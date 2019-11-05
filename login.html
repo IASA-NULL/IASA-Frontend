@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 - IASA</title>
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+        }
+
+        :root {
+            --mdc-theme-primary: #5351db !important;
+            --mdc-theme-secondary: #8cc4de !important;
+            --mdc-theme-on-primary: #fff !important;
+            --mdc-theme-on-secondary: #fff !important;
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+
+        #cont {
+            position: absolute;
+            top: 50vh;
+            left: 50vw;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 550px;
+            overflow: hidden;
+        }
+
+        .loginBox {
+            margin: 0;
+            text-align: center;
+            display: flex;
+            max-width: 430px;
+            width:100%;
+            height: 476px;
+            align-items: center;
+            justify-content: center;
+            float: left;
+            padding: 35px;
+        }
+
+        .loginBox>* {
+            margin: 15px;
+        }
+
+        .fade {
+            transition: opacity .5s ease;
+        }
+
+        @font-face {
+            font-family: 'nanum';
+            font-display: auto;
+            src: local('나눔스퀘어'), url("http://api.iasa.ga/res/font/NSR.woff");
+        }
+
+        * {
+            font-family: 'nanum';
+        }
+
+        #loginCont {
+            height: 100%;
+            display: flex;
+            position: relative;
+            transition: left .3s ease;
+            left: 0;
+        }
+
+        .innerCont {
+            width: 430px;
+            margin: 35px;
+        }
+
+        .innerCont:first-child {
+            margin-left: 0;
+        }
+
+        #findIdForm>* {
+            margin: 5px;
+        }
+    </style>
+    <meta name="viewpot" content="sidth=device-width, intial-scale=1.0" />
+</head>
+
+<body>
+    <script>
+        let mdcInstance = Object();
+        let currentForm = "id", nextForm = "next", currentState = 0;
+
+        function initMdc() {
+            mdcInstance.idInput = new mdc.textField.MDCTextField(document.getElementById("uidCont"));
+            mdcInstance.passInput = new mdc.textField.MDCTextField(document.getElementById("upassCont"));
+            mdcInstance.fidName = new mdc.textField.MDCTextField(document.getElementById("fidNameForm"));
+            mdcInstance.fidStuid = new mdc.textField.MDCTextField(document.getElementById("fidStuidForm"));
+            mdcInstance.progress = new mdc.linearProgress.MDCLinearProgress.attachTo(document.querySelector('.mdc-linear-progress'));
+            mdcInstance.progress.determinate = false;
+        }
+
+        function initEvent() {
+            let uid = document.getElementById("uid");
+            uid.addEventListener("keyup", function (event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    enterId();
+                }
+            });
+            let upass = document.getElementById("upass");
+            upass.addEventListener("keyup", function (event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    enterPass();
+                }
+            });
+            let fidName = document.getElementById("fidName");
+            fidName.addEventListener("keyup", function (event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    document.getElementById("fidStuid").focus();
+                }
+            });
+            let fidStuid = document.getElementById("fidStuid");
+            fidStuid.addEventListener("keyup", function (event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    clickFindId();
+                }
+            });
+        }
+
+        function hasClass(ele, cls) {
+            return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+        }
+
+        function addClass(ele, cls) {
+            if (!hasClass(ele, cls)) ele.className += " " + cls;
+        }
+
+        function removeClass(ele, cls) {
+            if (hasClass(ele, cls)) {
+                var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                ele.className = ele.className.replace(reg, ' ');
+            }
+        }
+        function loginError(type, msg) {
+            if (type == 0) {
+                document.getElementById('errIdMsg').innerHTML = msg;
+                document.getElementById("errId").style.display = 'inherit';
+                mdcInstance.idInput.valid = false;
+                document.getElementById("uid").disabled = false;
+                document.getElementById("enterId").disabled = false;
+                document.getElementById("forgotId").disabled = false;
+                document.getElementById("uid").focus();
+                setTimeout(function () {
+                    document.getElementById("iProg").style.opacity = 0;
+                }, 200);
+            }
+            if (type == 1) {
+                document.getElementById('errPassMsg').innerHTML = msg;
+                document.getElementById("errPass").style.display = 'inherit';
+                mdcInstance.passInput.valid = false;
+                document.getElementById("upass").disabled = false;
+                document.getElementById("enterPass").disabled = false;
+                document.getElementById("forgotPass").disabled = false;
+                document.getElementById("upass").focus();
+                setTimeout(function () {
+                    document.getElementById("iProg").style.opacity = 0;
+                }, 200);
+            }
+            if(type==2) {
+                document.getElementById('errFIdMsg').innerHTML = msg;
+                document.getElementById("errFId").style.display = 'inherit';
+                mdcInstance.fidName.valid = false;
+                mdcInstance.fidStuid.valid = false;
+                document.getElementById("clickFindId").disabled = false;
+                document.getElementById("fidName").disabled = false;
+                document.getElementById("fidStuid").disabled = false;
+                document.getElementById("fidName").focus();
+                setTimeout(function () {
+                    document.getElementById("iProg").style.opacity = 0;
+                }, 200);
+            }
+        }
+        function swapForm(form1, form2) {
+            obj1 = document.getElementById(form1 + "Form");
+            obj2 = document.getElementById(form2 + "Form");
+            var temp = document.createElement("div");
+            obj1.parentNode.insertBefore(temp, obj1);
+            obj2.parentNode.insertBefore(obj1, obj2);
+            temp.parentNode.insertBefore(obj2, temp);
+            temp.parentNode.removeChild(temp);
+        }
+        function swapElements(form1, form2) {
+            el1 = document.getElementById(form1 + "Form");
+            el2 = document.getElementById(form2 + "Form");
+            var clonedElement1 = el1.cloneNode(true);
+            var clonedElement2 = el2.cloneNode(true);
+
+            el2.parentNode.replaceChild(clonedElement1, el2);
+            el1.parentNode.replaceChild(clonedElement2, el1);
+        }
+        function moveToForm(formId) {
+            if (currentState == 0) {
+                swapForm(nextForm, formId);
+                nextForm = formId;
+            }
+            if (currentState == 1) {
+                swapForm(currentForm, nextForm);
+                swapForm(currentForm, formId);
+                currentForm = nextForm;
+                nextForm = formId;
+            }
+            currentState = 1;
+            document.getElementById("loginCont").style.transition = "none";
+            document.getElementById("loginCont").style.left = "0";
+            setTimeout(function () {
+                document.getElementById("loginCont").style.transition = "left .3s ease";
+                document.getElementById("loginCont").style.left = "-500px";
+            }, 100);
+        }
+        function enterId() {
+            document.getElementById("iProg").style.opacity = 1;
+            document.getElementById("uid").disabled = true;
+            document.getElementById("enterId").disabled = true;
+            document.getElementById("forgotId").disabled = true;
+            document.getElementById("errId").style.display = 'none';
+            if (String(document.getElementById("uid").value).length == 0) {
+                loginError(0, "아이디를 입력하세요.");
+                return;
+            }
+            if (String(document.getElementById("uid").value) === "hi") {
+                setTimeout(function () {
+                    setHeader('hi', '비밀번호를 입력해서 로그인');
+                    document.getElementById("iProg").style.opacity = 0;
+                    moveToForm("pass");
+                    setTimeout(function () {
+                        document.getElementById("upass").focus();
+                    }, 500);
+                }, 500);
+            }
+            else {
+                setTimeout(function () {
+                    loginError(0, "아이디가 존재하지 않습니다.");
+                }, 500);
+            }
+        }
+        function enterPass() {
+            document.getElementById("iProg").style.opacity = 1;
+            document.getElementById("upass").disabled = true;
+            document.getElementById("enterPass").disabled = true;
+            document.getElementById("forgotPass").disabled = true;
+            document.getElementById("errPass").style.display = 'none';
+            if (String(document.getElementById("upass").value).length == 0) {
+                loginError(1, "비밀번호를 입력하세요.");
+                return;
+            }
+            setTimeout(function () {
+                if (String(document.getElementById("upass").value) === "hello") {
+                    setTimeout(function () {
+                        location.replace('index.html');
+                    }, 800);
+                }
+                else {
+                    loginError(1, '잘못된 비밀번호입니다.');
+                }
+            }, 300);
+        }
+        function setHeader(primary, secondary) {
+            document.getElementById("mainHeader").innerHTML = primary;
+            document.getElementById("subHeader").innerHTML = secondary;
+        }
+        function clickFindId() {
+            document.getElementById("iProg").style.opacity = 1;
+            document.getElementById("fidName").disabled = true;
+            document.getElementById("fidStuid").disabled = true;
+            document.getElementById("fidContinue").disabled = true;
+            document.getElementById("errFId").style.display = 'none';
+            if(String(document.getElementById("fidName").value).length == 0) {
+                loginError(2, "이름을 입력하세요.");
+                return;
+            }
+            if(String(document.getElementById("fidStuid").value).length == 0) {
+                loginError(2, "학번을 입력하세요.");
+                return;
+            }
+            if(String(document.getElementById("fidName").value)!="홍길동" || String(document.getElementById("fidStuid").value)!="10101") {
+                loginError(2, "정보가 올바르지 않습니다.");
+                return;
+            }
+            moveToForm('idFound');
+            setTimeout(function () {
+                setHeader('아이디 찾기', '계속');
+                document.getElementById("fidName").disabled = false;
+                document.getElementById("fidStuid").disabled = false;
+                document.getElementById("fidContinue").disabled = false;
+                document.getElementById("fidContinue").focus();
+                document.getElementById("iProg").style.opacity = 0;
+            }, 300);
+        }
+        function reqFindId() {
+            moveToForm('findId');
+            setHeader('아이디 찾기', '이름과 학번을 입력하세요.');
+            setTimeout(function () {
+                document.getElementById("fidName").focus();
+            }, 500);
+        }
+        function togglePassword(id) {
+            let x = document.getElementById(id);
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+        function loginWithFoundId() {
+            document.getElementById("iProg").style.opacity = 1;
+            document.getElementById("uid").value = "hi";
+            moveToForm('id');
+            setHeader('로그인', 'IASA Portal(으)로 계속');
+            setTimeout(function () {
+                document.getElementById("uid").focus();
+                document.getElementById("iProg").style.opacity = 0;
+            }, 500);
+        }
+        window.addEventListener('DOMContentLoaded', function () {
+            initMdc();
+            initEvent();
+            setHeader('로그인', 'IASA Portal(으)로 계속');
+            document.getElementById("errId").style.display = 'none';
+            document.getElementById("errPass").style.display = 'none';
+            document.getElementById("errFId").style.display = 'none';
+            document.getElementById("loginCont").style.width = document.getElementById('loginCont').children.length * 500 + 'px';
+            for (var i = 0; i < document.querySelectorAll('.mdc-ripple').length; i++)
+                mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
+            setTimeout(function () {
+                document.getElementById("uid").focus();
+                document.getElementById("iProg").style.opacity = 0;
+            }, 300);
+        });
+    </script>
+    <div class="mdc-card demo-card demo-ui-control mdc-elevation--z10" id="cont">
+        <div role="progressbar" class="mdc-linear-progress fade" style="width:500px;" id="iProg">
+            <div class="mdc-linear-progress__buffering-dots"></div>
+            <div class="mdc-linear-progress__buffer"></div>
+            <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+                <span class="mdc-linear-progress__bar-inner"></span>
+            </div>
+            <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+                <span class="mdc-linear-progress__bar-inner"></span>
+            </div>
+        </div>
+        <div class="loginBox" id="login">
+            <div style="width:100%;">
+                <img src="res/logo.png" style="display: block;width:80px;margin: 0 auto;">
+                <p id="mainHeader" style="font-size: 200%;"></p>
+                <p id="subHeader"></p>
+                <div id="loginCont">
+                    <div class="innerCont" id="idForm">
+                        <div class="mdc-text-field mdc-text-field--outlined" id="uidCont" style="width:90%;">
+                            <input class="mdc-text-field__input" id="uid">
+                            <div class="mdc-notched-outline">
+                                <div class="mdc-notched-outline__leading"></div>
+                                <div class="mdc-notched-outline__notch">
+                                    <label for="text-field-hero-input" class="mdc-floating-label">아이디</label>
+                                </div>
+                                <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                        </div>
+                        <div style="width:100%;height:5px;display: flex;"></div>
+                        <span id="errId" style="color:#e36346;margin-top:2px;"><i class="material-icons"
+                                style="font-size: 100%;margin-top:5px;display: inline-block;">error_outline</i>
+                            <p id="errIdMsg" style="color:#e36346;display: inline-block;"></p>
+                        </span>
+                        <div style="width:100%;height:15px;display: flex;"></div>
+                        <div style="width:100%;display: flex;">
+                            <button class="mdc-button mdc-ripple" style="width:175px;float:left;" onclick="reqFindId();"
+                                id="forgotId">아이디를 잊으셨나요?</button>
+                        </div>
+                        <div style="width:100%;height:15px;display: flex;"></div>
+                        <div style="width:100%;display: flex;">
+                            <div style="width:100%;">
+                                <button class="mdc-button mdc-ripple" style="width:100px;float:left;">계정 만들기</button>
+                                <button class="mdc-button mdc-button--raised mdc-ripple"
+                                    style="width:100px;float:right;margin-right:25px;" onclick="enterId();"
+                                    id="enterId">다음</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="innerCont" id="nextForm"></div>
+                    <div class="innerCont" id="passForm">
+                        <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-trailing-icon"
+                            id="upassCont" style="width:90%;">
+                            <i class="material-icons mdc-text-field__icon" tabindex="0" role="button"
+                                onclick="togglePassword('upass');">visibility</i>
+                            <input class="mdc-text-field__input" id="upass" type="password">
+                            <div class="mdc-notched-outline">
+                                <div class="mdc-notched-outline__leading"></div>
+                                <div class="mdc-notched-outline__notch">
+                                    <label for="text-field-hero-input" class="mdc-floating-label">비밀번호</label>
+                                </div>
+                                <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                        </div>
+                        <div style="width:100%;height:5px;display: flex;"></div>
+                        <span id="errPass" style="color:#e36346;margin-top:2px;"><i class="material-icons"
+                                style="font-size: 100%;margin-top:5px;display: inline-block;">error_outline</i>
+                            <p id="errPassMsg" style="color:#e36346;display: inline-block;"></p>
+                        </span>
+                        <div style="width:100%;height:15px;display: flex;"></div>
+                        <div style="width:100%;display: flex;">
+                            <div style="width:100%;">
+                                <button class="mdc-button mdc-ripple" style="width:200px;float:left;"
+                                    onclick="moveToForm('findPass')" id="forgotPass">비밀번호를
+                                    잊으셨나요?</button>
+                                <button class="mdc-button mdc-button--raised mdc-ripple"
+                                    style="width:100px;float:right;margin-right:25px;" onclick="enterPass();"
+                                    id="enterPass">로그인</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="innerCont" id="idFoundForm">
+                        <p style="font-size: 150%;">사용자의 ID는 <b style="font-size: 130%;">hi</b>입니다.</p>
+                        <div style="width:100%;height:15px;display: flex;"></div>
+                        <div style="width:100%;display: flex;">
+                            <div style="width:100%;">
+                                <button class="mdc-button mdc-button--raised mdc-ripple"
+                                    style="width:100px;float:right;margin-right:25px;" onclick="loginWithFoundId();"
+                                    id="fidContinue">로그인</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="innerCont" id="findIdForm">
+                        <div class="mdc-text-field mdc-text-field--outlined" id="fidNameForm" style="width:90%;">
+                            <input class="mdc-text-field__input" id="fidName">
+                            <div class="mdc-notched-outline">
+                                <div class="mdc-notched-outline__leading"></div>
+                                <div class="mdc-notched-outline__notch">
+                                    <label for="text-field-hero-input" class="mdc-floating-label">이름</label>
+                                </div>
+                                <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                        </div>
+                        <div class="mdc-text-field mdc-text-field--outlined" id="fidStuidForm" style="width:90%;">
+                            <input class="mdc-text-field__input" id="fidStuid">
+                            <div class="mdc-notched-outline">
+                                <div class="mdc-notched-outline__leading"></div>
+                                <div class="mdc-notched-outline__notch">
+                                    <label for="text-field-hero-input" class="mdc-floating-label">학번</label>
+                                </div>
+                                <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                        </div>
+                        <div style="width:100%;height:5px;display: flex;"></div>
+                        <span id="errFId" style="color:#e36346;margin-top:2px;"><i class="material-icons"
+                                style="font-size: 100%;margin-top:5px;display: inline-block;">error_outline</i>
+                            <p id="errFIdMsg" style="color:#e36346;display: inline-block;"></p>
+                        </span>
+                        <button class="mdc-button mdc-button--raised mdc-ripple"
+                            style="width:100px;float:right;margin-right:25px;" onclick="clickFindId();"
+                            id="clickFindId">다음</button>
+                    </div>
+                    <div class="innerCont" id="findPassForm" style="background-color: #5351db;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
