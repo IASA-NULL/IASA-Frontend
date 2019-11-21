@@ -227,7 +227,7 @@
 <body>
 <script>
     let mdcInstance = Object();
-    let activeSection = "myunbul";
+    let activeSection = "myeonbul";
 
     function hasClass(ele, cls) {
         if (!ele) return false;
@@ -270,7 +270,7 @@
         mdcInstance.mybPlace = new mdc.textField.MDCTextField(document.getElementById("mybPlace"));
         mdcInstance.mybTeacher = new mdc.select.MDCSelect(document.getElementById("mybTeacher"));
         mdcInstance.findTeacher = new mdc.textField.MDCTextField(document.getElementById("findTeacher"));
-        mdcInstance.succ = new mdc.snackbar.MDCSnackbar(document.getElementById('doneMyunbul'));
+        mdcInstance.succ = new mdc.snackbar.MDCSnackbar(document.getElementById('doneMyeonbul'));
         mdcInstance.fail = new mdc.snackbar.MDCSnackbar(document.getElementById('reqFailed'));
         mdcInstance.loading = new mdc.snackbar.MDCSnackbar(document.getElementById('loadingSnackbar'));
         mdcInstance.reqForm = new mdc.snackbar.MDCSnackbar(document.getElementById('formRequired'));
@@ -336,7 +336,7 @@
         mdcInstance.reqForm.close();
     }
 
-    function requestMyunbul() {
+    function requestMyeonbul() {
         closeSnackbar();
         if (!mdcInstance.mybTeacher.value || !mdcInstance.mybReason.value || (!document.getElementById('mybTime1').checked && !document.getElementById('mybTime2').checked)) {
             closeSnackbar();
@@ -345,17 +345,48 @@
         }
         document.getElementById("iProg").style.opacity = 1;
         mdcInstance.loading.open();
-        document.getElementById('myunbulSubmit').disabled = true;
-        setTimeout(function () {
+        document.getElementById('myeonbulSubmit').disabled = true;
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        let stTime, fiTime;
+        if (document.getElementById('mybTime1').checked && !document.getElementById('mybTime2').checked) {
+            stTime = 1920;
+            fiTime = 2100;
+        }
+        if (!document.getElementById('mybTime1').checked && document.getElementById('mybTime2').checked) {
+            stTime = 2130;
+            fiTime = 2330;
+        }
+        if (!document.getElementById('mybTime1').checked && !document.getElementById('mybTime2').checked) {
+            stTime = 1920;
+            fiTime = 2330;
+        }
+        fetch('https://api.iasa.kr/myeonbul', {
+            method: 'PUT',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({
+                title: mdcInstance.mybReason.value,
+                students: [2019001],
+                teacher: mdcInstance.mybTeacher.value,
+                place: mdcInstance.mybPlace.value ? mdcInstance.mybPlace.value : "선생님이 지정",
+                date: (yyyy * 10000) + (mm * 100) + (dd),
+                start_time: stTime,
+                end_time: fiTime
+            })
+        }).then((response) => {
+            alert(response);
+        }).catch(function (err) {
             closeSnackbar();
-            document.getElementById('myunbulSubmit').disabled = false;
-            document.getElementById('reTry').onclick = requestMyunbul;
+            document.getElementById('reTry').onclick = requestMyeonbul;
             mdcInstance.fail.open();
-            document.getElementById("iProg").style.opacity = 0;
-        }, 2000);
+        })
+        document.getElementById('myeonbulSubmit').disabled = false;
+        document.getElementById("iProg").style.opacity = 0;
     }
 
-    function cancelMyunbul1() {
+    function cancelMyeonbul1() {
         document.getElementById("iProg").style.opacity = 1;
         closeSnackbar();
         mdcInstance.loading.open();
@@ -363,13 +394,13 @@
         setTimeout(function () {
             closeSnackbar();
             document.getElementById('mybCancel1Submit').disabled = false;
-            document.getElementById('reTry').onclick = cancelMyunbul1;
+            document.getElementById('reTry').onclick = cancelMyeonbul1;
             mdcInstance.fail.open();
             document.getElementById("iProg").style.opacity = 0;
         }, 2000);
     }
 
-    function cancelMyunbul2() {
+    function cancelMyeonbul2() {
         document.getElementById("iProg").style.opacity = 1;
         closeSnackbar();
         document.getElementById('mybCancel2Submit').disabled = true;
@@ -377,7 +408,7 @@
         setTimeout(function () {
             closeSnackbar();
             document.getElementById('mybCancel2Submit').disabled = false;
-            document.getElementById('reTry').onclick = cancelMyunbul2;
+            document.getElementById('reTry').onclick = cancelMyeonbul2;
             mdcInstance.fail.open();
             document.getElementById("iProg").style.opacity = 0;
         }, 2000);
@@ -456,7 +487,7 @@
             </a>
             <hr class="mdc-list-divider">
             <h6 class="mdc-list-group__subheader">신청</h6>
-            <a class="mdc-list-item mdc-list-item--activated mdc-ripple" onclick="selectSection('myunbul')">
+            <a class="mdc-list-item mdc-list-item--activated mdc-ripple" onclick="selectSection('myeonbul')">
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">event</i>
                 <span class="mdc-list-item__text">면불 신청</span>
             </a>
@@ -472,7 +503,7 @@
         <div id="alert" class="section section-disabled">
             <h1>알림</h1>
         </div>
-        <div id="myunbul" class="section section-visible-on-start">
+        <div id="myeonbul" class="section section-visible-on-start">
             <h1>면불 신청</h1>
             <div class="mdc-layout-grid">
                 <div class="mdc-layout-grid__inner">
@@ -787,7 +818,7 @@
                             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-7-desktop mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-12-phone">
                                 <button class="mdc-button mdc-button--outlined mdc-ripple"
                                         style="width:100%;height:56px;"
-                                        id="myunbulSubmit" onclick="requestMyunbul();">
+                                        id="myeonbulSubmit" onclick="requestMyeonbul();">
                                     <div class="mdc-button__ripple"></div>
                                     <i class="material-icons mdc-button__icon" aria-hidden="true">send</i>
                                     <span class="mdc-button__label">신청</span>
@@ -875,7 +906,7 @@
         </div>
     </div>
 </div>
-<div class="mdc-snackbar" id="doneMyunbul">
+<div class="mdc-snackbar" id="doneMyeonbul">
     <div class="mdc-snackbar__surface">
         <div class="mdc-snackbar__label"
              role="status"
@@ -942,7 +973,7 @@
                     <span class="mdc-button__label">아니요</span>
                 </button>
                 <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes"
-                        onclick="cancelMyunbul1()">
+                        onclick="cancelMyeonbul1()">
                     <span class="mdc-button__label">네</span>
                 </button>
             </footer>
@@ -967,7 +998,7 @@
                     <span class="mdc-button__label">아니요</span>
                 </button>
                 <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes"
-                        onclick="cancelMyunbul2();">
+                        onclick="cancelMyeonbul2();">
                     <span class="mdc-button__label">네</span>
                 </button>
             </footer>
