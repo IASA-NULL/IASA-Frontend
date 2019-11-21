@@ -363,6 +363,7 @@
             stTime = 1920;
             fiTime = 2330;
         }
+        document.domain="https://api.iasa.kr/";
         fetch('https://api.iasa.kr/myeonbul', {
             method: 'PUT',
             headers: {'content-type': 'application/json'},
