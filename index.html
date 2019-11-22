@@ -264,6 +264,10 @@
         return "";
     }
 
+    function eraseCookie(name) {
+        document.cookie = name + '=; Max-Age=-99999999;';
+    }
+
     function hasClass(ele, cls) {
         if (!ele) return false;
         return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
@@ -312,6 +316,8 @@
         mdcInstance.progress = new mdc.linearProgress.MDCLinearProgress.attachTo(document.querySelector('.mdc-linear-progress'));
         mdcInstance.cancelDialog1 = new mdc.dialog.MDCDialog(document.getElementById('askCancelMyb1'));
         mdcInstance.cancelDialog2 = new mdc.dialog.MDCDialog(document.getElementById('askCancelMyb2'));
+        mdcInstance.accountmenu = new mdc.menu.MDCMenu(document.getElementById('accountMenu'));
+        mdcInstance.accountmenu.setAnchorElement(document.getElementById('accountInfo'));
         mdcInstance.accountButton = new mdc.ripple.MDCRipple(document.getElementById('accountInfo'));
         mdcInstance.accountButton.unbounded = true;
         mdcInstance.progress.determinate = false;
@@ -464,6 +470,11 @@
         }, 2000);
     }
 
+    function logOut() {
+        eraseCookie('auth');
+        location.replace('/login?next=' + btoa(window.location.href));
+    }
+
     window.addEventListener('DOMContentLoaded', function () {
         initMdc();
         if (isIE()) mdcInstance.noIE.open();
@@ -535,7 +546,7 @@
             <span class="mdc-top-app-bar__title">IASA</span>
         </section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
-            <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" id="accountInfo">
+            <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" id="accountInfo" onclick="mdcInstance.accountmenu.open=true;">
                 account_circle
             </button>
         </section>
@@ -981,6 +992,19 @@
             </button>
             <button type="button" class="mdc-button mdc-snackbar__action mdc-ripple">닫기</button>
         </div>
+    </div>
+</div>
+<div class="mdc-menu-surface--anchor">
+    <div class="mdc-menu mdc-menu-surface" id="accountMenu">
+        <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+            <h4 style="margin:10px;">이서현</h4>
+            <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="logOut();">
+                <span class="mdc-list-item__text">로그아웃</span>
+            </li>
+            <li class="mdc-list-item mdc-ripple" role="menuitem">
+                <span class="mdc-list-item__text">마이페이지</span>
+            </li>
+        </ul>
     </div>
 </div>
 <div class="mdc-snackbar" id="doneMyeonbul">

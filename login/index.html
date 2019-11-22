@@ -166,12 +166,15 @@
         return "";
     }
 
+    function eraseCookie(name) {
+        document.cookie = name + '=; Max-Age=-99999999;';
+    }
+
     function initMdc() {
         mdcInstance.idInput = new mdc.textField.MDCTextField(document.getElementById("uidCont"));
         mdcInstance.passInput = new mdc.textField.MDCTextField(document.getElementById("upassCont"));
         mdcInstance.fidName = new mdc.textField.MDCTextField(document.getElementById("fidNameForm"));
         mdcInstance.fidStuid = new mdc.textField.MDCTextField(document.getElementById("fidStuidForm"));
-        mdcInstance.fidStuid = new mdc.textField.MDCTextField(document.getElementById("signcodeCont"));
         mdcInstance.progress = new mdc.linearProgress.MDCLinearProgress.attachTo(document.querySelector('.mdc-linear-progress'));
         mdcInstance.menu = new mdc.menu.MDCMenu(document.getElementById('langMenu'));
         mdcInstance.menu.setAnchorElement(document.getElementById('menu-button'));
@@ -578,11 +581,10 @@
     function reqSignup3() {
         document.getElementById("iProg").style.opacity = 1;
         moveToForm('signup3');
-        setHeader('가입하기', 'NULL에 가입을 위한 25자리 코드를 요청 후 입력해 주세요.');
+        setHeader('오류', '웹캠에 연결할 수 없습니다.');
         setPrevForm("id");
         setTimeout(function () {
             document.getElementById("iProg").style.opacity = 0;
-            document.getElementById("signcode").focus();
         }, 400);
     }
 
@@ -590,7 +592,6 @@
         document.getElementById("iProg").style.opacity = 1;
         moveToForm('signupData1');
         setHeader('가입하기', '아래 내용을 채워주세요.');
-        document.getElementById("studentId").innerText = stuId;
         setPrevForm("id");
         setTimeout(function () {
             document.getElementById("iProg").style.opacity = 0;
@@ -805,23 +806,54 @@
                             </button>
                         </div>
                         <div class="innerCont" id="signup3Form">
-                            <div class="mdc-text-field mdc-text-field--outlined" style="width:90%;" id="signcodeCont">
-                                <input class="mdc-text-field__input" id="signcode">
+                            <p>크롬 브라우저를 사용하거나 웹캠을 키고 다시 시도하세요.</p>
+                            <div style="width:100%;height:15px;display: flex;"></div>
+                            <button class="mdc-button mdc-button--raised mdc-ripple"
+                                    style="width:100px;float:right;margin-right:25px;" onclick="backToForm();">돌아가기
+                            </button>
+                        </div>
+                        <div class="innerCont" id="signupData1Form">
+                            <div class="mdc-text-field mdc-text-field--outlined" style="width:90%;"
+                                 id="signupEmailForm">
+                                <input class="mdc-text-field__input">
                                 <div class="mdc-notched-outline">
                                     <div class="mdc-notched-outline__leading"></div>
                                     <div class="mdc-notched-outline__notch">
-                                        <label for="text-field-hero-input" class="mdc-floating-label">코드</label>
+                                        <label for="text-field-hero-input" class="mdc-floating-label">이메일</label>
+                                    </div>
+                                    <div class="mdc-notched-outline__trailing"></div>
+                                </div>
+                            </div>
+                            <div style="width:100%;height:15px;display: flex;"></div>
+                            <div class="mdc-text-field mdc-text-field--outlined" style="width:90%;"
+                                 id="signupEmailForm">
+                                <input class="mdc-text-field__input">
+                                <div class="mdc-notched-outline">
+                                    <div class="mdc-notched-outline__leading"></div>
+                                    <div class="mdc-notched-outline__notch">
+                                        <label for="text-field-hero-input" class="mdc-floating-label">비밀번호</label>
+                                    </div>
+                                    <div class="mdc-notched-outline__trailing"></div>
+                                </div>
+                            </div>
+                            <div style="width:100%;height:15px;display: flex;"></div>
+                            <div class="mdc-text-field mdc-text-field--outlined" style="width:90%;"
+                                 id="signupEmailForm">
+                                <input class="mdc-text-field__input">
+                                <div class="mdc-notched-outline">
+                                    <div class="mdc-notched-outline__leading"></div>
+                                    <div class="mdc-notched-outline__notch">
+                                        <label for="text-field-hero-input" class="mdc-floating-label">비밀번호 재입력</label>
                                     </div>
                                     <div class="mdc-notched-outline__trailing"></div>
                                 </div>
                             </div>
                             <div style="width:100%;height:15px;display: flex;"></div>
                             <button class="mdc-button mdc-button--raised mdc-ripple"
-                                    style="width:100px;float:right;margin-right:25px;" onclick="">다음
+                                    style="width:100px;float:right;margin-right:25px;"
+                                    onclick="">
+                                다음
                             </button>
-                        </div>
-                        <div class="innerCont" id="signupData1Form">
-                            <h1 id="studentId"></h1>
                         </div>
                     </div>
                 </div>
