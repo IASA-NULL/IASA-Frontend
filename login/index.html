@@ -2,6 +2,12 @@
 <html>
 
 <head>
+    <script>
+        if (location.protocol != 'https:')
+        {
+            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+        }
+    </script>
     <meta charset="UTF-8">
     <title>로그인 - IASA</title>
     <link href="/res/mdc-3.2.0.min.css" rel="stylesheet">
