@@ -414,7 +414,7 @@
                 end_time: fiTime
             })
         }).then(function (response) {
-            if (response.status != 200) {
+            if (response.status != 201) {
                 document.getElementById('reTry').onclick = requestMyeonbul;
                 closeSnackbar();
                 mdcInstance.fail.open();
