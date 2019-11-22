@@ -190,28 +190,28 @@
         @keyframes fadein {
             0% {
                 opacity: 0;
-                padding-bottom: 0%;
-                padding-top: 4%;
+                padding-bottom: 0;
+                padding-top: 20px;
             }
 
             100% {
                 opacity: 1;
-                padding-bottom: 0%;
-                padding-top: 2%;
+                padding-bottom: 0;
+                padding-top: 10px;
             }
         }
 
         @keyframes fadeout {
             0% {
                 opacity: 1;
-                padding-bottom: 0%;
-                padding-top: 2%;
+                padding-bottom: 0;
+                padding-top: 10px;
             }
 
             100% {
                 opacity: 0;
                 padding-bottom: 3%;
-                padding-top: 0%;
+                padding-top: 0;
             }
         }
 
@@ -522,7 +522,7 @@
     </div>
     <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-            <a href="#" class="demo-menu material-icons mdc-top-app-bar__navigation-icon">menu</a>
+            <a class="demo-menu material-icons mdc-top-app-bar__navigation-icon">menu</a>
             <span class="mdc-top-app-bar__title">IASA</span>
         </section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
@@ -543,7 +543,7 @@
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">fastfood</i>
                 <span class="mdc-list-item__text">급식</span>
             </a>
-            <a class="mdc-list-item mdc-ripple" onclick="selectSection('')">
+            <a class="mdc-list-item mdc-ripple" onclick="selectSection('calendar')">
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">calendar_today</i>
                 <span class="mdc-list-item__text">학사일정</span>
             </a>
@@ -565,6 +565,10 @@
         </div>
         <div id="alert" class="section section-disabled">
             <h1>알림</h1>
+            <p>조금만 기다리면 멋진 페이지를 만날 수 있을거에요.</p>
+        </div>
+        <div id="calendar" class="section section-disabled">
+            <h1>학사일정</h1>
             <p>조금만 기다리면 멋진 페이지를 만날 수 있을거에요.</p>
         </div>
         <div id="myeonbul" class="section section-visible-on-start">
