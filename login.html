@@ -495,6 +495,10 @@
     }
 
     function reqSignup() {
+        if(isIE()) {
+            reqSignup3();
+            return;
+        }
         moveToForm('signup1');
         setHeader('가입하기', '다음 버튼을 누르고 웹캠에 학생증의 바코드를 보여주세요.');
         var curVid = document.getElementById('cardAnim');
