@@ -3,8 +3,7 @@
 
 <head>
     <script>
-        if (location.protocol != 'https:')
-        {
+        if (location.protocol != 'https:') {
             location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
         }
     </script>
@@ -41,6 +40,7 @@
             left: 50vw;
             transform: translate(calc(-50% - 0.5px), calc(-50% - 0.5px));
         }
+
         @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
             #fullCont {
                 position: absolute;
@@ -58,7 +58,7 @@
 
         a {
             text-decoration: none !important;
-            color:inherit !important;
+            color: inherit !important;
         }
 
         .loginBox {
@@ -134,6 +134,7 @@
 <script>
     let mdcInstance = Object();
     let currentForm = "id", nextForm = "next", currentState = 0, prevForm = "id";
+
     function isIE() {
         ua = navigator.userAgent;
         /* MSIE used to detect old browsers and Trident used to newer ones*/
@@ -144,8 +145,8 @@
 
     function setCookie(cname, cvalue, exdays) {
         var d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
-        var expires = "expires="+ d.toUTCString();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
 
@@ -153,7 +154,7 @@
         var name = cname + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
         var ca = decodedCookie.split(';');
-        for(var i = 0; i <ca.length; i++) {
+        for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
             while (c.charAt(0) == ' ') {
                 c = c.substring(1);
@@ -400,6 +401,7 @@
             }, 500);
         }
     }
+
     function getQueryString() {
         var key = false, res = {}, itm = null;
         // get the query string without the ?
@@ -510,7 +512,7 @@
     }
 
     function reqSignup() {
-        if(isIE()) {
+        if (isIE()) {
             reqSignup3();
             return;
         }
@@ -617,13 +619,13 @@
         document.getElementById("errFId").style.display = 'none';
         document.getElementById("loginCont").style.width = document.getElementById('loginCont').children.length * 500 + 'px';
         document.getElementById("passToggle").style.color = "#bbbbbb";
-        document.getElementById("upass").type='password';
+        document.getElementById("upass").type = 'password';
         for (var i = 0; i < document.querySelectorAll('.mdc-ripple').length; i++)
             mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
         setTimeout(function () {
             mdcInstance.idInput.focus();
             document.getElementById("iProg").style.opacity = 0;
-            if(isIE()) mdcInstance.noIE.open();
+            if (isIE()) mdcInstance.noIE.open();
         }, 300);
     });
 </script>
@@ -631,7 +633,8 @@
     <div id="cont">
         <div class="mdc-card demo-card demo-ui-control mdc-elevation--z0" id="cardCont">
             <a onclick="backToForm('id');" style="padding:10px;position:absolute;cursor: pointer;" id="prevCont">
-                <div><span class="mdc-fab__icon material-icons" style="font-size: 200%;"><button class="mdc-icon-button material-icons">arrow_back</button></span></div>
+                <div><span class="mdc-fab__icon material-icons" style="font-size: 200%;"><button
+                        class="mdc-icon-button material-icons">arrow_back</button></span></div>
             </a>
             <div role="progressbar" class="mdc-linear-progress fade" style="width:500px;z-index:1000;" id="iProg">
                 <div class="mdc-linear-progress__buffering-dots"></div>
@@ -661,7 +664,8 @@
                                 </div>
                             </div>
                             <div style="width:100%;height:5px;display: flex;"></div>
-                            <span id="errId" style="color:#e36346;margin-top:2px;"><i class="material-icons" style="font-size: 100%;margin-top:5px;display: inline-block;">error_outline</i>
+                            <span id="errId" style="color:#e36346;margin-top:2px;"><i class="material-icons"
+                                                                                      style="font-size: 100%;margin-top:5px;display: inline-block;">error_outline</i>
                             <p id="errIdMsg" style="color:#e36346;display: inline-block;"></p>
                         </span>
                             <div style="width:100%;height:15px;display: flex;"></div>
@@ -674,16 +678,20 @@
                             <div style="width:100%;height:15px;display: flex;"></div>
                             <div style="width:100%;display: flex;">
                                 <div style="width:100%;">
-                                    <button class="mdc-button mdc-ripple" style="width:100px;float:left;" onclick="mdcInstance.signmenu.open=true;"
-                                             id="signupButton">계정 만들기
+                                    <button class="mdc-button mdc-ripple" style="width:100px;float:left;"
+                                            onclick="mdcInstance.signmenu.open=true;"
+                                            id="signupButton">계정 만들기
                                     </button>
                                     <div class="mdc-menu-surface--anchor">
                                         <div class="mdc-menu mdc-menu-surface" id="signupMenu">
-                                            <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                                                <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="reqSignup();">
+                                            <ul class="mdc-list" role="menu" aria-hidden="true"
+                                                aria-orientation="vertical" tabindex="-1">
+                                                <li class="mdc-list-item mdc-ripple" role="menuitem"
+                                                    onclick="reqSignup();">
                                                     <span class="mdc-list-item__text">학생</span>
                                                 </li>
-                                                <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="reqSignup3();">
+                                                <li class="mdc-list-item mdc-ripple" role="menuitem"
+                                                    onclick="reqSignup3();">
                                                     <span class="mdc-list-item__text">선생님</span>
                                                 </li>
                                             </ul>
@@ -776,7 +784,8 @@
                         </div>
                         <div class="innerCont" id="findPassForm" style="background-color: #5351db;"></div>
                         <div class="innerCont" id="signup1Form">
-                            <video autoplay loop muted playsinline src="/res/vid/card.mp4" style="width:430px;transform:translate(-0.5px, 0);"
+                            <video autoplay loop muted playsinline src="/res/vid/card.mp4"
+                                   style="width:430px;transform:translate(-0.5px, 0);"
                                    id="cardAnim"></video>
                             <button class="mdc-button mdc-button--raised mdc-ripple"
                                     style="width:100px;float:right;margin-right:25px;" onclick="reqSignup2();">다음
@@ -786,7 +795,8 @@
                             <div id="qrContainer" style="width:450px !important;">
 
                             </div>
-                            <video autoplay loop muted playsinline src="/res/vid/camLoad.mp4" style="width:200px;transform:translate(-0.5px, 0);"
+                            <video autoplay loop muted playsinline src="/res/vid/camLoad.mp4"
+                                   style="width:200px;transform:translate(-0.5px, 0);"
                                    id="camAnim"></video>
                             <div style="width:100%;height:15px;display: flex;"></div>
                             <button class="mdc-button mdc-ripple" style="width:120px;float:left;"
@@ -821,8 +831,11 @@
     </div>
     <div style="width:100%;display: flex;">
         <div style="width:100%;">
-        <button id="menu-button" class="mdc-button mdc-ripple" style="float:left;" onclick="mdcInstance.menu.open=true;">한국어<i class="material-icons" onclick="mdcInstance.menu.open=true;">keyboard_arrow_down</i></button>
-        <button class="mdc-button mdc-ripple" style="float:right;">약관</button>
+            <button id="menu-button" class="mdc-button mdc-ripple" style="float:left;"
+                    onclick="mdcInstance.menu.open=true;">한국어<i class="material-icons"
+                                                                onclick="mdcInstance.menu.open=true;">keyboard_arrow_down</i>
+            </button>
+            <button class="mdc-button mdc-ripple" style="float:right;">약관</button>
         </div>
     </div>
     <div id="demo-menu" class="mdc-menu-surface--anchor">
@@ -858,7 +871,9 @@
             인터넷 익스플로러에서는 정상적인 작동을 보증하지 않습니다. 크롬 등 타 브라우저를 사용해주세요.
         </div>
         <div class="mdc-snackbar__actions">
-            <button type="button" class="mdc-button mdc-snackbar__action mdc-ripple" onclick="win = window.open('https://chrome.com', '_blank');win.focus();">크롬 다운로드</button>
+            <button type="button" class="mdc-button mdc-snackbar__action mdc-ripple"
+                    onclick="win = window.open('https://chrome.com', '_blank');win.focus();">크롬 다운로드
+            </button>
             <button type="button" class="mdc-button mdc-snackbar__action mdc-ripple">닫기</button>
         </div>
     </div>

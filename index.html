@@ -3,8 +3,7 @@
 
 <head>
     <script>
-        if (location.protocol != 'https:')
-        {
+        if (location.protocol != 'https:') {
             location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
         }
     </script>
@@ -132,7 +131,7 @@
             --mdc-theme-on-secondary: #fff !important;
         }
 
-        *::selection{
+        *::selection {
             background-color: #5351db !important;
             color: #ffffff !important;
         }
@@ -242,8 +241,8 @@
 
     function setCookie(cname, cvalue, exdays) {
         var d = new Date();
-        d.setTime(d.getTime() + (exdays*24*60*60*1000));
-        var expires = "expires="+ d.toUTCString();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
 
@@ -251,7 +250,7 @@
         var name = cname + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
         var ca = decodedCookie.split(';');
-        for(var i = 0; i <ca.length; i++) {
+        for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
             while (c.charAt(0) == ' ') {
                 c = c.substring(1);
@@ -341,7 +340,7 @@
     }
 
     function selectSection(secName) {
-        if(secName==activeSection) return;
+        if (secName == activeSection) return;
         let sec = document.querySelectorAll('.section');
         for (var i = 0; i < sec.length; i++) {
             removeClass(sec[i], "section-visible");
@@ -406,16 +405,16 @@
                 students: [2019001],
                 teacher: mdcInstance.mybTeacher.value,
                 place: mdcInstance.mybPlace.value ? mdcInstance.mybPlace.value : "선생님이 지정",
-                date: parseInt(yyyy+mm+dd),
+                date: parseInt(yyyy + mm + dd),
                 start_time: stTime,
                 end_time: fiTime
             })
-        }).then(function(response) {
-            mdcInstance.mybTeacher.value="";
-            mdcInstance.mybPlace.value="";
-            mdcInstance.mybReason.value="";
-            document.getElementById('mybTime1').checked=false;
-            document.getElementById('mybTime2').checked=false;
+        }).then(function (response) {
+            mdcInstance.mybTeacher.value = "";
+            mdcInstance.mybPlace.value = "";
+            mdcInstance.mybReason.value = "";
+            document.getElementById('mybTime1').checked = false;
+            document.getElementById('mybTime2').checked = false;
             closeSnackbar();
             mdcInstance.mybsucc.open();
         }).catch(function (err) {
@@ -471,18 +470,17 @@
             };
         }
         if (!String.prototype.padStart) {
-            String.prototype.padStart = function padStart(targetLength,padString) {
-                targetLength = targetLength>>0; //truncate if number or convert non-number to 0;
+            String.prototype.padStart = function padStart(targetLength, padString) {
+                targetLength = targetLength >> 0; //truncate if number or convert non-number to 0;
                 padString = String((typeof padString !== 'undefined' ? padString : ' '));
                 if (this.length > targetLength) {
                     return String(this);
-                }
-                else {
-                    targetLength = targetLength-this.length;
+                } else {
+                    targetLength = targetLength - this.length;
                     if (targetLength > padString.length) {
-                        padString += padString.repeat(targetLength/padString.length); //append to original to ensure we are longer than needed
+                        padString += padString.repeat(targetLength / padString.length); //append to original to ensure we are longer than needed
                     }
-                    return padString.slice(0,targetLength) + String(this);
+                    return padString.slice(0, targetLength) + String(this);
                 }
             };
         }
@@ -506,7 +504,7 @@
             document.getElementById("preloader").style.display = "none";
         }, 400);
     });
-    if(!getCookie('auth')) location.replace('/login');
+    if (!getCookie('auth')) location.replace('/login');
 </script>
 <header class="mdc-top-app-bar app-bar mdc-top-app-bar--fixed" id="app-bar">
     <div role="progressbar" class="mdc-linear-progress fade"
@@ -524,6 +522,9 @@
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
             <a href="#" class="demo-menu material-icons mdc-top-app-bar__navigation-icon">menu</a>
             <span class="mdc-top-app-bar__title">IASA</span>
+        </section>
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+            <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded">account_circle</button>
         </section>
     </div>
 </header>
@@ -556,9 +557,11 @@
     <main class="main-content" id="main-content">
         <div id="meal" class="section section-disabled">
             <h1>급식</h1>
+            <p>조금만 기다리면 멋진 페이지를 만날 수 있을거에요.</p>
         </div>
         <div id="alert" class="section section-disabled">
             <h1>알림</h1>
+            <p>조금만 기다리면 멋진 페이지를 만날 수 있을거에요.</p>
         </div>
         <div id="myeonbul" class="section section-visible-on-start">
             <h1>면불 신청</h1>
