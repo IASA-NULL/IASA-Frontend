@@ -270,7 +270,7 @@
         mdcInstance.mybPlace = new mdc.textField.MDCTextField(document.getElementById("mybPlace"));
         mdcInstance.mybTeacher = new mdc.select.MDCSelect(document.getElementById("mybTeacher"));
         mdcInstance.findTeacher = new mdc.textField.MDCTextField(document.getElementById("findTeacher"));
-        mdcInstance.succ = new mdc.snackbar.MDCSnackbar(document.getElementById('doneMyeonbul'));
+        mdcInstance.mybsucc = new mdc.snackbar.MDCSnackbar(document.getElementById('doneMyeonbul'));
         mdcInstance.fail = new mdc.snackbar.MDCSnackbar(document.getElementById('reqFailed'));
         mdcInstance.loading = new mdc.snackbar.MDCSnackbar(document.getElementById('loadingSnackbar'));
         mdcInstance.reqForm = new mdc.snackbar.MDCSnackbar(document.getElementById('formRequired'));
@@ -332,7 +332,7 @@
     function closeSnackbar() {
         mdcInstance.loading.close();
         mdcInstance.fail.close();
-        mdcInstance.succ.close();
+        mdcInstance.mybsucc.close();
         mdcInstance.reqForm.close();
     }
 
@@ -376,9 +376,14 @@
                 end_time: fiTime
             })
         }).then((response) => {
-            alert(response);
-        }).catch(function (err) {
+            mdcInstance.mybTeacher.value="";
+            mdcInstance.mybPlace.value="";
+            mdcInstance.mybReason.value="";
+            document.getElementById('mybTime1').checked=false;
+            document.getElementById('mybTime2').checked=false;
             closeSnackbar();
+            mdcInstance.mybsucc.open();
+        }).catch(function (err) {
             document.getElementById('reTry').onclick = requestMyeonbul;
             mdcInstance.fail.open();
         })
@@ -828,7 +833,7 @@
                     </div>
                 </div>
             </div>
-            <h1>검토 중인 면불신청</h1>
+            <h1>오늘의 면불</h1>
             <div class="mdc-layout-grid">
                 <div class="mdc-layout-grid__inner">
                     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-12-phone">
