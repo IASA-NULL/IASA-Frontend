@@ -310,6 +310,8 @@
         mdcInstance.progress = new mdc.linearProgress.MDCLinearProgress.attachTo(document.querySelector('.mdc-linear-progress'));
         mdcInstance.cancelDialog1 = new mdc.dialog.MDCDialog(document.getElementById('askCancelMyb1'));
         mdcInstance.cancelDialog2 = new mdc.dialog.MDCDialog(document.getElementById('askCancelMyb2'));
+        mdcInstance.accountButton = new mdc.ripple.MDCRipple(document.getElementById('accountMenu'));
+        mdcInstance.accountButton.unbounded = true;
         mdcInstance.progress.determinate = false;
     }
 
@@ -524,7 +526,9 @@
             <span class="mdc-top-app-bar__title">IASA</span>
         </section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
-            <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded">account_circle</button>
+            <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" id="accountInfo">
+                account_circle
+            </button>
         </section>
     </div>
 </header>
