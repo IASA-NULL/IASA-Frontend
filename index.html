@@ -400,7 +400,7 @@
                 students: [2019001],
                 teacher: mdcInstance.mybTeacher.value,
                 place: mdcInstance.mybPlace.value ? mdcInstance.mybPlace.value : "선생님이 지정",
-                date: (yyyy * 10000) + (mm * 100) + (dd),
+                date: parseInt(yyyy+mm+dd),
                 start_time: stTime,
                 end_time: fiTime
             })
