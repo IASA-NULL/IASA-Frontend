@@ -412,6 +412,11 @@
                 end_time: fiTime
             })
         }).then(function (response) {
+            if (response.status != 200) {
+                document.getElementById('reTry').onclick = requestMyeonbul;
+                mdcInstance.fail.open();
+                return;
+            }
             mdcInstance.mybTeacher.value = "";
             mdcInstance.mybPlace.value = "";
             mdcInstance.mybReason.value = "";
