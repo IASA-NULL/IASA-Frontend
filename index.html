@@ -414,6 +414,7 @@
         }).then(function (response) {
             if (response.status != 200) {
                 document.getElementById('reTry').onclick = requestMyeonbul;
+                closeSnackbar();
                 mdcInstance.fail.open();
                 return;
             }
@@ -426,6 +427,7 @@
             mdcInstance.mybsucc.open();
         }).catch(function (err) {
             document.getElementById('reTry').onclick = requestMyeonbul;
+            closeSnackbar();
             mdcInstance.fail.open();
         })
         document.getElementById('myeonbulSubmit').disabled = false;
