@@ -335,6 +335,7 @@
     }
 
     function selectSection(secName) {
+        if(secName==activeSection) return;
         let sec = document.querySelectorAll('.section');
         for (var i = 0; i < sec.length; i++) {
             removeClass(sec[i], "section-visible");
