@@ -172,8 +172,8 @@
 
         .section-visible {
             opacity: 0;
-            animation: fadein 0.3s ease-out;
-            animation-delay: 0.35s;
+            animation: fadein 0.2s ease-out;
+            animation-delay: 0.21s;
             animation-fill-mode: forwards;
         }
 
@@ -183,7 +183,7 @@
 
         .section-hidden {
             opacity: 1;
-            animation: fadeout 0.3s ease-in;
+            animation: fadeout 0.2s ease-in;
             animation-fill-mode: forwards;
         }
 
@@ -362,7 +362,7 @@
             removeClass(document.getElementById(secName), "section-hidden");
             removeClass(document.getElementById(secName), "section-disabled");
             addClass(document.getElementById(secName), "section-visible");
-        }, 350);
+        }, 210);
     }
 
     function closeSnackbar() {
