@@ -521,7 +521,7 @@
     });
     window.addEventListener('load', function () {
         document.getElementById("preloader").style.opacity = 0;
-        mdcInstance.drawer.open = true;
+        if (window.innerWidth > 1024) mdcInstance.drawer.open = true;
         setTimeout(function () {
             document.getElementById("preloader").style.display = "none";
         }, 400);
