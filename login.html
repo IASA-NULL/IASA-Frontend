@@ -128,6 +128,13 @@
 <script>
     let mdcInstance = Object();
     let currentForm = "id", nextForm = "next", currentState = 0, prevForm = "id";
+    function isIE() {
+        ua = navigator.userAgent;
+        /* MSIE used to detect old browsers and Trident used to newer ones*/
+        var is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
+
+        return is_ie;
+    }
 
     function setCookie(cname, cvalue, exdays) {
         var d = new Date();
@@ -589,13 +596,6 @@
             mdcInstance.idInput.focus();
             document.getElementById("iProg").style.opacity = 0;
         }, 500);
-    }
-    function isIE() {
-        ua = navigator.userAgent;
-        /* MSIE used to detect old browsers and Trident used to newer ones*/
-        var is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
-
-        return is_ie;
     }
 
     window.addEventListener('DOMContentLoaded', function () {
