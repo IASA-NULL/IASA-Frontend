@@ -410,7 +410,7 @@
             document.getElementById('myeonbulList').innerHTML = "";
             for (let i = 0; i < res.length; i++) {
                 document.getElementById('myeonbulList').innerHTML = '<tr class="mdc-data-table__row">\n' +
-                    '<td class="mdc-data-table__cell">' + getTeacherName2019(res[i].teacher) + '</td>\n' +
+                    '<td class="mdc-data-table__cell">' + getTeacherName2019(res[i].teacherID) + '</td>\n' +
                     '<td class="mdc-data-table__cell">' + res[i].place + '</td>\n' +
                     '<td class="mdc-data-table__cell">' + (String(res[i].start_time).substr(0, 2) + ':' + String(res[i].start_time).substr(2, 2) + " - " + String(res[i].end_time).substr(0, 2) + ':' + String(res[i].end_time).substr(2, 2)) + '</td>\n' +
                     '<td class="mdc-data-table__cell">' + (String(res[i].date).substr(0, 4) + '/' + String(res[i].date).substr(4, 2) + '/' + String(res[i].date).substr(6, 2)) + '</td>\n' +
@@ -423,7 +423,7 @@
                         '<div class="mdc-card__primary-action mdc-ripple" tabindex="0">\n' +
                         '<h1>' + res[i].title + '</h1>\n' +
                         '<h3 style="margin:5px;">' + (String(res[i].start_time).substr(0, 2) + ':' + String(res[i].start_time).substr(2, 2) + " - " + String(res[i].end_time).substr(0, 2) + ':' + String(res[i].end_time).substr(2, 2)) + '</h3>\n' +
-                        '<h3 style="margin:5px;">' + getTeacherName2019(res[i].teacher) + ' 선생님</h3>\n' +
+                        '<h3 style="margin:5px;">' + getTeacherName2019(res[i].teacherID) + ' 선생님</h3>\n' +
                         '<h3 style="margin:5px;">' + res[i].place + '</h3>\n' +
                         '<h3 style="margin:5px;">' + (res[i].verified ? '승인됨' : '승인 대기중') + '</h3>\n' +
                         '<div class="mdc-layout-grid__inner">\n' +
@@ -444,7 +444,7 @@
                         '</div>\n' +
                         '</div>\n' +
                         '</div>\n' +
-                        '</div>\n'+
+                        '</div>\n' +
                         '</div>';
                 }
             }
