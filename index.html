@@ -405,6 +405,7 @@
         }).then(function (response) {
             return response.text();
         }).then(function (text) {
+            let fl=true;
             res = JSON.parse(text.replaceAll('True', 'true').replaceAll('False', 'false').replaceAll("Decimal('", '').replaceAll("')", '').replaceAll('"', '').replaceAll("'", '"'));
             document.getElementById('myeonbulList').innerHTML = "";
             document.getElementById('myeonbulToday').innerHTML = "";
@@ -417,6 +418,7 @@
                     '<td class="mdc-data-table__cell">' + (res[i].verified ? '승인됨' : '승인 대기중') + '</td>\n' +
                     '</tr>' + document.getElementById('myeonbulList').innerHTML;
                 if (String(res[i].date) == getDate()) {
+                    fl=false;
                     document.getElementById('myeonbulToday').innerHTML +=
                         '<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone">\n' +
                         '<div class="mdc-card myb-card mdc-elevation--z5">\n' +
@@ -448,9 +450,8 @@
                         '</div>';
                 }
             }
-            if (res.length == 0) {
-                document.getElementById('myeonbulList').innerHTML = '<tr class="mdc-data-table__row"><td class="mdc-data-table__cell" colspan="5">면불 기록이 없어요!</td></tr>';
-            }
+            if (res.length == 0) document.getElementById('myeonbulList').innerHTML = '<tr class="mdc-data-table__row"><td class="mdc-data-table__cell" colspan="5">면불 기록이 없어요!</td></tr>';
+            if(fl) document.getElementById('myeonbulToday').innerHTML='<div class="mdc-layout-grid__cell"><h3 style="font-weight: lighter;">오늘 신청된 면불이 없어요!</h3></div>';
             for (var i = 0; i < document.querySelectorAll('.mdc-ripple').length; i++)
                 mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
         }).catch(function (err) {
