@@ -310,13 +310,12 @@
         mdcInstance.mybPlace = new mdc.textField.MDCTextField(document.getElementById("mybPlace"));
         mdcInstance.mybTeacher = new mdc.select.MDCSelect(document.getElementById("mybTeacher"));
         mdcInstance.findTeacher = new mdc.textField.MDCTextField(document.getElementById("findTeacher"));
-        mdcInstance.mybsucc = new mdc.snackbar.MDCSnackbar(document.getElementById('doneMyeonbul'));
+        mdcInstance.reqsucc = new mdc.snackbar.MDCSnackbar(document.getElementById('doneRequest'));
         mdcInstance.fail = new mdc.snackbar.MDCSnackbar(document.getElementById('reqFailed'));
         mdcInstance.loading = new mdc.snackbar.MDCSnackbar(document.getElementById('loadingSnackbar'));
         mdcInstance.reqForm = new mdc.snackbar.MDCSnackbar(document.getElementById('formRequired'));
         mdcInstance.progress = new mdc.linearProgress.MDCLinearProgress.attachTo(document.querySelector('.mdc-linear-progress'));
-        mdcInstance.cancelDialog1 = new mdc.dialog.MDCDialog(document.getElementById('askCancelMyb1'));
-        mdcInstance.cancelDialog2 = new mdc.dialog.MDCDialog(document.getElementById('askCancelMyb2'));
+        mdcInstance.cancelDialog = new mdc.dialog.MDCDialog(document.getElementById('askCancelMyb'));
         mdcInstance.errinit = new mdc.dialog.MDCDialog(document.getElementById('errInit'));
         mdcInstance.accountmenu = new mdc.menu.MDCMenu(document.getElementById('accountMenu'));
         mdcInstance.accountmenu.setAnchorElement(document.getElementById('accountInfo'));
@@ -380,7 +379,7 @@
     function closeSnackbar() {
         mdcInstance.loading.close();
         mdcInstance.fail.close();
-        mdcInstance.mybsucc.close();
+        mdcInstance.reqsucc.close();
         mdcInstance.reqForm.close();
     }
 
@@ -408,6 +407,7 @@
         }).then(function (text) {
             res = JSON.parse(text.replaceAll('True', 'true').replaceAll('False', 'false').replaceAll("Decimal('", '').replaceAll("')", '').replaceAll('"', '').replaceAll("'", '"'));
             document.getElementById('myeonbulList').innerHTML = "";
+            document.getElementById('myeonbulToday').innerHTML = "";
             for (let i = 0; i < res.length; i++) {
                 document.getElementById('myeonbulList').innerHTML = '<tr class="mdc-data-table__row">\n' +
                     '<td class="mdc-data-table__cell">' + getTeacherName2019(res[i].teacherID) + '</td>\n' +
@@ -429,14 +429,14 @@
                         '<div class="mdc-layout-grid__inner">\n' +
                         '<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">\n' +
                         '<button class="mdc-button mdc-button--outlined mdc-ripple myb-button"\n' +
-                        'onclick="mdcInstance.cancelDialog1.open();" id="mybEdit1Submit" style="width:calc(100% - 20px);">\n' +
+                        'onclick="" id="mybEdit1Submit" style="width:calc(100% - 20px);">\n' +
                         '<div class="mdc-button__ripple"></div>\n' +
                         '<i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>\n' +
                         '<span class="mdc-button__label">수정</span>\n' +
                         '</button>\n' +
                         '</div>\n' +
                         '<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">\n' +
-                        '<button class="mdc-button mdc-button--outlined mdc-ripple myb-button" onclick="mdcInstance.cancelDialog1.open();" id="mybCancel1Submit" style="width:calc(100% - 20px);">\n' +
+                        '<button class="mdc-button mdc-button--outlined mdc-ripple myb-button" onclick="cancelMyeonbulReq(' + "'" + String(res[i].date) + '_' + String(res[i].id) + "'" + ');" id="mybCancel1Submit" style="width:calc(100% - 20px);">\n' +
                         '<div class="mdc-button__ripple"></div>\n' +
                         '<i class="material-icons mdc-button__icon" aria-hidden="true">clear</i>\n' +
                         '<span class="mdc-button__label">취소</span>\n' +
@@ -458,8 +458,38 @@
         });
     }
 
-    function cancelMyeonbul(myeonbulId) {
+    let mybId;
 
+    function cancelMyeonbulReq(myeonbulId) {
+        mybId = myeonbulId;
+        mdcInstance.cancelDialog.open();
+    }
+
+    function cancelMyeonbulConfirm() {
+        closeSnackbar();
+        document.getElementById("iProg").style.opacity = 1;
+        mdcInstance.loading.open();
+        fetch('https://api.iasa.kr/myeonbul?id=' + mybId, {
+            method: 'DELETE'
+        }).then(function (response) {
+            document.getElementById("iProg").style.opacity = 0;
+            if (response.status != 200) {
+                document.getElementById('reTry').onclick = cancelMyeonbulConfirm();
+                closeSnackbar();
+                mdcInstance.fail.open();
+                return;
+            }
+            closeSnackbar();
+            mdcInstance.reqsucc.open();
+            getMyeonbul();
+            return;
+        }).catch(function (err) {
+            document.getElementById("iProg").style.opacity = 0;
+            document.getElementById('reTry').onclick = cancelMyeonbulConfirm();
+            closeSnackbar();
+            mdcInstance.fail.open();
+            return;
+        })
     }
 
     function requestMyeonbul() {
@@ -510,7 +540,7 @@
             document.getElementById('mybTime1').checked = false;
             document.getElementById('mybTime2').checked = false;
             closeSnackbar();
-            mdcInstance.mybsucc.open();
+            mdcInstance.reqsucc.open();
             getMyeonbul();
         }).catch(function (err) {
             document.getElementById('reTry').onclick = requestMyeonbul;
@@ -519,34 +549,6 @@
         })
         document.getElementById('myeonbulSubmit').disabled = false;
         document.getElementById("iProg").style.opacity = 0;
-    }
-
-    function cancelMyeonbul1() {
-        document.getElementById("iProg").style.opacity = 1;
-        closeSnackbar();
-        mdcInstance.loading.open();
-        document.getElementById('mybCancel1Submit').disabled = true;
-        setTimeout(function () {
-            closeSnackbar();
-            document.getElementById('mybCancel1Submit').disabled = false;
-            document.getElementById('reTry').onclick = cancelMyeonbul1;
-            mdcInstance.fail.open();
-            document.getElementById("iProg").style.opacity = 0;
-        }, 2000);
-    }
-
-    function cancelMyeonbul2() {
-        document.getElementById("iProg").style.opacity = 1;
-        closeSnackbar();
-        document.getElementById('mybCancel2Submit').disabled = true;
-        mdcInstance.loading.open();
-        setTimeout(function () {
-            closeSnackbar();
-            document.getElementById('mybCancel2Submit').disabled = false;
-            document.getElementById('reTry').onclick = cancelMyeonbul2;
-            mdcInstance.fail.open();
-            document.getElementById("iProg").style.opacity = 0;
-        }, 2000);
     }
 
     function logOut() {
@@ -1065,12 +1067,12 @@
         </ul>
     </div>
 </div>
-<div class="mdc-snackbar" id="doneMyeonbul">
+<div class="mdc-snackbar" id="doneRequest">
     <div class="mdc-snackbar__surface">
         <div class="mdc-snackbar__label"
              role="status"
              aria-live="polite">
-            면불이 정상적으로 신청 되었습니다.
+            정상적으로 처리되었습니다.
         </div>
         <div class="mdc-snackbar__actions">
             <button type="button" class="mdc-button mdc-snackbar__action mdc-ripple">닫기</button>
@@ -1119,7 +1121,7 @@
      role="alertdialog"
      aria-modal="true"
      aria-labelledby="my-dialog-title"
-     aria-describedby="my-dialog-content" id="askCancelMyb1">
+     aria-describedby="my-dialog-content" id="askCancelMyb">
     <div class="mdc-dialog__container">
         <div class="mdc-dialog__surface">
             <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
@@ -1132,32 +1134,7 @@
                     <span class="mdc-button__label">아니요</span>
                 </button>
                 <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes"
-                        onclick="cancelMyeonbul1()">
-                    <span class="mdc-button__label">네</span>
-                </button>
-            </footer>
-        </div>
-    </div>
-    <div class="mdc-dialog__scrim"></div>
-</div>
-<div class="mdc-dialog"
-     role="alertdialog"
-     aria-modal="true"
-     aria-labelledby="my-dialog-title"
-     aria-describedby="my-dialog-content" id="askCancelMyb2">
-    <div class="mdc-dialog__container">
-        <div class="mdc-dialog__surface">
-            <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
-            <h2 class="mdc-dialog__title">경고</h2>
-            <div class="mdc-dialog__content">
-                정말로 요청을 취소하겠습니까?
-            </div>
-            <footer class="mdc-dialog__actions">
-                <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
-                    <span class="mdc-button__label">아니요</span>
-                </button>
-                <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes"
-                        onclick="cancelMyeonbul2();">
+                        onclick="cancelMyeonbulConfirm();">
                     <span class="mdc-button__label">네</span>
                 </button>
             </footer>
