@@ -322,6 +322,8 @@
         mdcInstance.accountButton = new mdc.ripple.MDCRipple(document.getElementById('accountInfo'));
         mdcInstance.accountButton.unbounded = true;
         mdcInstance.progress.determinate = false;
+        mdcInstance.errinit.scrimClickAction = "";
+        mdcInstance.errinit.escapeKeyAction = "";
     }
 
     function searchRes(str) {
@@ -383,20 +385,78 @@
 
     let res;
 
+    function getDate() {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        return (yyyy + mm + dd);
+    }
+
     function getMyeonbul() {
         String.prototype.replaceAll = function (find, replace) {
             var str = this;
             return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
         };
+        document.getElementById('myeonbulList').innerHTML = '<tr class="mdc-data-table__row"><td class="mdc-data-table__cell" colspan="5">불러오는 중...</td></tr>';
         fetch('https://api.iasa.kr/myeonbul?student=2018001', {
             method: 'GET',
             headers: {'content-type': 'application/json'}
         }).then(function (response) {
             return response.text();
         }).then(function (text) {
-            res = JSON.parse(text.replaceAll('True', 'true').replaceAll("Decimal('", '').replaceAll("')", '').replaceAll('"', '').replaceAll("'", '"'));
+            res = JSON.parse(text.replaceAll('True', 'true').replaceAll('False', 'false').replaceAll("Decimal('", '').replaceAll("')", '').replaceAll('"', '').replaceAll("'", '"'));
+            document.getElementById('myeonbulList').innerHTML = "";
+            for (let i = 0; i < res.length; i++) {
+                document.getElementById('myeonbulList').innerHTML = '<tr class="mdc-data-table__row">\n' +
+                    '<td class="mdc-data-table__cell">' + res[i].teacherID + '</td>\n' +
+                    '<td class="mdc-data-table__cell">' + res[i].place + '</td>\n' +
+                    '<td class="mdc-data-table__cell">' + (String(res[i].start_time).substr(0, 2) + ':' + String(res[i].start_time).substr(2, 2) + " - " + String(res[i].end_time).substr(0, 2) + ':' + String(res[i].end_time).substr(2, 2)) + '</td>\n' +
+                    '<td class="mdc-data-table__cell">' + (String(res[i].date).substr(0, 4) + '/' + String(res[i].date).substr(4, 2) + '/' + String(res[i].date).substr(6, 2)) + '</td>\n' +
+                    '<td class="mdc-data-table__cell">' + (res[i].verified ? '승인됨' : '승인 대기중') + '</td>\n' +
+                    '</tr>' + document.getElementById('myeonbulList').innerHTML;
+                if (String(res[i].date) == getDate()) {
+                    document.getElementById('myeonbulToday').innerHTML +=
+                        '<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone">\n' +
+                        '<div class="mdc-card myb-card mdc-elevation--z5">\n' +
+                        '<div class="mdc-card__primary-action mdc-ripple" tabindex="0">\n' +
+                        '<h1>' + res[i].title + '</h1>\n' +
+                        '<h3 style="margin:5px;">' + (String(res[i].start_time).substr(0, 2) + ':' + String(res[i].start_time).substr(2, 2) + " - " + String(res[i].end_time).substr(0, 2) + ':' + String(res[i].end_time).substr(2, 2)) + '</h3>\n' +
+                        '<h3 style="margin:5px;">' + res[i].teacher + ' 선생님</h3>\n' +
+                        '<h3 style="margin:5px;">' + res[i].place + '</h3>\n' +
+                        '<h3 style="margin:5px;">' + (res[i].verified ? '승인됨' : '승인 대기중') + '</h3>\n' +
+                        '<div class="mdc-layout-grid__inner">\n' +
+                        '<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">\n' +
+                        '<button class="mdc-button mdc-button--outlined mdc-ripple myb-button"\n' +
+                        'onclick="mdcInstance.cancelDialog1.open();" id="mybEdit1Submit" style="width:calc(100% - 20px);">\n' +
+                        '<div class="mdc-button__ripple"></div>\n' +
+                        '<i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>\n' +
+                        '<span class="mdc-button__label">수정</span>\n' +
+                        '</button>\n' +
+                        '</div>\n' +
+                        '<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">\n' +
+                        '<button class="mdc-button mdc-button--outlined mdc-ripple myb-button" onclick="mdcInstance.cancelDialog1.open();" id="mybCancel1Submit" style="width:calc(100% - 20px);">\n' +
+                        '<div class="mdc-button__ripple"></div>\n' +
+                        '<i class="material-icons mdc-button__icon" aria-hidden="true">clear</i>\n' +
+                        '<span class="mdc-button__label">취소</span>\n' +
+                        '</button>\n' +
+                        '</div>\n' +
+                        '</div>\n' +
+                        '</div>\n' +
+                        '</div>\n'+
+                        '</div>';
+                }
+            }
+            if (res.length == 0) {
+                document.getElementById('myeonbulList').innerHTML = '<tr class="mdc-data-table__row"><td class="mdc-data-table__cell" colspan="5">면불 기록이 없어요!</td></tr>';
+            }
+        }).catch(function (err) {
+            mdcInstance.errinit.open();
+        });
+    }
 
-        })
+    function cancelMyeonbul(myeonbulId) {
+
     }
 
     function requestMyeonbul() {
@@ -409,10 +469,6 @@
         document.getElementById("iProg").style.opacity = 1;
         mdcInstance.loading.open();
         document.getElementById('myeonbulSubmit').disabled = true;
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
         let stTime, fiTime;
         if (document.getElementById('mybTime1').checked && !document.getElementById('mybTime2').checked) {
             stTime = 1920;
@@ -431,10 +487,10 @@
             headers: {'content-type': 'application/json'},
             body: JSON.stringify({
                 title: mdcInstance.mybReason.value,
-                students: [2019001],
+                students: [2018001],
                 teacher: mdcInstance.mybTeacher.value,
                 place: mdcInstance.mybPlace.value ? mdcInstance.mybPlace.value : "선생님이 지정",
-                date: parseInt(yyyy + mm + dd),
+                date: parseInt(getDate()),
                 start_time: stTime,
                 end_time: fiTime
             })
@@ -452,6 +508,7 @@
             document.getElementById('mybTime2').checked = false;
             closeSnackbar();
             mdcInstance.mybsucc.open();
+            getMyeonbul();
         }).catch(function (err) {
             document.getElementById('reTry').onclick = requestMyeonbul;
             closeSnackbar();
@@ -939,37 +996,7 @@
             </div>
             <h1>오늘의 면불</h1>
             <div class="mdc-layout-grid">
-                <div class="mdc-layout-grid__inner">
-                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-12-phone">
-                        <div class="mdc-card myb-card mdc-elevation--z5">
-                            <div class="mdc-card__primary-action mdc-ripple" tabindex="0">
-                                <h1>11/20 1차시</h1>
-                                <h3 style="margin:5px;">이서현 선생님</h3>
-                                <h3 style="margin:5px;">융합공작실</h3>
-                                <button class="mdc-button mdc-button--outlined mdc-ripple myb-button"
-                                        onclick="mdcInstance.cancelDialog1.open();" id="mybCancel1Submit">
-                                    <div class="mdc-button__ripple"></div>
-                                    <i class="material-icons mdc-button__icon" aria-hidden="true">clear</i>
-                                    <span class="mdc-button__label">취소</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-12-phone">
-                        <div class="mdc-card myb-card mdc-elevation--z5">
-                            <div class="mdc-card__primary-action mdc-ripple" tabindex="0">
-                                <h1>11/20 2차시</h1>
-                                <h3 style="margin:5px;">이서현 선생님</h3>
-                                <h3 style="margin:5px;">융합공작실</h3>
-                                <button class="mdc-button mdc-button--outlined mdc-ripple myb-button"
-                                        onclick="mdcInstance.cancelDialog2.open();" id="mybCancel2Submit">
-                                    <div class="mdc-button__ripple"></div>
-                                    <i class="material-icons mdc-button__icon" aria-hidden="true">clear</i>
-                                    <span class="mdc-button__label">취소</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="mdc-layout-grid__inner" id="myeonbulToday">
                 </div>
             </div>
             <h1>면불 신청 기록</h1>
@@ -978,24 +1005,31 @@
                     <thead>
                     <tr class="mdc-data-table__header-row">
                         <th class="mdc-data-table__header-cell" role="columnheader" scope="col">담당 선생님</th>
-                        <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader"
+                        <th class="mdc-data-table__header-cell" role="columnheader"
                             scope="col">면불 장소
                         </th>
-                        <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader"
-                            scope="col">선생님 코멘트
+                        <th class="mdc-data-table__header-cell" role="columnheader"
+                            scope="col">시간
+                        </th>
+                        <th class="mdc-data-table__header-cell" role="columnheader"
+                            scope="col">날짜
                         </th>
                         <th class="mdc-data-table__header-cell" role="columnheader" scope="col">결과</th>
                     </tr>
                     </thead>
-                    <tbody class="mdc-data-table__content">
-                    <tr class="mdc-data-table__row">
-                        <td class="mdc-data-table__cell">Frozen yogurt</td>
-                        <td class="mdc-data-table__cell mdc-data-table__cell--numeric">24</td>
-                        <td class="mdc-data-table__cell mdc-data-table__cell--numeric">4.0</td>
-                        <td class="mdc-data-table__cell">Super tasty</td>
-                    </tr>
+                    <tbody class="mdc-data-table__content" id="myeonbulList">
                     </tbody>
                 </table>
+            </div>
+            <div style="width:100%;height:15px;display: flex;"></div>
+            <div style="width:100%;display: flex;">
+                <div style="width:100%;">
+                    <button class="mdc-button mdc-ripple"
+                            style="width:100px;float:right;margin-right:25px;"
+                            onclick="getMyeonbul();"
+                            id="fidContinue">새로고침
+                    </button>
+                </div>
             </div>
         </div>
     </main>
