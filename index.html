@@ -316,6 +316,7 @@
         mdcInstance.progress = new mdc.linearProgress.MDCLinearProgress.attachTo(document.querySelector('.mdc-linear-progress'));
         mdcInstance.cancelDialog1 = new mdc.dialog.MDCDialog(document.getElementById('askCancelMyb1'));
         mdcInstance.cancelDialog2 = new mdc.dialog.MDCDialog(document.getElementById('askCancelMyb2'));
+        mdcInstance.errinit = new mdc.dialog.MDCDialog(document.getElementById('errInit'));
         mdcInstance.accountmenu = new mdc.menu.MDCMenu(document.getElementById('accountMenu'));
         mdcInstance.accountmenu.setAnchorElement(document.getElementById('accountInfo'));
         mdcInstance.accountButton = new mdc.ripple.MDCRipple(document.getElementById('accountInfo'));
@@ -378,6 +379,24 @@
         mdcInstance.fail.close();
         mdcInstance.mybsucc.close();
         mdcInstance.reqForm.close();
+    }
+
+    let res;
+
+    function getMyeonbul() {
+        String.prototype.replaceAll = function (find, replace) {
+            var str = this;
+            return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
+        };
+        fetch('https://api.iasa.kr/myeonbul?student=2018001', {
+            method: 'GET',
+            headers: {'content-type': 'application/json'}
+        }).then(function (response) {
+            return response.text();
+        }).then(function (text) {
+            res = JSON.parse(text.replaceAll('True', 'true').replaceAll("Decimal('", '').replaceAll("')", '').replaceAll('"', '').replaceAll("'", '"'));
+
+        })
     }
 
     function requestMyeonbul() {
@@ -525,6 +544,7 @@
         setTimeout(function () {
             document.getElementById("preloader").style.display = "none";
         }, 400);
+        getMyeonbul();
     });
     if (!getCookie('auth')) location.replace('/login');
 </script>
@@ -546,7 +566,8 @@
             <span class="mdc-top-app-bar__title">IASA</span>
         </section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
-            <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" id="accountInfo" onclick="mdcInstance.accountmenu.open=true;">
+            <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" id="accountInfo"
+                    onclick="mdcInstance.accountmenu.open=true;">
                 account_circle
             </button>
         </section>
@@ -1101,6 +1122,28 @@
                 <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes"
                         onclick="cancelMyeonbul2();">
                     <span class="mdc-button__label">네</span>
+                </button>
+            </footer>
+        </div>
+    </div>
+    <div class="mdc-dialog__scrim"></div>
+</div>
+<div class="mdc-dialog"
+     role="alertdialog"
+     aria-modal="true"
+     aria-labelledby="my-dialog-title"
+     aria-describedby="my-dialog-content" id="errInit">
+    <div class="mdc-dialog__container">
+        <div class="mdc-dialog__surface">
+            <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
+            <h2 class="mdc-dialog__title">오류</h2>
+            <div class="mdc-dialog__content">
+                웹 사이트를 초기화할수 없습니다.
+            </div>
+            <footer class="mdc-dialog__actions">
+                <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="refresh"
+                        onclick="location.reload();">
+                    <span class="mdc-button__label">새로고침</span>
                 </button>
             </footer>
         </div>
