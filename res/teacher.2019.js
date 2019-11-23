@@ -1,4 +1,4 @@
-let __teacher=Object;
+let __teacher=Object();
 __teacher[2019001]="김진영";
 __teacher[2019002]="이유희";
 __teacher[2019003]="이은정";
@@ -46,7 +46,9 @@ __teacher[2019044]="최마리";
 __teacher[2019045]="조은교";
 __teacher[2019046]="한은경";
 __teacher[2019047]="김종주";
+__teacher[2019048]="박해인";
 
 function getTeacherName2019(id) {
+    if(!(__teacher.hasOwnProperty(id))) return "???";
     return __teacher[id];
 }

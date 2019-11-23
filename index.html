@@ -75,6 +75,7 @@
     <script src="/res/mdc-3.2.0.min.js"></script>
     <script src="/res/fetch.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
+    <script src="res/teacher.2019.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
         body {
@@ -409,7 +410,7 @@
             document.getElementById('myeonbulList').innerHTML = "";
             for (let i = 0; i < res.length; i++) {
                 document.getElementById('myeonbulList').innerHTML = '<tr class="mdc-data-table__row">\n' +
-                    '<td class="mdc-data-table__cell">' + res[i].teacherID + '</td>\n' +
+                    '<td class="mdc-data-table__cell">' + getTeacherName2019(res[i].teacher) + '</td>\n' +
                     '<td class="mdc-data-table__cell">' + res[i].place + '</td>\n' +
                     '<td class="mdc-data-table__cell">' + (String(res[i].start_time).substr(0, 2) + ':' + String(res[i].start_time).substr(2, 2) + " - " + String(res[i].end_time).substr(0, 2) + ':' + String(res[i].end_time).substr(2, 2)) + '</td>\n' +
                     '<td class="mdc-data-table__cell">' + (String(res[i].date).substr(0, 4) + '/' + String(res[i].date).substr(4, 2) + '/' + String(res[i].date).substr(6, 2)) + '</td>\n' +
@@ -422,7 +423,7 @@
                         '<div class="mdc-card__primary-action mdc-ripple" tabindex="0">\n' +
                         '<h1>' + res[i].title + '</h1>\n' +
                         '<h3 style="margin:5px;">' + (String(res[i].start_time).substr(0, 2) + ':' + String(res[i].start_time).substr(2, 2) + " - " + String(res[i].end_time).substr(0, 2) + ':' + String(res[i].end_time).substr(2, 2)) + '</h3>\n' +
-                        '<h3 style="margin:5px;">' + res[i].teacher + ' 선생님</h3>\n' +
+                        '<h3 style="margin:5px;">' + getTeacherName2019(res[i].teacher) + ' 선생님</h3>\n' +
                         '<h3 style="margin:5px;">' + res[i].place + '</h3>\n' +
                         '<h3 style="margin:5px;">' + (res[i].verified ? '승인됨' : '승인 대기중') + '</h3>\n' +
                         '<div class="mdc-layout-grid__inner">\n' +
@@ -701,208 +702,208 @@
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">국어</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="1">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019001">
                                             김진영
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019002">
                                             이유희
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="3">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019003">
                                             이은정
                                         </li>
                                         <hr>
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">영어</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="4">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019004">
                                             김여진
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="5">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019005">
                                             김진영
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="6">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019006">
                                             홍영주
                                         </li>
                                         <hr>
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">수학</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="7">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019007">
                                             김동완
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="8">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019008">
                                             김완일
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="9">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019009">
                                             박은진
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="10">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019010">
                                             배태영
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="11">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019011">
                                             서순진
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="12">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019012">
                                             윤정아
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="13">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019013">
                                             이동화
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="14">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019014">
                                             최정심
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="15">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019015">
                                             허석
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="16">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019016">
                                             황선미
                                         </li>
                                         <hr>
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">물리</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="17">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019017">
                                             김시영
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="18">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019018">
                                             김형섭
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="19">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019019">
                                             이윤서
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="20">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019020">
                                             이지영
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="21">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019021">
                                             임헌권
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="22">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019022">
                                             정수정
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="23">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019023">
                                             조대기
                                         </li>
                                         <hr>
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">화학</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="24">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019024">
                                             김금희
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="25">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019025">
                                             김은경
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="26">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019026">
                                             원기재
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="27">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019027">
                                             이승희
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="28">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019028">
                                             장미경
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="29">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019029">
                                             한가연
                                         </li>
                                         <hr>
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">생명과학</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="30">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019030">
                                             김우태
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="31">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019031">
                                             김은성
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="32">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019032">
                                             윤덕한
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="33">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019033">
                                             장경애
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="34">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019034">
                                             조항설
                                         </li>
                                         <hr>
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">지구과학</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="35">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019035">
                                             안주영
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="36">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019036">
                                             이기무
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="37">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019037">
                                             최종근
                                         </li>
                                         <hr>
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">정보</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="38">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019038">
                                             김규현
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="39">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019039">
                                             김명권
                                         </li>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="40">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019040">
                                             최용운
                                         </li>
                                         <hr>
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">한국사</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="41">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019041">
                                             노관민
                                         </li>
                                         <hr>
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">음악</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="42">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019042">
                                             황선랑
                                         </li>
                                         <hr>
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">미술</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="43">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019043">
                                             김은주
                                         </li>
                                         <hr>
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">체육</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="44">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019044">
                                             최마리
                                         </li>
                                         <hr>
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">심리학</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="45">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019045">
                                             조은교
                                         </li>
                                         <hr>
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">법과정치</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="46">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019046">
                                             한은경
                                         </li>
                                         <hr>
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">Wee클래스</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="47">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019047">
                                             김종주
                                         </li>
                                         <hr>
                                     </div>
                                     <div class="subject">
                                         <p style="font-size:80%;margin:5px;margin-left:10px;">도서관</p>
-                                        <li class="mdc-list-item mdc-ripple teacher" data-value="48">
+                                        <li class="mdc-list-item mdc-ripple teacher" data-value="2019048">
                                             박해인
                                         </li>
                                         <hr>
