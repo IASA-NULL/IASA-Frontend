@@ -451,6 +451,8 @@
             if (res.length == 0) {
                 document.getElementById('myeonbulList').innerHTML = '<tr class="mdc-data-table__row"><td class="mdc-data-table__cell" colspan="5">면불 기록이 없어요!</td></tr>';
             }
+            for (var i = 0; i < document.querySelectorAll('.mdc-ripple').length; i++)
+                mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
         }).catch(function (err) {
             mdcInstance.errinit.open();
         });
