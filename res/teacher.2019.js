@@ -49,6 +49,7 @@ __teacher[2019047]="김종주";
 __teacher[2019048]="박해인";
 
 function getTeacherName2019(id) {
+    id=parseInt(id);
     if(!(__teacher.hasOwnProperty(id))) return "???";
     return __teacher[id];
 }
