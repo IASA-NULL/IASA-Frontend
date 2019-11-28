@@ -86,7 +86,8 @@
         @font-face {
             font-family: 'nanum';
             font-display: auto;
-            src: local('나눔스퀘어'), url("/res/NSR.woff");
+            src: local('Pacifico Regular'), local('Pacifico-Regular'), local('나눔스퀘어'), url("/res/NSR.woff");
+            font-display: swap;
         }
 
         * {
@@ -132,6 +133,7 @@
 
 <body>
 <script>
+    document.body.style.cursor='wait';
     let mdcInstance = Object();
     let currentForm = "id", nextForm = "next", currentState = 0, prevForm = "id";
 
@@ -627,6 +629,7 @@
             mdcInstance.idInput.focus();
             document.getElementById("iProg").style.opacity = 0;
             if (isIE()) mdcInstance.noIE.open();
+            document.body.style.cursor='default';
         }, 300);
     });
 </script>
@@ -826,7 +829,7 @@
                             </div>
                             <div style="width:100%;height:15px;display: flex;"></div>
                             <div class="mdc-text-field mdc-text-field--outlined" style="width:90%;"
-                                 id="signupEmailForm">
+                                 id="signupPassForm">
                                 <input class="mdc-text-field__input">
                                 <div class="mdc-notched-outline">
                                     <div class="mdc-notched-outline__leading"></div>
@@ -838,7 +841,7 @@
                             </div>
                             <div style="width:100%;height:15px;display: flex;"></div>
                             <div class="mdc-text-field mdc-text-field--outlined" style="width:90%;"
-                                 id="signupEmailForm">
+                                 id="signupPassConfForm">
                                 <input class="mdc-text-field__input">
                                 <div class="mdc-notched-outline">
                                     <div class="mdc-notched-outline__leading"></div>

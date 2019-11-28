@@ -18,7 +18,7 @@
             transform: translate(calc(50vw - 50%), calc(50vh - 50%));
         }
     </style>
-    <div style="z-index:5000;height:100vh;width:100vw;margin:0;padding:0;position: fixed;background-color:#ffffff;opacity:1;top:0;left:0;"
+    <div style="z-index:5000;height:100vh;width:100vw;margin:0;padding:0;position: fixed;background-color:#ffffff;opacity:1;top:0;left:0;cursor:wait;"
          id="preloader" class="fade">
         <svg width="435" height="524" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
              overflow="hidden" id="splashSvg">
@@ -97,7 +97,8 @@
         @font-face {
             font-family: 'nanum';
             font-display: auto;
-            src: local('나눔스퀘어'), url("/res/NSR.woff");
+            src: local('Pacifico Regular'), local('Pacifico-Regular'), local('나눔스퀘어'), url("/res/NSR.woff");
+            font-display: swap;
         }
 
         * {
@@ -394,6 +395,7 @@
     }
 
     function getMyeonbul() {
+        document.body.style.cursor='wait';
         String.prototype.replaceAll = function (find, replace) {
             var str = this;
             return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
@@ -454,8 +456,10 @@
             if(fl) document.getElementById('myeonbulToday').innerHTML='<div class="mdc-layout-grid__cell"><h3 style="font-weight: lighter;">오늘 신청된 면불이 없어요!</h3></div>';
             for (var i = 0; i < document.querySelectorAll('.mdc-ripple').length; i++)
                 mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
+            document.body.style.cursor='default';
         }).catch(function (err) {
             mdcInstance.errinit.open();
+            document.body.style.cursor='default';
         });
     }
 
