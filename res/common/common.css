@@ -1,0 +1,97 @@
+body {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+.mdc-drawer-app-content {
+    overflow: hidden !important;
+    padding-bottom: 15px;
+}
+
+main {
+    margin: 0;
+}
+
+@font-face {
+    font-family: 'nanum';
+    font-display: auto;
+    src: local('Pacifico Regular'), local('Pacifico-Regular'), local('나눔스퀘어'), url("/res/NSR.woff");
+    font-display: swap;
+}
+
+* {
+    font-family: 'nanum';
+}
+
+.mdc-drawer-app-content {
+    flex: auto;
+    overflow: auto;
+    position: relative;
+}
+
+.main-content {
+    overflow: auto;
+    height: 100%;
+}
+
+.app-bar {
+    position: absolute;
+}
+
+.mdc-top-app-bar {
+    z-index: 7;
+}
+
+
+.mdc-list-item--activated * {
+    color: #5351db !important;;
+}
+
+:root {
+    --mdc-theme-primary: #5351db !important;
+    --mdc-theme-secondary: #8cc4de !important;
+    --mdc-theme-on-primary: #fff !important;
+    --mdc-theme-on-secondary: #fff !important;
+}
+
+*::selection {
+    background-color: #5351db !important;
+    color: #ffffff !important;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border: 3px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    -webkit-border-radius: 10px;
+    background-color: #5351db;
+    -webkit-box-shadow: inset -1px -1px 0px #5351db, inset 1px 1px 0px #5351db;
+}
+
+::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+
+a {
+    text-decoration: none !important;
+}
+
+main {
+    margin: 5px 0 5px 10px;
+}
+
+.mdc-list-item {
+    transition: color .5s;
+}

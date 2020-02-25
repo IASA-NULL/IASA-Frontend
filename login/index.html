@@ -13,11 +13,8 @@
     <script src="/res/mdc-3.2.0.min.js"></script>
     <script src="/res/quagga.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="/res/common/common.css">
     <style>
-        body {
-            height: 100vh;
-            margin: 0;
-        }
 
         :root {
             --mdc-theme-primary: #5351db !important;
@@ -132,45 +129,11 @@
 </head>
 
 <body>
+<script src="/res/common/common.js"></script>
 <script>
-    document.body.style.cursor='wait';
-    let mdcInstance = Object();
+    document.body.style.cursor = 'wait';
     let currentForm = "id", nextForm = "next", currentState = 0, prevForm = "id";
 
-    function isIE() {
-        ua = navigator.userAgent;
-        /* MSIE used to detect old browsers and Trident used to newer ones*/
-        var is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
-
-        return is_ie;
-    }
-
-    function setCookie(cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        var expires = "expires=" + d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-
-    function getCookie(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    }
-
-    function eraseCookie(name) {
-        document.cookie = name + '=; Max-Age=-99999999;';
-    }
 
     function initMdc() {
         mdcInstance.idInput = new mdc.textField.MDCTextField(document.getElementById("uidCont"));
@@ -184,9 +147,12 @@
         mdcInstance.signmenu.setAnchorElement(document.getElementById('signupButton'));
         mdcInstance.prevButton = new mdc.ripple.MDCRipple(document.querySelector('#prevCont>div>span>button'));
         mdcInstance.langNotify = new mdc.snackbar.MDCSnackbar(document.getElementById('langErr'));
-        mdcInstance.noIE = new mdc.snackbar.MDCSnackbar(document.getElementById('noIE'));
+        mdcInstance.noIE = new mdc.snackbar.MDCSnackbar(document.getElementById('noIE'))
         mdcInstance.prevButton.unbounded = true;
         mdcInstance.progress.determinate = false;
+
+
+        mdcInstance.signupCode = new mdc.textField.MDCTextField(document.getElementById("signupCodeForm"));
     }
 
     function initEvent() {
@@ -218,21 +184,6 @@
                 clickFindId();
             }
         });
-    }
-
-    function hasClass(ele, cls) {
-        return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
-    }
-
-    function addClass(ele, cls) {
-        if (!hasClass(ele, cls)) ele.className += " " + cls;
-    }
-
-    function removeClass(ele, cls) {
-        if (hasClass(ele, cls)) {
-            var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-            ele.className = ele.className.replace(reg, ' ');
-        }
     }
 
     function loginError(type, msg) {
@@ -583,7 +534,7 @@
     function reqSignup3() {
         document.getElementById("iProg").style.opacity = 1;
         moveToForm('signup3');
-        setHeader('오류', '웹캠에 연결할 수 없습니다.');
+        setHeader('본인인증 코드 입력', '계속하려면 NULL에 본인인증을 위한 25자리 코드를 요청하세요.');
         setPrevForm("id");
         setTimeout(function () {
             document.getElementById("iProg").style.opacity = 0;
@@ -611,6 +562,12 @@
         }, 500);
     }
 
+    window.addEventListener('load', function () {
+        setTimeout(function () {
+            document.getElementById("iProg").style.opacity = 0;
+        }, 300);
+    })
+
     window.addEventListener('DOMContentLoaded', function () {
         initMdc();
         initEvent();
@@ -627,10 +584,10 @@
             mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
         setTimeout(function () {
             mdcInstance.idInput.focus();
-            document.getElementById("iProg").style.opacity = 0;
             if (isIE()) mdcInstance.noIE.open();
-            document.body.style.cursor='default';
+            document.body.style.cursor = 'default';
         }, 300);
+        document.getElementById("iProg").style.opacity = 1;
     });
 </script>
 <div id="fullCont">
@@ -803,26 +760,37 @@
                                    style="width:200px;transform:translate(-0.5px, 0);"
                                    id="camAnim"></video>
                             <div style="width:100%;height:15px;display: flex;"></div>
-                            <button class="mdc-button mdc-ripple" style="width:120px;float:left;"
+                            <button class="mdc-button mdc-ripple" style="width:150px;float:left;"
                                     onclick="reqSignup3();">
-                                인식할 수 없음
+                                학생증이 없음
                             </button>
                         </div>
                         <div class="innerCont" id="signup3Form">
-                            <p>크롬 브라우저를 사용하거나 웹캠을 키고 다시 시도하세요.</p>
+
+                            <div class="mdc-text-field mdc-text-field--outlined" style="width:90%;"
+                                 id="signupCodeForm">
+                                <input class="mdc-text-field__input" id="signupCode">
+                                <div class="mdc-notched-outline">
+                                    <div class="mdc-notched-outline__leading"></div>
+                                    <div class="mdc-notched-outline__notch">
+                                        <label for="signupCode" class="mdc-floating-label">본인인증용 코드</label>
+                                    </div>
+                                    <div class="mdc-notched-outline__trailing"></div>
+                                </div>
+                            </div>
                             <div style="width:100%;height:15px;display: flex;"></div>
                             <button class="mdc-button mdc-button--raised mdc-ripple"
-                                    style="width:100px;float:right;margin-right:25px;" onclick="backToForm();">돌아가기
+                                    style="width:100px;float:right;margin-right:25px;" onclick="reqSignup2();">다음
                             </button>
                         </div>
                         <div class="innerCont" id="signupData1Form">
                             <div class="mdc-text-field mdc-text-field--outlined" style="width:90%;"
                                  id="signupEmailForm">
-                                <input class="mdc-text-field__input">
+                                <input class="mdc-text-field__input" id="signupEmail">
                                 <div class="mdc-notched-outline">
                                     <div class="mdc-notched-outline__leading"></div>
                                     <div class="mdc-notched-outline__notch">
-                                        <label for="text-field-hero-input" class="mdc-floating-label">이메일</label>
+                                        <label for="signupEmail" class="mdc-floating-label">이메일</label>
                                     </div>
                                     <div class="mdc-notched-outline__trailing"></div>
                                 </div>
@@ -830,11 +798,11 @@
                             <div style="width:100%;height:15px;display: flex;"></div>
                             <div class="mdc-text-field mdc-text-field--outlined" style="width:90%;"
                                  id="signupPassForm">
-                                <input class="mdc-text-field__input">
+                                <input class="mdc-text-field__input" id="signupPass">
                                 <div class="mdc-notched-outline">
                                     <div class="mdc-notched-outline__leading"></div>
                                     <div class="mdc-notched-outline__notch">
-                                        <label for="text-field-hero-input" class="mdc-floating-label">비밀번호</label>
+                                        <label for="signupPass" class="mdc-floating-label">비밀번호</label>
                                     </div>
                                     <div class="mdc-notched-outline__trailing"></div>
                                 </div>
@@ -842,11 +810,11 @@
                             <div style="width:100%;height:15px;display: flex;"></div>
                             <div class="mdc-text-field mdc-text-field--outlined" style="width:90%;"
                                  id="signupPassConfForm">
-                                <input class="mdc-text-field__input">
+                                <input class="mdc-text-field__input" id="signupPassConf">
                                 <div class="mdc-notched-outline">
                                     <div class="mdc-notched-outline__leading"></div>
                                     <div class="mdc-notched-outline__notch">
-                                        <label for="text-field-hero-input" class="mdc-floating-label">비밀번호 재입력</label>
+                                        <label for="signupPassConf" class="mdc-floating-label">비밀번호 재입력</label>
                                     </div>
                                     <div class="mdc-notched-outline__trailing"></div>
                                 </div>
@@ -870,7 +838,9 @@
                     onclick="mdcInstance.menu.open=true;">한국어<i class="material-icons"
                                                                 onclick="mdcInstance.menu.open=true;">keyboard_arrow_down</i>
             </button>
-            <button class="mdc-button mdc-ripple" style="float:right;">약관</button>
+            <a href="/terms.html">
+                <button class="mdc-button mdc-ripple" style="float:right;">약관</button>
+            </a>
         </div>
     </div>
     <div id="demo-menu" class="mdc-menu-surface--anchor">

@@ -77,96 +77,8 @@
     <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
     <script src="res/teacher.2019.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="/res/common/common.css">
     <style>
-        body {
-            display: flex;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-
-        .mdc-drawer-app-content {
-            overflow: hidden !important;
-            padding-bottom: 15px;
-        }
-
-        main {
-            margin: 0;
-        }
-
-        @font-face {
-            font-family: 'nanum';
-            font-display: auto;
-            src: local('Pacifico Regular'), local('Pacifico-Regular'), local('나눔스퀘어'), url("/res/NSR.woff");
-            font-display: swap;
-        }
-
-        * {
-            font-family: 'nanum';
-        }
-
-        .mdc-drawer-app-content {
-            flex: auto;
-            overflow: auto;
-            position: relative;
-        }
-
-        .main-content {
-            overflow: auto;
-            height: 100%;
-        }
-
-        .app-bar {
-            position: absolute;
-        }
-
-        .mdc-top-app-bar {
-            z-index: 7;
-        }
-
-        .mdc-list-item--activated * {
-            color: #5351db !important;;
-        }
-
-        :root {
-            --mdc-theme-primary: #5351db !important;
-            --mdc-theme-secondary: #8cc4de !important;
-            --mdc-theme-on-primary: #fff !important;
-            --mdc-theme-on-secondary: #fff !important;
-        }
-
-        *::selection {
-            background-color: #5351db !important;
-            color: #ffffff !important;
-        }
-
-        a {
-            text-decoration: none !important;
-        }
-
-        main {
-            margin: 5px;
-            margin-left: 10px;
-        }
-
-        .mdc-menu::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        /* Track */
-        .mdc-menu::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        /* Handle */
-        .mdc-menu::-webkit-scrollbar-thumb {
-            background: #888;
-        }
-
-        /* Handle on hover */
-        .mdc-menu::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
 
         .section-visible-on-start {
             opacity: 0;
@@ -239,61 +151,9 @@
 </head>
 
 <body>
+<script src="/res/common/common.js"></script>
 <script>
-    let mdcInstance = Object();
     let activeSection = "myeonbul";
-
-    function setCookie(cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        var expires = "expires=" + d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-
-    function getCookie(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    }
-
-    function eraseCookie(name) {
-        document.cookie = name + '=; Max-Age=-99999999;';
-    }
-
-    function hasClass(ele, cls) {
-        if (!ele) return false;
-        return !!ele.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
-    }
-
-    function addClass(ele, cls) {
-        if (!ele) return;
-        if (!hasClass(ele, cls)) ele.className += " " + cls;
-    }
-
-    function removeClass(ele, cls) {
-        if (!ele) return;
-        if (hasClass(ele, cls)) {
-            var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-            ele.className = ele.className.replace(reg, ' ');
-        }
-    }
-
-    function isIE() {
-        ua = navigator.userAgent;
-        /* MSIE used to detect old browsers and Trident used to newer ones*/
-        var is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
-        return is_ie;
-    }
 
     function initMdc() {
         for (var i = 0; i < document.querySelectorAll('.mdc-ripple').length; i++)
@@ -395,7 +255,7 @@
     }
 
     function getMyeonbul() {
-        document.body.style.cursor='wait';
+        document.body.style.cursor = 'wait';
         String.prototype.replaceAll = function (find, replace) {
             var str = this;
             return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
@@ -407,7 +267,7 @@
         }).then(function (response) {
             return response.text();
         }).then(function (text) {
-            let fl=true;
+            let fl = true;
             res = JSON.parse(text.replaceAll('True', 'true').replaceAll('False', 'false').replaceAll("Decimal('", '').replaceAll("')", '').replaceAll('"', '').replaceAll("'", '"'));
             document.getElementById('myeonbulList').innerHTML = "";
             document.getElementById('myeonbulToday').innerHTML = "";
@@ -420,7 +280,7 @@
                     '<td class="mdc-data-table__cell">' + (res[i].verified ? '승인됨' : '승인 대기중') + '</td>\n' +
                     '</tr>' + document.getElementById('myeonbulList').innerHTML;
                 if (String(res[i].date) == getDate()) {
-                    fl=false;
+                    fl = false;
                     document.getElementById('myeonbulToday').innerHTML +=
                         '<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone">\n' +
                         '<div class="mdc-card myb-card mdc-elevation--z5">\n' +
@@ -453,13 +313,13 @@
                 }
             }
             if (res.length == 0) document.getElementById('myeonbulList').innerHTML = '<tr class="mdc-data-table__row"><td class="mdc-data-table__cell" colspan="5">면불 기록이 없어요!</td></tr>';
-            if(fl) document.getElementById('myeonbulToday').innerHTML='<div class="mdc-layout-grid__cell"><h3 style="font-weight: lighter;">오늘 신청된 면불이 없어요!</h3></div>';
+            if (fl) document.getElementById('myeonbulToday').innerHTML = '<div class="mdc-layout-grid__cell"><h3 style="font-weight: lighter;">오늘 신청된 면불이 없어요!</h3></div>';
             for (var i = 0; i < document.querySelectorAll('.mdc-ripple').length; i++)
                 mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
-            document.body.style.cursor='default';
+            document.body.style.cursor = 'default';
         }).catch(function (err) {
             mdcInstance.errinit.open();
-            document.body.style.cursor='default';
+            document.body.style.cursor = 'default';
         });
     }
 
@@ -970,7 +830,7 @@
                                         </div>
                                         <div class="mdc-checkbox__ripple"></div>
                                     </div>
-                                    <label for="checkbox-1">1차</label>
+                                    <label for="mybTime1">1차</label>
                                 </div>
                                 <div class="mdc-form-field">
                                     <div class="mdc-checkbox">
@@ -988,7 +848,7 @@
                                         </div>
                                         <div class="mdc-checkbox__ripple"></div>
                                     </div>
-                                    <label for="checkbox-1">2차</label>
+                                    <label for="mybTime2">2차</label>
                                 </div>
                             </div>
                             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-7-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
