@@ -3,11 +3,24 @@ function initMdc() {
         mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
     mdcInstance.topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
     mdcInstance.topAppBar.setScrollTarget(document.getElementById('main-content'));
-    mdcInstance.topAppBar.listen('MDCTopAppBar:nav', function () {
+    mdcInstance.topAppBar.listen('MDCTopAppBar:nav', function (e) {
         mdcInstance.drawer.open = !mdcInstance.drawer.open;
+        if (asideStat == 1) {
+            if (hasClass(document.getElementById('mdc-content'), 'mdc-drawer-app-content-margin')) {
+                setTimeout(function () {
+                    removeClass(document.getElementById('mdc-content'), 'mdc-drawer-app-content-margin');
+                }, 200);
+            } else {
+                setTimeout(function () {
+                    addClass(document.getElementById('mdc-content'), 'mdc-drawer-app-content-margin');
+                }, 200);
+            }
+        }
+        e.stopPropagation();
     });
     mdcInstance.accountmenu = new mdc.menu.MDCMenu(document.getElementById('accountMenu'));
     mdcInstance.accountmenu.setAnchorElement(document.getElementById('accountInfo'));
+    mdcInstance.accountmenu.setFixedPosition(true);
     mdcInstance.accountButton = new mdc.ripple.MDCRipple(document.getElementById('accountInfo'));
     mdcInstance.accountButton.unbounded = true;
     mdcInstance.progress = new mdc.linearProgress.MDCLinearProgress.attachTo(document.querySelector('.mdc-linear-progress'));
@@ -17,29 +30,7 @@ function initMdc() {
     mdcInstance.drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
 }
 
-let orgY, toY, laY = -1;
-let elem;
-
-function animate() {
-    dY = toY - orgY;
-    if (Math.abs(dY) < 1) {
-        elem["scrollTop"] = toY;
-        return;
-    }
-    if (Math.abs(elem["scrollTop"] - orgY) > 1) return;
-    orgY += dY / 20;
-    elem["scrollTop"] = orgY;
-    requestAnimationFrame(animate);
-}
-
-function scrollToCont(id = "") {
-    orgY = elem["scrollTop"];
-    toY = elem["scrollTop"] + document.getElementById("cont_" + id).getBoundingClientRect().top - document.getElementById('app-bar').offsetHeight - 5;
-    height = document.getElementById('main-content').scrollHeight;
-    toY = Math.min(toY, height - document.getElementById('main-content').offsetHeight);
-    requestAnimationFrame(animate);
-}
-
+var elem;
 
 window.addEventListener('DOMContentLoaded', function () {
     modalHandle();
@@ -60,14 +51,12 @@ function modalHandle() {
         addClass(document.querySelector('aside'), 'mdc-drawer--modal');
         removeClass(document.querySelector('aside'), 'mdc-drawer--dismissible');
         removeClass(document.getElementById('mdc-content'), 'mdc-drawer-app-content');
+        removeClass(document.getElementById('mdc-content'), 'mdc-drawer-app-content-margin');
         if (mdcInstance.drawer) mdcInstance.drawer.destroy();
         document.getElementById('modalBack').className = 'mdc-drawer-scrim';
         mdcInstance.drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
         mdcInstance.topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
         mdcInstance.topAppBar.setScrollTarget(document.getElementById('main-content'));
-        mdcInstance.topAppBar.listen('MDCTopAppBar:nav', function () {
-            mdcInstance.drawer.open = !mdcInstance.drawer.open;
-        });
         mdcInstance.drawer.open = false;
         asideStat = 0;
     }
@@ -75,14 +64,12 @@ function modalHandle() {
         removeClass(document.querySelector('aside'), 'mdc-drawer--modal');
         addClass(document.querySelector('aside'), 'mdc-drawer--dismissible');
         addClass(document.getElementById('mdc-content'), 'mdc-drawer-app-content');
+        addClass(document.getElementById('mdc-content'), 'mdc-drawer-app-content-margin');
         if (mdcInstance.drawer) mdcInstance.drawer.destroy();
         document.getElementById('modalBack').className = '';
         mdcInstance.drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
         mdcInstance.topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
         mdcInstance.topAppBar.setScrollTarget(document.getElementById('main-content'));
-        mdcInstance.topAppBar.listen('MDCTopAppBar:nav', function () {
-            mdcInstance.drawer.open = !mdcInstance.drawer.open;
-        });
         mdcInstance.drawer.open = true;
         asideStat = 1;
     }
@@ -90,10 +77,12 @@ function modalHandle() {
 
 window.addEventListener('resize', modalHandle);
 
+let laY = -1;
+
 window.addEventListener('load', function () {
     document.getElementById("iProg").style.opacity = 0;
     setInterval(function () {
-        lists = document.querySelectorAll('.mdc-list-item');
+        lists = document.querySelector('aside').querySelectorAll('.mdc-list-item');
         headers = document.querySelectorAll('h2');
         for (i = headers.length - 1; i >= 0; i--) {
             viewY = elem["scrollTop"] + headers[i].getBoundingClientRect().top - document.getElementById('app-bar').offsetHeight - 7;

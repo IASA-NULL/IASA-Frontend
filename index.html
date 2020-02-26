@@ -8,6 +8,7 @@
         }
     </script>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IASA</title>
     <style>
         .fade {
@@ -65,9 +66,11 @@
                 <path d="M541.5 162.5 628.5 213 541.5 263.5Z" stroke="#FFC600" stroke-width="13.3333"
                       stroke-miterlimit="8" fill="none" fill-rule="evenodd"/>
                 <path d="M453.999 578.5 329 578.5C328.833 534.758 328.667 491.016 328.5 447.273L453.747 447.305C453.913 404.37 454.08 361.435 454.247 318.5L613.5 318.519"
-                      stroke="#6D74D5" stroke-width="13.3333" stroke-miterlimit="8" fill="none" fill-rule="evenodd"/>
+                      stroke="#6D74D5" stroke-width="13.3333" stroke-miterlimit="8" fill="none"
+                      fill-rule="evenodd"/>
                 <path d="M604.951 318.5 623.461 318.55 624.052 447.427 747.34 448.427 748.5 578.5 448.5 578.5"
-                      stroke="#2E369E" stroke-width="13.3333" stroke-miterlimit="8" fill="none" fill-rule="evenodd"/>
+                      stroke="#2E369E" stroke-width="13.3333" stroke-miterlimit="8" fill="none"
+                      fill-rule="evenodd"/>
             </g>
         </svg>
     </div>
@@ -160,8 +163,20 @@
             mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
         mdcInstance.topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
         mdcInstance.topAppBar.setScrollTarget(document.getElementById('main-content'));
-        mdcInstance.topAppBar.listen('MDCTopAppBar:nav', function () {
+        mdcInstance.topAppBar.listen('MDCTopAppBar:nav', function (e) {
             mdcInstance.drawer.open = !mdcInstance.drawer.open;
+            if (asideStat == 1) {
+                if (hasClass(document.getElementById('mdc-content'), 'mdc-drawer-app-content-margin')) {
+                    setTimeout(function () {
+                        removeClass(document.getElementById('mdc-content'), 'mdc-drawer-app-content-margin');
+                    }, 200);
+                } else {
+                    setTimeout(function () {
+                        addClass(document.getElementById('mdc-content'), 'mdc-drawer-app-content-margin');
+                    }, 200);
+                }
+            }
+            e.stopPropagation();
         });
         mdcInstance.list = mdc.list.MDCList.attachTo(document.querySelector('.mdc-list'));
         mdcInstance.list.wrapFocus = true;
@@ -180,6 +195,7 @@
         mdcInstance.errinit = new mdc.dialog.MDCDialog(document.getElementById('errInit'));
         mdcInstance.accountmenu = new mdc.menu.MDCMenu(document.getElementById('accountMenu'));
         mdcInstance.accountmenu.setAnchorElement(document.getElementById('accountInfo'));
+        mdcInstance.accountmenu.setFixedPosition(true);
         mdcInstance.accountButton = new mdc.ripple.MDCRipple(document.getElementById('accountInfo'));
         mdcInstance.accountButton.unbounded = true;
         mdcInstance.progress.determinate = false;
@@ -423,6 +439,7 @@
 
     window.addEventListener('DOMContentLoaded', function () {
         initMdc();
+        modalHandle();
         if (isIE()) mdcInstance.noIE.open();
         if (!String.prototype.includes) {
             String.prototype.includes = function (search, start) {
@@ -456,18 +473,53 @@
             searchRes(document.getElementById("searchTeacher").value);
         });
         searchRes("");
+        menuEl = document.querySelector('aside').querySelectorAll('a');
+        for (i = 0; i < menuEl.length; i++) {
+            menuEl[i].addEventListener('click', function () {
+                if (asideStat == 0) mdcInstance.drawer.open = false;
+            })
+        }
         document.getElementById("iProg").style.opacity = 0;
     });
-    window.addEventListener('resize', function () {
-        if (mdcInstance.drawer.open) {
-            if (window.innerWidth <= 1024) mdcInstance.drawer.open = false;
-        } else {
-            if (window.innerWidth > 1024) mdcInstance.drawer.open = true;
+
+    let asideStat = -1;
+
+    function modalHandle() {
+        if (window.innerWidth <= 1024 && asideStat != 0) {
+            addClass(document.querySelector('aside'), 'mdc-drawer--modal');
+            removeClass(document.querySelector('aside'), 'mdc-drawer--dismissible');
+            removeClass(document.getElementById('mdc-content'), 'mdc-drawer-app-content');
+            removeClass(document.getElementById('mdc-content'), 'mdc-drawer-app-content-margin');
+            document.querySelector('table').style.width = 'calc(100vw - 55px)';
+            document.querySelector('.mdc-data-table').style.width = 'calc(100vw - 50px)';
+            if (mdcInstance.drawer) mdcInstance.drawer.destroy();
+            document.getElementById('modalBack').className = 'mdc-drawer-scrim';
+            mdcInstance.drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
+            mdcInstance.topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
+            mdcInstance.topAppBar.setScrollTarget(document.getElementById('main-content'));
+            mdcInstance.drawer.open = false;
+            asideStat = 0;
         }
-    });
+        if (window.innerWidth > 1024 && asideStat != 1) {
+            removeClass(document.querySelector('aside'), 'mdc-drawer--modal');
+            addClass(document.querySelector('aside'), 'mdc-drawer--dismissible');
+            addClass(document.getElementById('mdc-content'), 'mdc-drawer-app-content');
+            addClass(document.getElementById('mdc-content'), 'mdc-drawer-app-content-margin');
+            document.querySelector('table').style.width = 'calc(100vw - 311px)';
+            document.querySelector('.mdc-data-table').style.width = 'calc(100vw - 306px)';
+            if (mdcInstance.drawer) mdcInstance.drawer.destroy();
+            document.getElementById('modalBack').className = '';
+            mdcInstance.drawer = mdc.drawer.MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
+            mdcInstance.topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
+            mdcInstance.topAppBar.setScrollTarget(document.getElementById('main-content'));
+            mdcInstance.drawer.open = true;
+            asideStat = 1;
+        }
+    }
+
+    window.addEventListener('resize', modalHandle);
     window.addEventListener('load', function () {
         document.getElementById("preloader").style.opacity = 0;
-        if (window.innerWidth > 1024) mdcInstance.drawer.open = true;
         setTimeout(function () {
             document.getElementById("preloader").style.display = "none";
         }, 400);
@@ -493,10 +545,23 @@
             <span class="mdc-top-app-bar__title">IASA</span>
         </section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
-            <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" id="accountInfo"
-                    onclick="mdcInstance.accountmenu.open=true;">
-                account_circle
-            </button>
+            <div class="mdc-menu-surface--anchor">
+                <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" id="accountInfo"
+                        onclick="mdcInstance.accountmenu.open=true;">
+                    account_circle
+                </button>
+                <div class="mdc-menu mdc-menu-surface" id="accountMenu">
+                    <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                        <h4 style="margin:10px;">이서현</h4>
+                        <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="logOut();">
+                            <span class="mdc-list-item__text">로그아웃</span>
+                        </li>
+                        <li class="mdc-list-item mdc-ripple" role="menuitem">
+                            <span class="mdc-list-item__text">마이페이지</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </section>
     </div>
 </header>
@@ -524,8 +589,8 @@
         </nav>
     </div>
 </aside>
-
-<div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust">
+<div class="mdc-drawer-scrim" id="modalBack"></div>
+<div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust" id="mdc-content">
     <main class="main-content" id="main-content">
         <div id="meal" class="section section-disabled">
             <h1>급식</h1>
@@ -870,8 +935,8 @@
                 </div>
             </div>
             <h1>면불 신청 기록</h1>
-            <div class="mdc-data-table" style="width:100%;">
-                <table class="mdc-data-table__table" aria-label="Dessert calories">
+            <div class="mdc-data-table" style="width:calc(100vw - 50px);">
+                <table class="mdc-data-table__table" style="width:calc(100vw - 50px);">
                     <thead>
                     <tr class="mdc-data-table__header-row">
                         <th class="mdc-data-table__header-cell" role="columnheader" scope="col">담당 선생님</th>
@@ -917,19 +982,6 @@
             </button>
             <button type="button" class="mdc-button mdc-snackbar__action mdc-ripple">닫기</button>
         </div>
-    </div>
-</div>
-<div class="mdc-menu-surface--anchor">
-    <div class="mdc-menu mdc-menu-surface" id="accountMenu">
-        <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-            <h4 style="margin:10px;">이서현</h4>
-            <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="logOut();">
-                <span class="mdc-list-item__text">로그아웃</span>
-            </li>
-            <li class="mdc-list-item mdc-ripple" role="menuitem">
-                <span class="mdc-list-item__text">마이페이지</span>
-            </li>
-        </ul>
     </div>
 </div>
 <div class="mdc-snackbar" id="doneRequest">

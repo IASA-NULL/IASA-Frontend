@@ -50,3 +50,32 @@ function isIE() {
     var is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
     return is_ie;
 }
+
+
+let __scroll_orgY, __scroll_toY;
+let __scroll_elem;
+
+
+window.addEventListener('DOMContentLoaded', function () {
+    __scroll_elem = document.getElementById('main-content');
+});
+
+function __scroll_animate() {
+    dY = __scroll_toY - __scroll_orgY;
+    if (Math.abs(dY) < 1) {
+        __scroll_elem["scrollTop"] = __scroll_toY;
+        return;
+    }
+    if (Math.abs(__scroll_elem["scrollTop"] - __scroll_orgY) > 1) return;
+    __scroll_orgY += dY / 20;
+    __scroll_elem["scrollTop"] = __scroll_orgY;
+    requestAnimationFrame(__scroll_animate);
+}
+
+function scrollToCont(id = "") {
+    __scroll_orgY = __scroll_elem["scrollTop"];
+    __scroll_toY = __scroll_elem["scrollTop"] + document.getElementById("cont_" + id).getBoundingClientRect().top - document.getElementById('app-bar').offsetHeight - 5;
+    height = document.getElementById('main-content').scrollHeight;
+    __scroll_toY = Math.min(__scroll_toY, height - document.getElementById('main-content').offsetHeight);
+    requestAnimationFrame(__scroll_animate);
+}

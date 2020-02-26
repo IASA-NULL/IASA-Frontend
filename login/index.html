@@ -25,10 +25,10 @@
 
 
         #cont {
+            max-width: 90vw;
             width: 500px;
-            min-height: 550px;
-            overflow: hidden;
             height: auto;
+            overflow: hidden;
         }
 
         #fullCont {
@@ -51,6 +51,7 @@
             border-style: solid;
             border-width: 1px;
             border-color: #bbbbbb !important;
+            margin-bottom: 20px;
         }
 
         a {
@@ -62,15 +63,38 @@
             margin: 0;
             text-align: center;
             display: flex;
-            max-width: 430px;
-            width: 100%;
+            max-width: 77.4vw;
+            width: 430px;
             min-height: 496px;
             align-items: center;
             justify-content: center;
             float: left;
-            padding: 35px;
-            padding-bottom: 15px;
+            padding: 35px 35px 15px;
         }
+
+        @media (min-height: 581px) {
+            #cont {
+                min-height: 560px;
+            }
+        }
+
+        @media (max-height: 580px) {
+            .loginBox {
+                height: calc(72.1vh - 80px) !important;
+                padding: 15px 20px 15px 20px;
+            }
+
+            #cont {
+                overflow-x: hidden;
+                overflow-y: scroll;
+                height: calc(70vh - 10px) !important;
+            }
+
+            #cont::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
 
         .loginBox > * {
             margin: 15px;
@@ -100,6 +124,7 @@
         }
 
         .innerCont {
+            max-width: 77.4vw;
             width: 430px;
             margin: 35px;
             display: none;
@@ -117,12 +142,27 @@
             transition: all .3s ease;
         }
 
+        video {
+            max-width: 73.8vw !important;
+            width: 410px !important;
+        }
+
+        #qrContainer {
+            max-width: 73.8vw !important;
+            width: 410px !important;
+        }
+
         #qrContainer > video {
+            max-width: 73.8vw !important;
             width: 410px !important;
         }
 
         #qrContainer > canvas {
             display: none !important;
+        }
+
+        #signupMenu {
+            z-index: 1000;
         }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -150,7 +190,8 @@
         mdcInstance.noIE = new mdc.snackbar.MDCSnackbar(document.getElementById('noIE'))
         mdcInstance.prevButton.unbounded = true;
         mdcInstance.progress.determinate = false;
-
+        mdcInstance.userrightMenu = new mdc.menu.MDCMenu(document.getElementById('userrightMenu'));
+        mdcInstance.userrightMenu.setAnchorElement(document.getElementById('userRight'));
 
         mdcInstance.signupCode = new mdc.textField.MDCTextField(document.getElementById("signupCodeForm"));
     }
@@ -271,7 +312,7 @@
         swapForm(currentForm, formId);
         currentForm = formId;
         document.getElementById("loginCont").style.transition = "none";
-        document.getElementById("loginCont").style.left = "-500px";
+        document.getElementById("loginCont").style.left = "-" + document.getElementById('cont').offsetWidth + "px";
         document.getElementById(nextForm + "Form").style.display = "block";
         document.getElementById(currentForm + "Form").style.display = "block";
         setTimeout(function () {
@@ -321,9 +362,8 @@
         document.getElementById(currentForm + "Form").style.display = "block";
         setTimeout(function () {
             document.getElementById("loginCont").style.transition = "left .3s ease";
-            document.getElementById("loginCont").style.left = "-500px";
+            document.getElementById("loginCont").style.left = "-" + document.getElementById('cont').offsetWidth + "px";
         }, 100);
-        ;
         setTimeout(function () {
             document.getElementById("loginCont").style.transition = "none";
             document.getElementById("loginCont").style.left = "-35px";
@@ -753,9 +793,7 @@
                             </button>
                         </div>
                         <div class="innerCont" id="signup2Form">
-                            <div id="qrContainer" style="width:450px !important;">
-
-                            </div>
+                            <div id="qrContainer"></div>
                             <video autoplay loop muted playsinline src="/res/vid/camLoad.mp4"
                                    style="width:200px;transform:translate(-0.5px, 0);"
                                    id="camAnim"></video>
@@ -834,25 +872,44 @@
     </div>
     <div style="width:100%;display: flex;">
         <div style="width:100%;">
-            <button id="menu-button" class="mdc-button mdc-ripple" style="float:left;"
-                    onclick="mdcInstance.menu.open=true;">한국어<i class="material-icons"
-                                                                onclick="mdcInstance.menu.open=true;">keyboard_arrow_down</i>
-            </button>
-            <a href="/terms.html">
-                <button class="mdc-button mdc-ripple" style="float:right;">약관</button>
-            </a>
-        </div>
-    </div>
-    <div id="demo-menu" class="mdc-menu-surface--anchor">
-        <div class="mdc-menu mdc-menu-surface" id="langMenu">
-            <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                <li class="mdc-list-item mdc-ripple" role="menuitem">
-                    <span class="mdc-list-item__text">한국어</span>
-                </li>
-                <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="mdcInstance.langNotify.open();">
-                    <span class="mdc-list-item__text">English</span>
-                </li>
-            </ul>
+
+            <div id="demo-menu" class="mdc-menu-surface--anchor" style="float:left;">
+                <button id="menu-button" class="mdc-button mdc-ripple"
+                        onclick="mdcInstance.menu.open=true;">한국어<i class="material-icons"
+                                                                    onclick="mdcInstance.menu.open=true;">keyboard_arrow_down</i>
+                </button>
+                <div class="mdc-menu mdc-menu-surface" id="langMenu">
+                    <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                        <li class="mdc-list-item mdc-ripple" role="menuitem">
+                            <span class="mdc-list-item__text">한국어</span>
+                        </li>
+                        <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="mdcInstance.langNotify.open();">
+                            <span class="mdc-list-item__text">English</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mdc-menu-surface--anchor" style="float:right;">
+                <button id="userRight" class="mdc-button mdc-ripple"
+                        onclick="mdcInstance.userrightMenu.open=true;">약관<i class="material-icons"
+                                                                            onclick="mdcInstance.userrightMenu.open=true;">keyboard_arrow_down</i>
+                </button>
+                <div class="mdc-menu mdc-menu-surface" id="userrightMenu">
+                    <ul class="mdc-list" role="menu" aria-hidden="true"
+                        aria-orientation="vertical" tabindex="-1">
+                        <a href="/terms.html">
+                            <li class="mdc-list-item mdc-ripple" role="menuitem">
+                                <span class="mdc-list-item__text">사용자 약관</span>
+                            </li>
+                        </a>
+                        <a href="/userdata.html">
+                            <li class="mdc-list-item mdc-ripple" role="menuitem">
+                                <span class="mdc-list-item__text">개인정보처리방침</span>
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>

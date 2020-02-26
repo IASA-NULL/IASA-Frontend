@@ -1,7 +1,4 @@
 #body {
     padding: 10px;
-}
-
-.mdc-drawer-app-content {
-    margin-left: 256px;
+    line-height: 30px;
 }

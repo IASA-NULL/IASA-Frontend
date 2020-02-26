@@ -23,6 +23,7 @@ main {
 
 * {
     font-family: 'nanum';
+    -webkit-font-smoothing: antialiased;
 }
 
 .mdc-drawer-app-content {
@@ -42,6 +43,10 @@ main {
 
 .mdc-top-app-bar {
     z-index: 7;
+}
+
+.mdc-drawer-app-content-margin {
+    margin-left: 256px;
 }
 
 
