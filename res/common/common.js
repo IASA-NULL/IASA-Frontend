@@ -72,10 +72,19 @@ function __scroll_animate() {
     requestAnimationFrame(__scroll_animate);
 }
 
-function scrollToCont(id = "") {
+function scrollToCont(id) {
     __scroll_orgY = __scroll_elem["scrollTop"];
     __scroll_toY = __scroll_elem["scrollTop"] + document.getElementById("cont_" + id).getBoundingClientRect().top - document.getElementById('app-bar').offsetHeight - 5;
     height = document.getElementById('main-content').scrollHeight;
     __scroll_toY = Math.min(__scroll_toY, height - document.getElementById('main-content').offsetHeight);
     requestAnimationFrame(__scroll_animate);
+}
+
+function logOut() {
+    eraseCookie('auth');
+    location.replace('/login?next=' + btoa(window.location.href));
+}
+
+function isLogin() {
+    return !!getCookie('auth');
 }

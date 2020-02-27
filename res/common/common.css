@@ -7,7 +7,6 @@ body {
 
 .mdc-drawer-app-content {
     overflow: hidden !important;
-    padding-bottom: 15px;
 }
 
 main {
@@ -93,10 +92,22 @@ a {
     text-decoration: none !important;
 }
 
-main {
-    margin: 5px 0 5px 10px;
-}
-
 .mdc-list-item {
     transition: color .5s;
+}
+
+footer {
+    background-color: #5351db !important;;
+    color: white !important;
+    width: 100%;
+    padding-bottom: 10px;
+    min-height: 220px;
+}
+
+footer a {
+    color: white !important;
+}
+
+header a {
+    color: white !important;
 }

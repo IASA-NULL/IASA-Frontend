@@ -115,7 +115,7 @@
 
             100% {
                 opacity: 1;
-                padding-bottom: 0;
+                padding-bottom: 10px;
                 padding-top: 10px;
             }
         }
@@ -129,7 +129,7 @@
 
             100% {
                 opacity: 0;
-                padding-bottom: 3%;
+                padding-bottom: 10px;
                 padding-top: 0;
             }
         }
@@ -149,6 +149,7 @@
         .section {
             margin-left: 15px;
             margin-right: 15px;
+            min-height: calc(100vh - 220px - 48px);
         }
     </style>
 </head>
@@ -430,11 +431,6 @@
         })
         document.getElementById('myeonbulSubmit').disabled = false;
         document.getElementById("iProg").style.opacity = 0;
-    }
-
-    function logOut() {
-        eraseCookie('auth');
-        location.replace('/login?next=' + btoa(window.location.href));
     }
 
     window.addEventListener('DOMContentLoaded', function () {
@@ -967,6 +963,30 @@
                 </div>
             </div>
         </div>
+        <footer>
+            <div class="mdc-layout-grid">
+                <div class="mdc-layout-grid__inner">
+                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-5-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
+                        <h1>IASA Portal</h1>
+                    </div>
+                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-7-desktop mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-12-phone">
+                        <div class="mdc-layout-grid">
+                            <div class="mdc-layout-grid__inner">
+                                <div class=" mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
+                                    <a href="/terms.html">이용약관</a></div>
+                                <div class=" mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
+                                    <a href="/userdata.html">개인정보처리방침</a></div>
+                                <div class=" mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
+                                    <a href="/opensource.html">오픈소스 사용고지</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12-desktop mdc-layout-grid__cell--span-12-tablet mdc-layout-grid__cell--span-12-phone">
+                        <h3>Copyright 2019-2020 NULL®. All right reserved.</h3>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </main>
 </div>
 <div class="mdc-snackbar" id="noIE">
@@ -1041,7 +1061,6 @@
      aria-describedby="my-dialog-content" id="askCancelMyb">
     <div class="mdc-dialog__container">
         <div class="mdc-dialog__surface">
-            <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
             <h2 class="mdc-dialog__title">경고</h2>
             <div class="mdc-dialog__content">
                 정말로 요청을 취소하겠습니까?
@@ -1066,7 +1085,6 @@
      aria-describedby="my-dialog-content" id="errInit">
     <div class="mdc-dialog__container">
         <div class="mdc-dialog__surface">
-            <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
             <h2 class="mdc-dialog__title">오류</h2>
             <div class="mdc-dialog__content">
                 웹 사이트를 초기화할수 없습니다.

@@ -33,6 +33,12 @@ function initMdc() {
 var elem;
 
 window.addEventListener('DOMContentLoaded', function () {
+    if (isLogin()) document.getElementById('loginMenu_login').remove();
+    else {
+        document.getElementById('loginMenu_logout').remove();
+        document.getElementById('loginMenu_info').remove();
+        document.getElementById('loginMenu_mypage').remove();
+    }
     modalHandle();
     initMdc();
     elem = document.getElementById('main-content');

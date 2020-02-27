@@ -36,7 +36,7 @@
     <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
             <a class="demo-menu material-icons mdc-top-app-bar__navigation-icon" style="cursor: pointer;">menu</a>
-            <span class="mdc-top-app-bar__title">IASA</span>
+            <span class="mdc-top-app-bar__title"><a href="/">IASA</a></span>
         </section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
             <div class="mdc-menu-surface--anchor">
@@ -46,11 +46,17 @@
                 </button>
                 <div class="mdc-menu mdc-menu-surface" id="accountMenu">
                     <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                        <h4 style="margin:10px;">이서현</h4>
-                        <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="logOut();">
+                        <li role="menuitem" id="loginMenu_info">
+                            <h4 style="margin:10px;" id="userId">이서현</h4>
+                        </li>
+                        <li class="mdc-list-item mdc-ripple" role="menuitem" onclick=" location.href='/login/';"
+                            id="loginMenu_login">
+                            <span class="mdc-list-item__text">로그인</span>
+                        </li>
+                        <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="logOut();" id="loginMenu_logout">
                             <span class="mdc-list-item__text">로그아웃</span>
                         </li>
-                        <li class="mdc-list-item mdc-ripple" role="menuitem">
+                        <li class="mdc-list-item mdc-ripple" role="menuitem" id="loginMenu_mypage">
                             <span class="mdc-list-item__text">마이페이지</span>
                         </li>
                     </ul>
@@ -63,7 +69,7 @@
     <div class="mdc-drawer__content">
         <nav class="mdc-list">
             <a class="mdc-list-item mdc-ripple" onclick="scrollToCont('index');">
-                <span class="mdc-list-item__text">약관</span>
+                <span class="mdc-list-item__text">개인정보 처리방침</span>
             </a>
             <a class="mdc-list-item mdc-ripple" onclick="scrollToCont('welcome');">
                 <span class="mdc-list-item__text">인삿말</span>
@@ -108,7 +114,7 @@
 <div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust" id="mdc-content">
     <main class="main-content" id="main-content">
         <div id="body" class="section">
-            <h1 id="cont_index">IASA Portal 약관</h1>
+            <h1 id="cont_index">IASA Portal 개인정보 처리방침</h1>
             <h2 id="cont_welcome">여러분을 환영합니다.</h2>
             <p>IASA Portal 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 IASA Portal의 서비스의 이용과 관련하여 IASA Portal 서비스를 제공하는
                 IASA 정보동아리 NULL(이하 ‘NULL’)과 이를 이용하는 IASA Portal 서비스 회원(이하 ‘회원’)과의 관계를 설명하며, 아울러 여러분의 서비스 이용에 도움이 될 수 있는
@@ -276,6 +282,30 @@
             </ul>
             <p>IASA Portal의 서비스와 관련하여 궁금하신 사항이 있으시면 NULL로 문의 주시기 바랍니다.</p>
         </div>
+        <footer>
+            <div class="mdc-layout-grid">
+                <div class="mdc-layout-grid__inner">
+                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-5-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
+                        <h1>IASA Portal</h1>
+                    </div>
+                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-7-desktop mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-12-phone">
+                        <div class="mdc-layout-grid">
+                            <div class="mdc-layout-grid__inner">
+                                <div class=" mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
+                                    <a href="/terms.html">이용약관</a></div>
+                                <div class=" mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
+                                    <a href="/userdata.html">개인정보처리방침</a></div>
+                                <div class=" mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
+                                    <a href="/opensource.html">오픈소스 사용고지</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12-desktop mdc-layout-grid__cell--span-12-tablet mdc-layout-grid__cell--span-12-phone">
+                        <h3>Copyright 2019-2020 NULL®. All right reserved.</h3>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </main>
 </div>
 </body>
