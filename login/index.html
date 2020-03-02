@@ -11,7 +11,7 @@
     <title>로그인 - IASA</title>
     <link href="/res/mdc-3.2.0.min.css" rel="stylesheet">
     <script src="/res/mdc-3.2.0.min.js"></script>
-    <script src="/res/quagga.min.js"></script>
+    <script src="/res/quagga.min.js" async></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/res/common/common.css">
     <style>
@@ -174,10 +174,12 @@
 
 <body>
 <script src="/res/common/common.js"></script>
+<script src="/pageJs/login.js"></script>
+<script src="/pageJs/loginForm.js"></script>
+<script src="/pageJs/signup.js"></script>
 <script>
     document.body.style.cursor = 'wait';
     let currentForm = "id", nextForm = "next", currentState = 0, prevForm = "id";
-
 
     function initMdc() {
         mdcInstance.idInput = new mdc.textField.MDCTextField(document.getElementById("uidCont"));
@@ -231,302 +233,6 @@
         });
     }
 
-    function loginError(type, msg) {
-        if (type == 0) {
-            document.getElementById('errIdMsg').innerHTML = msg;
-            document.getElementById("errId").style.display = 'inherit';
-            mdcInstance.idInput.valid = false;
-            document.getElementById("uid").disabled = false;
-            document.getElementById("enterId").disabled = false;
-            document.getElementById("forgotId").disabled = false;
-            mdcInstance.idInput.focus();
-            setTimeout(function () {
-                document.getElementById("iProg").style.opacity = 0;
-            }, 200);
-        }
-        if (type == 1) {
-            document.getElementById('errPassMsg').innerHTML = msg;
-            document.getElementById("errPass").style.display = 'inherit';
-            mdcInstance.passInput.valid = false;
-            document.getElementById("upass").disabled = false;
-            document.getElementById("enterPass").disabled = false;
-            document.getElementById("forgotPass").disabled = false;
-            mdcInstance.passInput.focus();
-            setTimeout(function () {
-                document.getElementById("iProg").style.opacity = 0;
-            }, 200);
-        }
-        if (type == 2) {
-            document.getElementById('errFIdMsg').innerHTML = msg;
-            document.getElementById("errFId").style.display = 'inherit';
-            mdcInstance.fidName.valid = false;
-            mdcInstance.fidStuid.valid = false;
-            document.getElementById("clickFindId").disabled = false;
-            document.getElementById("fidName").disabled = false;
-            document.getElementById("fidStuid").disabled = false;
-            document.getElementById("fidName").focus();
-            setTimeout(function () {
-                document.getElementById("iProg").style.opacity = 0;
-            }, 200);
-        }
-    }
-
-    function swapForm(form1, form2) {
-        if (form1 == form2) return;
-        obj1 = document.getElementById(form1 + "Form");
-        obj2 = document.getElementById(form2 + "Form");
-        var temp = document.createElement("div");
-        obj1.parentNode.insertBefore(temp, obj1);
-        obj2.parentNode.insertBefore(obj1, obj2);
-        temp.parentNode.insertBefore(obj2, temp);
-        temp.parentNode.removeChild(temp);
-    }
-
-    function swapElements(form1, form2) {
-        el1 = document.getElementById(form1 + "Form");
-        el2 = document.getElementById(form2 + "Form");
-        var clonedElement1 = el1.cloneNode(true);
-        var clonedElement2 = el2.cloneNode(true);
-
-        el2.parentNode.replaceChild(clonedElement1, el2);
-        el1.parentNode.replaceChild(clonedElement2, el1);
-    }
-
-    function setPrevForm(formId) {
-        if (formId == "") document.getElementById("prevCont").style.display = 'none';
-        else document.getElementById("prevCont").style.display = 'block';
-        prevForm = formId;
-    }
-
-    function backToForm() {
-        stopVideo();
-        formId = prevForm;
-        document.getElementById(nextForm + "Form").style.display = "none";
-        document.getElementById(currentForm + "Form").style.display = "none";
-        if (currentState == 0 && currentForm == formId) return;
-        if (currentState == 1 && nextForm == formId) return;
-        if (currentState == 0) {
-            swapForm(currentForm, nextForm);
-            document.getElementById(currentForm + "Form").style.display = "none";
-            t = nextForm;
-            nextForm = currentForm;
-            currentForm = t;
-        }
-        currentState = 0;
-        swapForm(currentForm, formId);
-        currentForm = formId;
-        document.getElementById("loginCont").style.transition = "none";
-        document.getElementById("loginCont").style.left = "-" + document.getElementById('cont').offsetWidth + "px";
-        document.getElementById(nextForm + "Form").style.display = "block";
-        document.getElementById(currentForm + "Form").style.display = "block";
-        setTimeout(function () {
-            document.getElementById("loginCont").style.transition = "left .3s ease";
-            document.getElementById("loginCont").style.left = "0";
-        }, 100);
-        setTimeout(function () {
-            if (formId == "id") {
-                document.getElementById("uid").disabled = false;
-                document.getElementById("enterId").disabled = false;
-                document.getElementById("forgotId").disabled = false;
-                mdcInstance.idInput.focus();
-                setPrevForm("");
-                setHeader('로그인', 'IASA Portal(으)로 계속');
-            }
-            if (formId == "pass") {
-                setPrevForm("id");
-                setHeader('hi', '비밀번호를 입력해서 로그인');
-            }
-            document.getElementById(nextForm + "Form").style.display = "none";
-        }, 400);
-        setTimeout(function () {
-            document.getElementById("iProg").style.opacity = 0;
-        }, 400);
-    }
-
-    function moveToForm(formId) {
-        if (currentState == 0 && currentForm == formId) return;
-        if (currentState == 1 && nextForm == formId) return;
-        stopVideo();
-        document.getElementById(nextForm + "Form").style.display = "none";
-        document.getElementById(currentForm + "Form").style.display = "none";
-        if (currentState == 0) {
-            swapForm(nextForm, formId);
-            nextForm = formId;
-        }
-        if (currentState == 1) {
-            swapForm(currentForm, nextForm);
-            swapForm(currentForm, formId);
-            currentForm = nextForm;
-            nextForm = formId;
-        }
-        currentState = 1;
-        document.getElementById("loginCont").style.transition = "none";
-        document.getElementById("loginCont").style.left = "0";
-        document.getElementById(formId + "Form").style.display = "block";
-        document.getElementById(currentForm + "Form").style.display = "block";
-        setTimeout(function () {
-            document.getElementById("loginCont").style.transition = "left .3s ease";
-            document.getElementById("loginCont").style.left = "-" + document.getElementById('cont').offsetWidth + "px";
-        }, 100);
-        setTimeout(function () {
-            document.getElementById("loginCont").style.transition = "none";
-            document.getElementById("loginCont").style.left = "-35px";
-            document.getElementById(currentForm + "Form").style.display = "none";
-        }, 400);
-    }
-
-    function enterId() {
-        document.getElementById("iProg").style.opacity = 1;
-        document.getElementById("uid").disabled = true;
-        document.getElementById("enterId").disabled = true;
-        document.getElementById("forgotId").disabled = true;
-        document.getElementById("errId").style.display = 'none';
-        if (String(document.getElementById("uid").value).length == 0) {
-            loginError(0, "아이디를 입력하세요.");
-            return;
-        }
-        if (String(document.getElementById("uid").value) === "hi") {
-            setTimeout(function () {
-                setHeader('hi', '비밀번호를 입력해서 로그인');
-                setPrevForm("id");
-                document.getElementById("iProg").style.opacity = 0;
-                moveToForm("pass");
-                setTimeout(function () {
-                    mdcInstance.passInput.focus();
-                }, 500);
-            }, 500);
-        } else {
-            setTimeout(function () {
-                loginError(0, "아이디가 존재하지 않습니다.");
-            }, 500);
-        }
-    }
-
-    function getQueryString() {
-        var key = false, res = {}, itm = null;
-        // get the query string without the ?
-        var qs = location.search.substring(1);
-        // check for the key as an argument
-        if (arguments.length > 0 && arguments[0].length > 1)
-            key = arguments[0];
-        // make a regex pattern to grab key/value
-        var pattern = /([^&=]+)=([^&]*)/g;
-        // loop the items in the query string, either
-        // find a match to the argument, or build an object
-        // with key/value pairs
-        while (itm = pattern.exec(qs)) {
-            if (key !== false && decodeURIComponent(itm[1]) === key)
-                return decodeURIComponent(itm[2]);
-            else if (key === false)
-                res[decodeURIComponent(itm[1])] = decodeURIComponent(itm[2]);
-        }
-
-        return key === false ? res : null;
-    }
-
-    function enterPass() {
-        document.getElementById("iProg").style.opacity = 1;
-        document.getElementById("upass").disabled = true;
-        document.getElementById("enterPass").disabled = true;
-        document.getElementById("forgotPass").disabled = true;
-        document.getElementById("errPass").style.display = 'none';
-        if (String(document.getElementById("upass").value).length == 0) {
-            loginError(1, "비밀번호를 입력하세요.");
-            return;
-        }
-        setTimeout(function () {
-            if (String(document.getElementById("upass").value) === "hello") {
-                setCookie('auth', 1, 365);
-                setTimeout(function () {
-                    try {
-                        if (getQueryString('next')) location.replace(atob(getQueryString('next')));
-                        else location.replace('/');
-                    } catch (e) {
-                        location.replace('/');
-                    }
-                }, 800);
-            } else {
-                loginError(1, '잘못된 비밀번호입니다.');
-            }
-        }, 300);
-    }
-
-    function setHeader(primary, secondary) {
-        document.getElementById("mainHeader").innerHTML = primary;
-        document.getElementById("subHeader").innerHTML = secondary;
-    }
-
-    function clickFindId() {
-        document.getElementById("iProg").style.opacity = 1;
-        document.getElementById("fidName").disabled = true;
-        document.getElementById("fidStuid").disabled = true;
-        document.getElementById("fidContinue").disabled = true;
-        document.getElementById("errFId").style.display = 'none';
-        if (String(document.getElementById("fidName").value).length == 0) {
-            loginError(2, "이름을 입력하세요.");
-            return;
-        }
-        if (String(document.getElementById("fidStuid").value).length == 0) {
-            loginError(2, "학번을 입력하세요.");
-            return;
-        }
-        if (String(document.getElementById("fidName").value) != "홍길동" || String(document.getElementById("fidStuid").value) != "10101") {
-            loginError(2, "정보가 올바르지 않습니다.");
-            return;
-        }
-        moveToForm('idFound');
-        setTimeout(function () {
-            setHeader('아이디 찾기', '계속');
-            document.getElementById("fidName").disabled = false;
-            document.getElementById("fidStuid").disabled = false;
-            document.getElementById("fidContinue").disabled = false;
-            document.getElementById("fidContinue").focus();
-            document.getElementById("iProg").style.opacity = 0;
-        }, 300);
-    }
-
-    function reqFindId() {
-        moveToForm('findId');
-        setHeader('아이디 찾기', '이름과 학번을 입력하세요.');
-        setPrevForm("id");
-        setTimeout(function () {
-            document.getElementById("fidName").focus();
-        }, 500);
-    }
-
-    function reqFindPass() {
-        moveToForm('findPass');
-        setHeader('아이디 찾기', '이름과 학번을 입력하세요.');
-        setPrevForm("pass");
-    }
-
-    function togglePassword(id) {
-        let x = document.getElementById(id);
-        if (x.type === "password") {
-            x.type = "text";
-            document.getElementById("passToggle").style.color = "#5351db";
-        } else {
-            x.type = "password";
-            document.getElementById("passToggle").style.color = "#bbbbbb";
-        }
-    }
-
-    function reqSignup() {
-        if (isIE()) {
-            reqSignup3();
-            return;
-        }
-        moveToForm('signup1');
-        setHeader('가입하기', '다음 버튼을 누르고 웹캠에 학생증의 바코드를 보여주세요.');
-        var curVid = document.getElementById('cardAnim');
-        curVid.pause();
-        curVid.currentTime = '0';
-        setTimeout(function () {
-            curVid.play();
-        }, 400);
-        setPrevForm("id");
-    }
-
     function stopVideo() {
         try {
             Quagga.stop();
@@ -537,74 +243,6 @@
     }
 
     let stuId;
-
-    function reqSignup2() {
-        var curVid = document.getElementById('camAnim');
-        curVid.style.display = "";
-        curVid.pause();
-        curVid.currentTime = '0';
-        setTimeout(function () {
-            curVid.play();
-        }, 400);
-        document.getElementById("iProg").style.opacity = 1;
-        Quagga.init({
-            inputStream: {
-                name: "Live",
-                type: "LiveStream",
-                target: document.querySelector('#qrContainer')    // Or '#yourElement' (optional)
-            },
-            decoder: {
-                readers: ["code_128_reader"]
-            }
-        }, function (err) {
-            if (err) {
-                reqSignup3();
-                return;
-            }
-            Quagga.onDetected(function (data) {
-                stuId = data.codeResult.code;
-                reqSignupData1();
-            });
-            Quagga.start();
-            document.getElementById("iProg").style.opacity = 0;
-            document.getElementById("qrContainer").style.display = 'block';
-            curVid.style.display = "none";
-        });
-        moveToForm('signup2');
-        setHeader('가입하기', '카메라에 바코드가 선명하게 보이게 해주세요.');
-        setPrevForm("id");
-    }
-
-    function reqSignup3() {
-        document.getElementById("iProg").style.opacity = 1;
-        moveToForm('signup3');
-        setHeader('본인인증 코드 입력', '계속하려면 NULL에 본인인증을 위한 25자리 코드를 요청하세요.');
-        setPrevForm("id");
-        setTimeout(function () {
-            document.getElementById("iProg").style.opacity = 0;
-        }, 400);
-    }
-
-    function reqSignupData1() {
-        document.getElementById("iProg").style.opacity = 1;
-        moveToForm('signupData1');
-        setHeader('가입하기', '아래 내용을 채워주세요.');
-        setPrevForm("id");
-        setTimeout(function () {
-            document.getElementById("iProg").style.opacity = 0;
-        }, 400);
-    }
-
-    function loginWithFoundId() {
-        document.getElementById("iProg").style.opacity = 1;
-        document.getElementById("uid").value = "hi";
-        moveToForm('id');
-        setHeader('로그인', 'IASA Portal(으)로 계속');
-        setTimeout(function () {
-            mdcInstance.idInput.focus();
-            document.getElementById("iProg").style.opacity = 0;
-        }, 500);
-    }
 
     window.addEventListener('load', function () {
         setTimeout(function () {
@@ -653,7 +291,7 @@
             </div>
             <div class="loginBox" id="login">
                 <div style="width:100%;">
-                    <img src="/res/logo.png" style="display: block;width:80px;margin: 0 auto;">
+                    <img src="/res/logo.jpg" style="display: block;width:80px;margin: 0 auto;">
                     <p id="mainHeader" style="font-size: 200%;"></p>
                     <p id="subHeader"></p>
                     <div id="loginCont">

@@ -58,6 +58,40 @@ let __scroll_elem;
 
 window.addEventListener('DOMContentLoaded', function () {
     __scroll_elem = document.getElementById('main-content');
+    if (!String.prototype.includes) {
+        String.prototype.includes = function (search, start) {
+            if (typeof start !== 'number') {
+                start = 0;
+            }
+
+            if (start + search.length > this.length) {
+                return false;
+            } else {
+                return this.indexOf(search, start) !== -1;
+            }
+        };
+    }
+    if (!String.prototype.padStart) {
+        String.prototype.padStart = function padStart(targetLength, padString) {
+            targetLength = targetLength >> 0; //truncate if number or convert non-number to 0;
+            padString = String((typeof padString !== 'undefined' ? padString : ' '));
+            if (this.length > targetLength) {
+                return String(this);
+            } else {
+                targetLength = targetLength - this.length;
+                if (targetLength > padString.length) {
+                    padString += padString.repeat(targetLength / padString.length); //append to original to ensure we are longer than needed
+                }
+                return padString.slice(0, targetLength) + String(this);
+            }
+        };
+    }
+    if (!String.prototype.replaceAll) {
+        String.prototype.replaceAll = function (find, replace) {
+            var str = this;
+            return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
+        };
+    }
 });
 
 function __scroll_animate() {
@@ -80,9 +114,37 @@ function scrollToCont(id) {
     requestAnimationFrame(__scroll_animate);
 }
 
+function getQueryString() {
+    var key = false, res = {}, itm = null;
+    var qs = location.search.substring(1);
+    if (arguments.length > 0 && arguments[0].length > 1)
+        key = arguments[0];
+    var pattern = /([^&=]+)=([^&]*)/g;
+    while (itm = pattern.exec(qs)) {
+        if (key !== false && decodeURIComponent(itm[1]) === key)
+            return decodeURIComponent(itm[2]);
+        else if (key === false)
+            res[decodeURIComponent(itm[1])] = decodeURIComponent(itm[2]);
+    }
+
+    return key === false ? res : null;
+}
+
+function getDate() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    return (yyyy + mm + dd);
+}
+
 function logOut() {
     eraseCookie('auth');
-    location.replace('/login?next=' + btoa(window.location.href));
+    location.replace('/login/index.html?next=' + btoa(location.pathname + location.search));
+}
+
+function logIn() {
+    location.replace('/login/index.html?next=' + btoa(location.pathname + location.search));
 }
 
 function isLogin() {

@@ -10,7 +10,8 @@ body {
 }
 
 main {
-    margin: 0;
+    margin: 5px 0 0;
+    height: calc(100% - 5px) !important;
 }
 
 @font-face {
@@ -96,7 +97,7 @@ a {
     transition: color .5s;
 }
 
-footer {
+main > footer {
     background-color: #5351db !important;;
     color: white !important;
     width: 100%;
@@ -104,7 +105,7 @@ footer {
     min-height: 220px;
 }
 
-footer a {
+main > footer a {
     color: white !important;
 }
 

@@ -123,13 +123,13 @@
         @keyframes fadeout {
             0% {
                 opacity: 1;
-                padding-bottom: 0;
+                padding-bottom: 10px;
                 padding-top: 10px;
             }
 
             100% {
                 opacity: 0;
-                padding-bottom: 10px;
+                padding-bottom: 20px;
                 padding-top: 0;
             }
         }
@@ -149,13 +149,14 @@
         .section {
             margin-left: 15px;
             margin-right: 15px;
-            min-height: calc(100vh - 220px - 48px);
+            min-height: calc(100vh - 247px - 68px);
         }
     </style>
 </head>
 
 <body>
 <script src="/res/common/common.js"></script>
+<script src="/pageJs/myeonbul.js"></script>
 <script>
     let activeSection = "myeonbul";
 
@@ -241,17 +242,18 @@
         }
         let laSection = activeSection;
         activeSection = secName;
-        removeClass(document.getElementById(laSection), "section-visible");
-        removeClass(document.getElementById(laSection), "section-disabled");
-        addClass(document.getElementById(laSection), "section-hidden");
+        removeClass(document.getElementById('sec_' + laSection), "section-visible");
+        removeClass(document.getElementById('sec_' + laSection), "section-disabled");
+        addClass(document.getElementById('sec_' + laSection), "section-hidden");
         setTimeout(function () {
-            removeClass(document.getElementById(laSection), "section-hidden");
-            removeClass(document.getElementById(laSection), "section-visible");
-            addClass(document.getElementById(laSection), "section-disabled");
-            removeClass(document.getElementById(secName), "section-hidden");
-            removeClass(document.getElementById(secName), "section-disabled");
-            addClass(document.getElementById(secName), "section-visible");
+            removeClass(document.getElementById('sec_' + laSection), "section-hidden");
+            removeClass(document.getElementById('sec_' + laSection), "section-visible");
+            addClass(document.getElementById('sec_' + laSection), "section-disabled");
+            removeClass(document.getElementById('sec_' + secName), "section-hidden");
+            removeClass(document.getElementById('sec_' + secName), "section-disabled");
+            addClass(document.getElementById('sec_' + secName), "section-visible");
         }, 210);
+        history.replaceState(null, null, '/index.html?sec=' + secName);
     }
 
     function closeSnackbar() {
@@ -263,208 +265,15 @@
 
     let res;
 
-    function getDate() {
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
-        return (yyyy + mm + dd);
-    }
-
-    function getMyeonbul() {
-        document.body.style.cursor = 'wait';
-        String.prototype.replaceAll = function (find, replace) {
-            var str = this;
-            return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
-        };
-        document.getElementById('myeonbulList').innerHTML = '<tr class="mdc-data-table__row"><td class="mdc-data-table__cell" colspan="5">불러오는 중...</td></tr>';
-        fetch('https://api.iasa.kr/myeonbul?student=2018001', {
-            method: 'GET',
-            headers: {'content-type': 'application/json'}
-        }).then(function (response) {
-            return response.text();
-        }).then(function (text) {
-            let fl = true;
-            res = JSON.parse(text.replaceAll('True', 'true').replaceAll('False', 'false').replaceAll("Decimal('", '').replaceAll("')", '').replaceAll('"', '').replaceAll("'", '"'));
-            document.getElementById('myeonbulList').innerHTML = "";
-            document.getElementById('myeonbulToday').innerHTML = "";
-            for (let i = 0; i < res.length; i++) {
-                document.getElementById('myeonbulList').innerHTML = '<tr class="mdc-data-table__row">\n' +
-                    '<td class="mdc-data-table__cell">' + getTeacherName2019(res[i].teacherID) + '</td>\n' +
-                    '<td class="mdc-data-table__cell">' + res[i].place + '</td>\n' +
-                    '<td class="mdc-data-table__cell">' + (String(res[i].start_time).substr(0, 2) + ':' + String(res[i].start_time).substr(2, 2) + " - " + String(res[i].end_time).substr(0, 2) + ':' + String(res[i].end_time).substr(2, 2)) + '</td>\n' +
-                    '<td class="mdc-data-table__cell">' + (String(res[i].date).substr(0, 4) + '/' + String(res[i].date).substr(4, 2) + '/' + String(res[i].date).substr(6, 2)) + '</td>\n' +
-                    '<td class="mdc-data-table__cell">' + (res[i].verified ? '승인됨' : '승인 대기중') + '</td>\n' +
-                    '</tr>' + document.getElementById('myeonbulList').innerHTML;
-                if (String(res[i].date) == getDate()) {
-                    fl = false;
-                    document.getElementById('myeonbulToday').innerHTML +=
-                        '<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone">\n' +
-                        '<div class="mdc-card myb-card mdc-elevation--z5">\n' +
-                        '<div class="mdc-card__primary-action mdc-ripple" tabindex="0">\n' +
-                        '<h1>' + res[i].title + '</h1>\n' +
-                        '<h3 style="margin:5px;">' + (String(res[i].start_time).substr(0, 2) + ':' + String(res[i].start_time).substr(2, 2) + " - " + String(res[i].end_time).substr(0, 2) + ':' + String(res[i].end_time).substr(2, 2)) + '</h3>\n' +
-                        '<h3 style="margin:5px;">' + getTeacherName2019(res[i].teacherID) + ' 선생님</h3>\n' +
-                        '<h3 style="margin:5px;">' + res[i].place + '</h3>\n' +
-                        '<h3 style="margin:5px;">' + (res[i].verified ? '승인됨' : '승인 대기중') + '</h3>\n' +
-                        '<div class="mdc-layout-grid__inner">\n' +
-                        '<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">\n' +
-                        '<button class="mdc-button mdc-button--outlined mdc-ripple myb-button"\n' +
-                        'onclick="" id="mybEdit1Submit" style="width:calc(100% - 20px);">\n' +
-                        '<div class="mdc-button__ripple"></div>\n' +
-                        '<i class="material-icons mdc-button__icon" aria-hidden="true">edit</i>\n' +
-                        '<span class="mdc-button__label">수정</span>\n' +
-                        '</button>\n' +
-                        '</div>\n' +
-                        '<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone">\n' +
-                        '<button class="mdc-button mdc-button--outlined mdc-ripple myb-button" onclick="cancelMyeonbulReq(' + "'" + String(res[i].date) + '_' + String(res[i].id) + "'" + ');" id="mybCancel1Submit" style="width:calc(100% - 20px);">\n' +
-                        '<div class="mdc-button__ripple"></div>\n' +
-                        '<i class="material-icons mdc-button__icon" aria-hidden="true">clear</i>\n' +
-                        '<span class="mdc-button__label">취소</span>\n' +
-                        '</button>\n' +
-                        '</div>\n' +
-                        '</div>\n' +
-                        '</div>\n' +
-                        '</div>\n' +
-                        '</div>';
-                }
-            }
-            if (res.length == 0) document.getElementById('myeonbulList').innerHTML = '<tr class="mdc-data-table__row"><td class="mdc-data-table__cell" colspan="5">면불 기록이 없어요!</td></tr>';
-            if (fl) document.getElementById('myeonbulToday').innerHTML = '<div class="mdc-layout-grid__cell"><h3 style="font-weight: lighter;">오늘 신청된 면불이 없어요!</h3></div>';
-            for (var i = 0; i < document.querySelectorAll('.mdc-ripple').length; i++)
-                mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
-            document.body.style.cursor = 'default';
-        }).catch(function (err) {
-            mdcInstance.errinit.open();
-            document.body.style.cursor = 'default';
-        });
-    }
-
-    let mybId;
-
-    function cancelMyeonbulReq(myeonbulId) {
-        mybId = myeonbulId;
-        mdcInstance.cancelDialog.open();
-    }
-
-    function cancelMyeonbulConfirm() {
-        closeSnackbar();
-        document.getElementById("iProg").style.opacity = 1;
-        mdcInstance.loading.open();
-        fetch('https://api.iasa.kr/myeonbul?id=' + mybId, {
-            method: 'DELETE'
-        }).then(function (response) {
-            document.getElementById("iProg").style.opacity = 0;
-            if (response.status != 200) {
-                document.getElementById('reTry').onclick = cancelMyeonbulConfirm();
-                closeSnackbar();
-                mdcInstance.fail.open();
-                return;
-            }
-            closeSnackbar();
-            mdcInstance.reqsucc.open();
-            getMyeonbul();
-            return;
-        }).catch(function (err) {
-            document.getElementById("iProg").style.opacity = 0;
-            document.getElementById('reTry').onclick = cancelMyeonbulConfirm();
-            closeSnackbar();
-            mdcInstance.fail.open();
-            return;
-        })
-    }
-
-    function requestMyeonbul() {
-        closeSnackbar();
-        if (!mdcInstance.mybTeacher.value || !mdcInstance.mybReason.value || (!document.getElementById('mybTime1').checked && !document.getElementById('mybTime2').checked)) {
-            closeSnackbar();
-            mdcInstance.reqForm.open();
-            return;
-        }
-        document.getElementById("iProg").style.opacity = 1;
-        mdcInstance.loading.open();
-        document.getElementById('myeonbulSubmit').disabled = true;
-        let stTime, fiTime;
-        if (document.getElementById('mybTime1').checked && !document.getElementById('mybTime2').checked) {
-            stTime = 1920;
-            fiTime = 2100;
-        }
-        if (!document.getElementById('mybTime1').checked && document.getElementById('mybTime2').checked) {
-            stTime = 2130;
-            fiTime = 2330;
-        }
-        if (document.getElementById('mybTime1').checked && document.getElementById('mybTime2').checked) {
-            stTime = 1920;
-            fiTime = 2330;
-        }
-        fetch('https://api.iasa.kr/myeonbul', {
-            method: 'POST',
-            headers: {'content-type': 'application/json'},
-            body: JSON.stringify({
-                title: mdcInstance.mybReason.value,
-                students: [2018001],
-                teacher: mdcInstance.mybTeacher.value,
-                place: mdcInstance.mybPlace.value ? mdcInstance.mybPlace.value : "선생님이 지정",
-                date: parseInt(getDate()),
-                start_time: stTime,
-                end_time: fiTime
-            })
-        }).then(function (response) {
-            if (response.status != 201) {
-                document.getElementById('reTry').onclick = requestMyeonbul;
-                closeSnackbar();
-                mdcInstance.fail.open();
-                return;
-            }
-            mdcInstance.mybTeacher.value = "";
-            mdcInstance.mybPlace.value = "";
-            mdcInstance.mybReason.value = "";
-            document.getElementById('mybTime1').checked = false;
-            document.getElementById('mybTime2').checked = false;
-            closeSnackbar();
-            mdcInstance.reqsucc.open();
-            getMyeonbul();
-        }).catch(function (err) {
-            document.getElementById('reTry').onclick = requestMyeonbul;
-            closeSnackbar();
-            mdcInstance.fail.open();
-        })
-        document.getElementById('myeonbulSubmit').disabled = false;
-        document.getElementById("iProg").style.opacity = 0;
-    }
-
     window.addEventListener('DOMContentLoaded', function () {
+        if (!getQueryString('sec')) history.replaceState(null, null, '/index.html?sec=myeonbul');
+        activeSection = getQueryString('sec');
+        removeClass(document.getElementById('sec_' + activeSection), 'section-disabled');
+        addClass(document.getElementById('sec_' + activeSection), 'section-visible-on-start');
+        addClass(document.getElementById('li_' + activeSection), 'mdc-list-item--activated');
         initMdc();
         modalHandle();
         if (isIE()) mdcInstance.noIE.open();
-        if (!String.prototype.includes) {
-            String.prototype.includes = function (search, start) {
-                if (typeof start !== 'number') {
-                    start = 0;
-                }
-
-                if (start + search.length > this.length) {
-                    return false;
-                } else {
-                    return this.indexOf(search, start) !== -1;
-                }
-            };
-        }
-        if (!String.prototype.padStart) {
-            String.prototype.padStart = function padStart(targetLength, padString) {
-                targetLength = targetLength >> 0; //truncate if number or convert non-number to 0;
-                padString = String((typeof padString !== 'undefined' ? padString : ' '));
-                if (this.length > targetLength) {
-                    return String(this);
-                } else {
-                    targetLength = targetLength - this.length;
-                    if (targetLength > padString.length) {
-                        padString += padString.repeat(targetLength / padString.length); //append to original to ensure we are longer than needed
-                    }
-                    return padString.slice(0, targetLength) + String(this);
-                }
-            };
-        }
         document.getElementById("searchTeacher").addEventListener('input', function () {
             searchRes(document.getElementById("searchTeacher").value);
         });
@@ -564,21 +373,21 @@
 <aside class="mdc-drawer mdc-drawer--dismissible mdc-top-app-bar--fixed-adjust">
     <div class="mdc-drawer__content">
         <nav class="mdc-list">
-            <a class="mdc-list-item mdc-ripple" onclick="selectSection('alert')">
+            <a id="li_alert" class="mdc-list-item mdc-ripple" onclick="selectSection('alert')">
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">notifications</i>
                 <span class="mdc-list-item__text">알림</span>
             </a>
-            <a class="mdc-list-item mdc-ripple" aria-current="page" onclick="selectSection('meal')">
+            <a id="li_meal" class="mdc-list-item mdc-ripple" aria-current="page" onclick="selectSection('meal')">
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">fastfood</i>
                 <span class="mdc-list-item__text">급식</span>
             </a>
-            <a class="mdc-list-item mdc-ripple" onclick="selectSection('calendar')">
+            <a id="li_calendar" class="mdc-list-item mdc-ripple" onclick="selectSection('calendar')">
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">calendar_today</i>
                 <span class="mdc-list-item__text">학사일정</span>
             </a>
             <hr class="mdc-list-divider">
             <h6 class="mdc-list-group__subheader">신청</h6>
-            <a class="mdc-list-item mdc-list-item--activated mdc-ripple" onclick="selectSection('myeonbul')">
+            <a id="li_myeonbul" class="mdc-list-item  mdc-ripple" onclick="selectSection('myeonbul')">
                 <i class="material-icons mdc-list-item__graphic" aria-hidden="true">event</i>
                 <span class="mdc-list-item__text">면불 신청</span>
             </a>
@@ -588,19 +397,19 @@
 <div class="mdc-drawer-scrim" id="modalBack"></div>
 <div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust" id="mdc-content">
     <main class="main-content" id="main-content">
-        <div id="meal" class="section section-disabled">
+        <div id="sec_meal" class="section section-disabled">
             <h1>급식</h1>
             <p>조금만 기다리면 멋진 페이지를 만날 수 있을거에요.</p>
         </div>
-        <div id="alert" class="section section-disabled">
+        <div id="sec_alert" class="section section-disabled">
             <h1>알림</h1>
             <p>조금만 기다리면 멋진 페이지를 만날 수 있을거에요.</p>
         </div>
-        <div id="calendar" class="section section-disabled">
+        <div id="sec_calendar" class="section section-disabled">
             <h1>학사일정</h1>
             <p>조금만 기다리면 멋진 페이지를 만날 수 있을거에요.</p>
         </div>
-        <div id="myeonbul" class="section section-visible-on-start">
+        <div id="sec_myeonbul" class="section section-disabled">
             <h1>면불 신청</h1>
             <div class="mdc-layout-grid">
                 <div class="mdc-layout-grid__inner">
