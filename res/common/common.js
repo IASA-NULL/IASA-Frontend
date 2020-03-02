@@ -1,3 +1,7 @@
+if (location.protocol != 'https:') {
+    location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+}
+
 let mdcInstance = Object();
 
 function setCookie(cname, cvalue, exdays) {
@@ -57,6 +61,8 @@ let __scroll_elem;
 
 
 window.addEventListener('DOMContentLoaded', function () {
+    for (var i = 0; i < document.querySelectorAll('.mdc-ripple').length; i++)
+        mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
     __scroll_elem = document.getElementById('main-content');
     if (!String.prototype.includes) {
         String.prototype.includes = function (search, start) {
@@ -144,7 +150,8 @@ function logOut() {
 }
 
 function logIn() {
-    location.replace('/login/index.html?next=' + btoa(location.pathname + location.search));
+    if (location.pathname == '/about.html') location.href = '/login/';
+    else location.replace('/login/index.html?next=' + btoa(location.pathname + location.search));
 }
 
 function isLogin() {

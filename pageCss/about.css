@@ -1,0 +1,54 @@
+#body p {
+    font-size: 2em;
+}
+
+#body h2 {
+    font-size: 3em;
+}
+
+main {
+    width: 100%;
+}
+
+#body {
+    padding: 10px;
+    min-height: calc(100vh - 247px - 68px);
+}
+
+header * {
+    background: #5351db;
+    color: white !important;
+    transition: all .5s;
+}
+
+.header-top {
+    background: white;
+    color: #5351db !important;
+    transition: all .3s;
+}
+
+.header-top * {
+    background: white;
+    color: #5351db !important;
+    transition: all .3s;
+}
+
+#navLoginBtn {
+    border-radius: 100px;
+    padding: 20px;
+    margin-right: 5px;
+    border-color: white;
+    font-size: 120%;
+    width: 140px;
+    transition: all .3s;
+}
+
+.loginBtn-top {
+    width: 80px !important;
+    transition: all .3s;
+}
+
+#accountMenu * {
+    color: black !important;
+    background: white !important;
+}

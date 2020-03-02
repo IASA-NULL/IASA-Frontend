@@ -2,11 +2,6 @@
 <html>
 
 <head>
-    <script>
-        if (location.protocol != 'https:') {
-            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-        }
-    </script>
     <meta charset="UTF-8">
     <title>로그인 - IASA</title>
     <link href="/res/mdc-3.2.0.min.css" rel="stylesheet">
@@ -178,6 +173,14 @@
 <script src="/pageJs/loginForm.js"></script>
 <script src="/pageJs/signup.js"></script>
 <script>
+    if (isLogin()) {
+        try {
+            if (getQueryString('next')) location.replace(atob(getQueryString('next')));
+            else location.replace('/');
+        } catch (e) {
+            location.replace('/');
+        }
+    }
     document.body.style.cursor = 'wait';
     let currentForm = "id", nextForm = "next", currentState = 0, prevForm = "id";
 
@@ -301,7 +304,7 @@
                                 <div class="mdc-notched-outline">
                                     <div class="mdc-notched-outline__leading"></div>
                                     <div class="mdc-notched-outline__notch">
-                                        <label for="text-field-hero-input" class="mdc-floating-label">아이디</label>
+                                        <label for="uid" class="mdc-floating-label">아이디</label>
                                     </div>
                                     <div class="mdc-notched-outline__trailing"></div>
                                 </div>
@@ -357,7 +360,7 @@
                                 <div class="mdc-notched-outline">
                                     <div class="mdc-notched-outline__leading"></div>
                                     <div class="mdc-notched-outline__notch">
-                                        <label for="text-field-hero-input" class="mdc-floating-label">비밀번호</label>
+                                        <label for="upass" class="mdc-floating-label">비밀번호</label>
                                     </div>
                                     <div class="mdc-notched-outline__trailing"></div>
                                 </div>
@@ -400,7 +403,7 @@
                                 <div class="mdc-notched-outline">
                                     <div class="mdc-notched-outline__leading"></div>
                                     <div class="mdc-notched-outline__notch">
-                                        <label for="text-field-hero-input" class="mdc-floating-label">이름</label>
+                                        <label for="fidName" class="mdc-floating-label">이름</label>
                                     </div>
                                     <div class="mdc-notched-outline__trailing"></div>
                                 </div>
@@ -410,7 +413,7 @@
                                 <div class="mdc-notched-outline">
                                     <div class="mdc-notched-outline__leading"></div>
                                     <div class="mdc-notched-outline__notch">
-                                        <label for="text-field-hero-input" class="mdc-floating-label">학번</label>
+                                        <label for="fidStuid" class="mdc-floating-label">학번</label>
                                     </div>
                                     <div class="mdc-notched-outline__trailing"></div>
                                 </div>

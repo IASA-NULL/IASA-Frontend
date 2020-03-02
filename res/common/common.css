@@ -1,17 +1,13 @@
 body {
     display: flex;
     height: 100vh;
+    width: 100vw;
     margin: 0;
     overflow: hidden;
 }
 
 .mdc-drawer-app-content {
     overflow: hidden !important;
-}
-
-main {
-    margin: 5px 0 0;
-    height: calc(100% - 5px) !important;
 }
 
 @font-face {
@@ -110,5 +106,5 @@ main > footer a {
 }
 
 header a {
-    color: white !important;
+    color: white;
 }

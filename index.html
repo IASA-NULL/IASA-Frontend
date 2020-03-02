@@ -2,11 +2,6 @@
 <html>
 
 <head>
-    <script>
-        if (location.protocol != 'https:') {
-            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-        }
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IASA</title>
@@ -81,88 +76,17 @@
     <script src="res/teacher.2019.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/res/common/common.css">
-    <style>
-
-        .section-visible-on-start {
-            opacity: 0;
-            animation: fadein 0.3s ease-out;
-            animation-fill-mode: forwards;
-        }
-
-        .section-visible {
-            opacity: 0;
-            animation: fadein 0.2s ease-out;
-            animation-delay: 0.21s;
-            animation-fill-mode: forwards;
-        }
-
-        .section-disabled {
-            display: none;
-        }
-
-        .section-hidden {
-            opacity: 1;
-            animation: fadeout 0.2s ease-in;
-            animation-fill-mode: forwards;
-        }
-
-        @keyframes fadein {
-            0% {
-                opacity: 0;
-                padding-bottom: 0;
-                padding-top: 20px;
-            }
-
-            100% {
-                opacity: 1;
-                padding-bottom: 10px;
-                padding-top: 10px;
-            }
-        }
-
-        @keyframes fadeout {
-            0% {
-                opacity: 1;
-                padding-bottom: 10px;
-                padding-top: 10px;
-            }
-
-            100% {
-                opacity: 0;
-                padding-bottom: 20px;
-                padding-top: 0;
-            }
-        }
-
-        .myb-button {
-            margin: 10px;
-        }
-
-        .myb-card * {
-            font-weight: lighter;
-        }
-
-        .myb-card > div {
-            padding: 10px;
-        }
-
-        .section {
-            margin-left: 15px;
-            margin-right: 15px;
-            min-height: calc(100vh - 247px - 68px);
-        }
-    </style>
+    <link rel="stylesheet" href="/pageCss/index.css">
 </head>
 
 <body>
 <script src="/res/common/common.js"></script>
 <script src="/pageJs/myeonbul.js"></script>
 <script>
+    if (!isLogin()) location.replace('/about.html');
     let activeSection = "myeonbul";
 
     function initMdc() {
-        for (var i = 0; i < document.querySelectorAll('.mdc-ripple').length; i++)
-            mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
         mdcInstance.topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
         mdcInstance.topAppBar.setScrollTarget(document.getElementById('main-content'));
         mdcInstance.topAppBar.listen('MDCTopAppBar:nav', function (e) {
@@ -330,7 +254,6 @@
         }, 400);
         getMyeonbul();
     });
-    if (!getCookie('auth')) location.replace('/login');
 </script>
 <header class="mdc-top-app-bar app-bar mdc-top-app-bar--fixed" id="app-bar">
     <div role="progressbar" class="mdc-linear-progress fade"
@@ -347,7 +270,7 @@
     <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
             <a class="demo-menu material-icons mdc-top-app-bar__navigation-icon" style="cursor: pointer;">menu</a>
-            <span class="mdc-top-app-bar__title">IASA</span>
+            <span class="mdc-top-app-bar__title"><a href="/">IASA Portal</a></span>
         </section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
             <div class="mdc-menu-surface--anchor">
@@ -428,7 +351,7 @@
                                 <div class="mdc-select__selected-text"></div>
                             </div>
                             <div class="mdc-select__menu mdc-menu mdc-menu-surface demo-width-class"
-                                 style="width:inherit;">
+                                 style="width:initial;">
                                 <ul class="mdc-list">
                                     <li class="mdc-list-item mdc-list-item--selected" data-value=""
                                         aria-selected="true" style="display: none;"></li>
@@ -436,7 +359,7 @@
                                         <i class="material-icons mdc-text-field__icon" tabindex="0"
                                            role="button">search</i>
                                         <input type="text" id="searchTeacher" class="mdc-text-field__input">
-                                        <label class="mdc-floating-label" for="my-text-field">검색</label>
+                                        <label class="mdc-floating-label" for="searchTeacher">검색</label>
                                         <div class="mdc-line-ripple"></div>
                                     </div>
                                     <div class="subject">

@@ -1,0 +1,73 @@
+
+.section-visible-on-start {
+    opacity: 0;
+    animation: fadein 0.3s ease-out;
+    animation-fill-mode: forwards;
+}
+
+.section-visible {
+    opacity: 0;
+    animation: fadein 0.2s ease-out;
+    animation-delay: 0.21s;
+    animation-fill-mode: forwards;
+}
+
+.section-disabled {
+    display: none;
+}
+
+.section-hidden {
+    opacity: 1;
+    animation: fadeout 0.2s ease-in;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+        padding-bottom: 0;
+        padding-top: 20px;
+    }
+
+    100% {
+        opacity: 1;
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+}
+
+@keyframes fadeout {
+    0% {
+        opacity: 1;
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+
+    100% {
+        opacity: 0;
+        padding-bottom: 20px;
+        padding-top: 0;
+    }
+}
+
+.myb-button {
+    margin: 10px;
+}
+
+.myb-card * {
+    font-weight: lighter;
+}
+
+.myb-card > div {
+    padding: 10px;
+}
+
+.section {
+    margin-left: 15px;
+    margin-right: 15px;
+    min-height: calc(100vh - 247px - 68px);
+}
+
+main {
+    margin-top: 4px;
+}

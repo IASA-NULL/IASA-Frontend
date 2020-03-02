@@ -1,6 +1,4 @@
 function initMdc() {
-    for (var i = 0; i < document.querySelectorAll('.mdc-ripple').length; i++)
-        mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
     mdcInstance.topAppBar = mdc.topAppBar.MDCTopAppBar.attachTo(document.getElementById('app-bar'));
     mdcInstance.topAppBar.setScrollTarget(document.getElementById('main-content'));
     mdcInstance.topAppBar.listen('MDCTopAppBar:nav', function (e) {
