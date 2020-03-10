@@ -10,9 +10,26 @@ main {
     width: 100%;
 }
 
-#body {
-    padding: 10px;
-    min-height: calc(100vh - 247px - 68px);
+@media (min-width: 600px) {
+    #body {
+        padding: 10px;
+        min-height: calc(100vh - 247px - 68px);
+    }
+
+    #firstSec {
+        padding: 50px;
+        height: calc(100vh - 170px);
+    }
+}
+
+@media (max-width: 599px) {
+    #firstSec {
+        padding: 10px;
+    }
+
+    #img1 {
+        margin: 20px;
+    }
 }
 
 header * {
@@ -35,20 +52,29 @@ header * {
 
 #navLoginBtn {
     border-radius: 100px;
-    padding: 20px;
     margin-right: 5px;
     border-color: white;
     font-size: 120%;
     width: 140px;
     transition: all .3s;
+    height: 45px;
 }
 
 .loginBtn-top {
-    width: 80px !important;
+    width: 20px !important;
     transition: all .3s;
+}
+
+#navLoginBtn:not(.loginBtn-top):before, #navLoginBtn:not(.loginBtn-top):after {
+    background: white;
 }
 
 #accountMenu * {
     color: black !important;
     background: white !important;
+}
+
+
+main {
+    margin-top: 0 !important;
 }

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>로그인 - IASA</title>
+    <title>로그인 - IASA Portal</title>
     <link href="/res/mdc-3.2.0.min.css" rel="stylesheet">
     <script src="/res/mdc-3.2.0.min.js"></script>
     <script src="/res/quagga.min.js" async></script>
@@ -542,17 +542,17 @@
                 <div class="mdc-menu mdc-menu-surface" id="userrightMenu">
                     <ul class="mdc-list" role="menu" aria-hidden="true"
                         aria-orientation="vertical" tabindex="-1">
-                        <a href="/terms.html">
+                        <a href="/terms">
                             <li class="mdc-list-item mdc-ripple" role="menuitem">
                                 <span class="mdc-list-item__text">사용자 약관</span>
                             </li>
                         </a>
-                        <a href="/userdata.html">
+                        <a href="/userdata">
                             <li class="mdc-list-item mdc-ripple" role="menuitem">
                                 <span class="mdc-list-item__text">개인정보처리방침</span>
                             </li>
                         </a>
-                        <a href="/opensource.html">
+                        <a href="/opensource">
                             <li class="mdc-list-item mdc-ripple" role="menuitem">
                                 <span class="mdc-list-item__text">오픈소스 사용고지</span>
                             </li>

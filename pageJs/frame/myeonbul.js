@@ -1,3 +1,28 @@
+function initMdc_myeonbul() {
+    mdcInstance.mybReason = new mdc.textField.MDCTextField(document.getElementById("mybReason"));
+    mdcInstance.mybPlace = new mdc.textField.MDCTextField(document.getElementById("mybPlace"));
+    mdcInstance.findTeacher = new mdc.textField.MDCTextField(document.getElementById("findTeacher"));
+    mdcInstance.reqsucc = new mdc.snackbar.MDCSnackbar(document.getElementById('doneRequest'));
+    mdcInstance.fail = new mdc.snackbar.MDCSnackbar(document.getElementById('reqFailed'));
+    mdcInstance.loading = new mdc.snackbar.MDCSnackbar(document.getElementById('loadingSnackbar'));
+    mdcInstance.reqForm = new mdc.snackbar.MDCSnackbar(document.getElementById('formRequired'));
+    mdcInstance.cancelDialog = new mdc.dialog.MDCDialog(document.getElementById('askCancelMyb'));
+}
+
+function frameInit_myeonbul() {
+    let menuLi = document.querySelectorAll('.mdc-select__menu');
+    for (var i = 0; i < menuLi.length; i++) {
+        if (menuLi[i].parentNode.nodeName == "BODY") menuLi[i].remove();
+    }
+    mdcInstance.mybTeacher = new mdc.select.MDCSelect(document.getElementById("mybTeacher"));
+    getMyeonbul();
+    modalHandle();
+    document.getElementById("searchTeacher").addEventListener('input', function () {
+        searchRes(document.getElementById("searchTeacher").value);
+    });
+    searchRes("");
+}
+
 function getMyeonbul() {
     document.body.style.cursor = 'wait';
     document.getElementById('myeonbulList').innerHTML = '<tr class="mdc-data-table__row"><td class="mdc-data-table__cell" colspan="5">불러오는 중...</td></tr>';
@@ -57,9 +82,10 @@ function getMyeonbul() {
         for (var i = 0; i < document.querySelectorAll('.mdc-ripple').length; i++)
             mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
         document.body.style.cursor = 'default';
+        loadFin();
     }).catch(function (err) {
-        mdcInstance.errinit.open();
         document.body.style.cursor = 'default';
+        mdcInstance.errinit.open();
     });
 }
 

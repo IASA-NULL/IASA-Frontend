@@ -3,7 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IASA Portal 오픈소스 사용고지</title>
+    <title>오픈소스 사용고지 - IASA Portal</title>
+    <!--Splash-->
+    <script>var timerStart = Date.now();</script>
+    <style>
+        .fade {
+            transition: opacity .5s ease;
+        }
+
+        #splashSvg {
+            max-width: 60vw;
+            height: auto;
+            transform: translate(calc(50vw - 50%), calc(50vh - 50%));
+            background: initial;
+        }
+
+        #logo-flag {
+            opacity: 0;
+            animation: logo-obj-anim .5s ease forwards;
+            animation-delay: .2s;
+        }
+
+        #logo-school {
+            opacity: 0;
+            animation: logo-obj-anim .5s ease forwards;
+            animation-delay: .5s;
+        }
+
+        @keyframes logo-obj-anim {
+            from {
+                opacity: 0;
+                transform: translate(-25px, -25px);
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        #logo-l1 {
+            stroke-dasharray: 160.4;
+            stroke-dashoffset: 160.4;
+            animation: logo-dash-1 .1s linear forwards;
+            animation-delay: .1s;
+            opacity: 0;
+        }
+
+        @keyframes logo-dash-1 {
+            from {
+                opacity: 1;
+            }
+            to {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        #logo-l2 {
+            stroke-dasharray: 239.1;
+            stroke-dashoffset: 239.1;
+            animation: logo-dash-2 .2s ease forwards;
+            animation-delay: 0s;
+            opacity: 0;
+        }
+
+        @keyframes logo-dash-2 {
+            from {
+                opacity: 1;
+            }
+            to {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        #logo-l3 {
+            stroke-dasharray: 447.8;
+            stroke-dashoffset: 447.8;
+            animation: logo-dash-3 .2s linear forwards;
+            animation-delay: .2s;
+            opacity: 0;
+        }
+
+        @keyframes logo-dash-3 {
+            from {
+                opacity: 1;
+            }
+            to {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        #logo-l4 {
+            stroke-dasharray: 421.1;
+            stroke-dashoffset: 421.1;
+            animation: logo-dash-4 .5s ease forwards;
+            animation-delay: .4s;
+            opacity: 0;
+        }
+
+        @keyframes logo-dash-4 {
+            from {
+                opacity: 1;
+            }
+            to {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        #logo-l5 {
+            stroke-dasharray: 418.1;
+            stroke-dashoffset: 418.1;
+            animation: logo-dash-5 .5s ease forwards;
+            animation-delay: .3s;
+            opacity: 0;
+        }
+
+        @keyframes logo-dash-5 {
+            from {
+                opacity: 1;
+            }
+            to {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+        #logo-l6 {
+            stroke-dasharray: 418.1;
+            stroke-dashoffset: 418.1;
+            animation: logo-dash-6 .5s ease forwards;
+            animation-delay: .5s;
+            opacity: 0;
+        }
+
+        @keyframes logo-dash-6 {
+            from {
+                opacity: 1;
+            }
+            to {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+        }
+
+    </style>
+    <div style="z-index:5000;height:100vh;width:100vw;margin:0;padding:0;position: fixed;background:#ffffff;opacity:1;top:0;left:0;cursor:wait;"
+         id="preloader" class="fade">
+        <svg id="splashSvg" width="504" height="489" viewBox="0 0 504 489" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(-22 -115)">
+                <path id="logo-flag" d="M120 154l135 78.5L120 311z" fill="#FFFF2D" fill-rule="evenodd"/>
+                <path id="logo-school" fill="#5351DB" d="M127 365h389v233H127z" opacity="0"/>
+                <path d="M237.462 202.729 98.5001 122.5 " stroke="#404040" stroke-width="13.3333" stroke-linecap="round"
+                      stroke-miterlimit="8" fill="none" fill-rule="evenodd" id="logo-l1"/>
+                <path d="M0 0 207.128 119.585" stroke="#404040" stroke-width="13.3333" stroke-linecap="round"
+                      stroke-miterlimit="8" fill="none" fill-rule="evenodd" transform="matrix(1 0 0 -1 30.5001 323.085)"
+                      id="logo-l2"/>
+                <path d="M97.5001 122.5 97.5002 570.347" stroke="#404040" stroke-width="13.3333" stroke-linecap="round"
+                      stroke-miterlimit="8" fill="none" fill-rule="evenodd" id="logo-l3"/>
+                <path d="M97.5001 570.5 518.665 570.5" stroke="#404040" stroke-width="13.3333" stroke-linecap="round"
+                      stroke-miterlimit="8" fill="none" fill-rule="evenodd" id="logo-l4"/>
+                <path d="M0 0 0.000104987 256.624" stroke="#404040" stroke-width="13.3333" stroke-linecap="round"
+                      stroke-miterlimit="8" fill="none" fill-rule="evenodd" transform="matrix(1 0 0 -1 487.5 597.124)"
+                      id="logo-l5"/>
+                <path d="M0 0 418.119 0.000104987" stroke="#404040" stroke-width="13.3333" stroke-linecap="round"
+                      stroke-miterlimit="8" fill="none" fill-rule="evenodd"
+                      transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 486.619 339.5)" id="logo-l6"/>
+            </g>
+        </svg>
+    </div>
+    <!--Splash-->
     <link href="/res/mdc-3.2.0.min.css" rel="stylesheet">
     <script src="/res/mdc-3.2.0.min.js"></script>
     <script src="/res/fetch.umd.js"></script>
@@ -86,6 +256,9 @@
             </a>
             <a class="mdc-list-item mdc-ripple" onclick="scrollToCont('padstart');">
                 <span class="mdc-list-item__text">stringpadstart-polyfill</span>
+            </a>
+            <a class="mdc-list-item mdc-ripple" onclick="scrollToCont('remove');">
+                <span class="mdc-list-item__text">remove-polyfill</span>
             </a>
             <a class="mdc-list-item mdc-ripple" onclick="scrollToCont('icons');">
                 <span class="mdc-list-item__text">Google Material Icons</span>
@@ -242,45 +415,47 @@
             <p>Copyright (c) 2014 Taylor Hakes</p>
             <p>Copyright (c) 2014 Forbes Lindesay</p>
             <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
-                associated
-                documentation files (the "Software"), to deal in the Software without restriction, including without
-                limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-                of
-                the Software, and to permit persons to whom the Software is furnished to do so, subject to the following
-                conditions:</p>
+                associated documentation files (the "Software"), to deal in the Software without restriction, including
+                without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the
+                following conditions:</p>
             <p>The above copyright notice and this permission notice shall be included in all copies or substantial
-                portions
-                of the Software.</p>
+                portions of the Software.</p>
             <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-                LIMITED
-                TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
-                SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
-                AN
-                ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-                USE OR
-                OTHER DEALINGS IN THE SOFTWARE.</p>
+                LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+                NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+                WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+                SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
             <h2 id="cont_padstart">stringpadstart-polyfill <a
                     href="https://vanillajstoolkit.com/polyfills/stringpadstart/">(프로젝트 사이트)</a></h2>
             <h4>IE브라우저 stringpadstart polyfill용</h4>
             <p>Copyright © Chris Ferdinandi</p>
             <p> Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
-                associated
-                documentation files (the “Software”), to deal in the Software without restriction, including without
-                limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-                of
-                the Software, and to permit persons to whom the Software is furnished to do so, subject to the following
-                conditions:</p>
+                associated documentation files (the “Software”), to deal in the Software without restriction, including
+                without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the
+                following conditions:</p>
             <p>The above copyright notice and this permission notice shall be included in all copies or substantial
-                portions
-                of the Software.</p>
+                portions of the Software.</p>
             <p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-                LIMITED
-                TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT
-                SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
-                AN
-                ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-                USE OR
-                OTHER DEALINGS IN THE SOFTWARE.</p>
+                LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+                NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+                WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+                SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+            <h2 id="cont_remove">remove-polyfill <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/remove">(프로젝트 사이트)</a></h2>
+            <h4>IE브라우저 .remove polyfill용</h4>
+            <p>Attribution is given to the original content.</p>
+            <p>Please attribute "Mozilla Contributors" and include a hyperlink (online) or URL (in print) to the
+                specific wiki page for the content being sourced. For example, to provide attribution for this article,
+                you can write:</p>
+            <p>About MDN by Mozilla Contributors is licensed under CC-BY-SA 2.5.</p>
+            <p>Note that in the example, "Mozilla Contributors" links to the history of the cited page. See Best
+                practices for attribution for further explanation.</p>
+            <p>Your reuse is published under the same license as the original content — CC-BY-SA v2.5 or any later
+                version.</p>
+
             <h2 id="cont_icons">Google Material Design Icons <a
                     href="https://material.io/resources/icons/?style=baseline">(프로젝트 사이트)</a></h2>
             <h4>기타 아이콘용</h4>
@@ -497,11 +672,11 @@
                         <div class="mdc-layout-grid">
                             <div class="mdc-layout-grid__inner">
                                 <div class=" mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
-                                    <a href="/terms.html">이용약관</a></div>
+                                    <a href="/terms">이용약관</a></div>
                                 <div class=" mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
-                                    <a href="/userdata.html">개인정보처리방침</a></div>
+                                    <a href="/userdata">개인정보처리방침</a></div>
                                 <div class=" mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
-                                    <a href="/opensource.html">오픈소스 사용고지</a></div>
+                                    <a href="/opensource">오픈소스 사용고지</a></div>
                             </div>
                         </div>
                     </div>

@@ -85,6 +85,13 @@ let laY = -1;
 
 window.addEventListener('load', function () {
     document.getElementById("iProg").style.opacity = 0;
+    document.body.style.cursor = 'default';
+    setTimeout(function () {
+        document.getElementById("preloader").style.opacity = 0;
+        setTimeout(function () {
+            document.getElementById("preloader").style.display = "none";
+        }, 400);
+    }, Math.max(0, 700 - Date.now() + timerStart));
     setInterval(function () {
         lists = document.querySelector('aside').querySelectorAll('.mdc-list-item');
         headers = document.querySelectorAll('h2');

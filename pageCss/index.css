@@ -68,6 +68,89 @@
     min-height: calc(100vh - 247px - 68px);
 }
 
-main {
-    margin-top: 4px;
+@media (min-width: 1025px) {
+    table {
+        width: calc(100vw - 311px) !important;
+    }
+
+    .mdc-data-table {
+        width: calc(100vw - 306px) !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    table {
+        width: calc(100vw - 55px) !important;
+    }
+
+    .mdc-data-table {
+        width: calc(100vw - 50px) !important;
+    }
+}
+
+#prevMeal {
+    position: relative;
+    top: -175px;
+    height: 50px;
+    background: #5351db;
+    color: white;
+    width: 50px;
+    border-radius: 100%;
+    left: -10px;
+    font-size: 30px;
+    line-height: 50px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#nextMeal {
+    position: relative;
+    top: -175px;
+    height: 50px;
+    background: #5351db;
+    color: white;
+    width: 50px;
+    border-radius: 100%;
+    left: calc(100% - 105px);
+    font-size: 30px;
+    line-height: 50px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.mealCardIntro1 {
+    opacity: 0;
+    animation: mealCardIntroRight .3s ease forwards;
+    animation-delay: .1s;
+}
+
+.mealCardIntro2 {
+    opacity: 0;
+    animation: mealCardIntroRight .3s ease forwards;
+    animation-delay: .2s;
+}
+
+.mealCardIntro3 {
+    opacity: 0;
+    animation: mealCardIntroRight .3s ease forwards;
+    animation-delay: .3s;
+}
+
+.mealCardIntro4 {
+    opacity: 0;
+    animation: mealCardIntroRight .3s ease forwards;
+    animation-delay: .4s;
+}
+
+@keyframes mealCardIntroRight {
+    from {
+        margin-left: 40px;
+        margin-right: -20px;
+        opacity: 0;
+    }
+    to {
+        margin-left: 10px;
+        margin-right: 10px;
+        opacity: 1;
+    }
 }

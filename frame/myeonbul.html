@@ -1,0 +1,361 @@
+<h1>면불 신청</h1>
+<div class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2-desktop mdc-layout-grid__cell--span-2-tablet mdc-layout-grid__cell--span-12-phone">
+            <div class="mdc-select mdc-select--outlined" id="mybTeacher" style="width:100%;"
+                 onclick="searchRes('');document.getElementById('searchTeacher').value='';setTimeout(function(){if(document.querySelector('.mdc-menu').scrollTop == 0)mdcInstance.findTeacher.focus();}, 300);">
+                <div class="mdc-select__anchor" style="width:100%;">
+                    <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                            <label class="mdc-floating-label" style="pointer-events: none;">담당 선생님</label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                    <i class="mdc-select__dropdown-icon"></i>
+                    <div class="mdc-select__selected-text"></div>
+                </div>
+                <div class="mdc-select__menu mdc-menu mdc-menu-surface demo-width-class"
+                     style="width:initial;">
+                    <ul class="mdc-list">
+                        <li class="mdc-list-item mdc-list-item--selected" data-value=""
+                            aria-selected="true" style="display: none;"></li>
+                        <div class="mdc-text-field mdc-text-field--with-leading-icon" id="findTeacher">
+                            <i class="material-icons mdc-text-field__icon" tabindex="0"
+                               role="button">search</i>
+                            <input type="text" id="searchTeacher" class="mdc-text-field__input">
+                            <label class="mdc-floating-label" for="searchTeacher">검색</label>
+                            <div class="mdc-line-ripple"></div>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">국어</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019001">
+                                김진영
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019002">
+                                이유희
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019003">
+                                이은정
+                            </li>
+                            <hr>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">영어</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019004">
+                                김여진
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019005">
+                                김진영
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019006">
+                                홍영주
+                            </li>
+                            <hr>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">수학</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019007">
+                                김동완
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019008">
+                                김완일
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019009">
+                                박은진
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019010">
+                                배태영
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019011">
+                                서순진
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019012">
+                                윤정아
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019013">
+                                이동화
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019014">
+                                최정심
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019015">
+                                허석
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019016">
+                                황선미
+                            </li>
+                            <hr>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">물리</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019017">
+                                김시영
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019018">
+                                김형섭
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019019">
+                                이윤서
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019020">
+                                이지영
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019021">
+                                임헌권
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019022">
+                                정수정
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019023">
+                                조대기
+                            </li>
+                            <hr>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">화학</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019024">
+                                김금희
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019025">
+                                김은경
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019026">
+                                원기재
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019027">
+                                이승희
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019028">
+                                장미경
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019029">
+                                한가연
+                            </li>
+                            <hr>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">생명과학</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019030">
+                                김우태
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019031">
+                                김은성
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019032">
+                                윤덕한
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019033">
+                                장경애
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019034">
+                                조항설
+                            </li>
+                            <hr>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">지구과학</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019035">
+                                안주영
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019036">
+                                이기무
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019037">
+                                최종근
+                            </li>
+                            <hr>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">정보</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019038">
+                                김규현
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019039">
+                                김명권
+                            </li>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019040">
+                                최용운
+                            </li>
+                            <hr>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">한국사</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019041">
+                                노관민
+                            </li>
+                            <hr>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">음악</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019042">
+                                황선랑
+                            </li>
+                            <hr>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">미술</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019043">
+                                김은주
+                            </li>
+                            <hr>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">체육</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019044">
+                                최마리
+                            </li>
+                            <hr>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">심리학</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019045">
+                                조은교
+                            </li>
+                            <hr>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">법과정치</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019046">
+                                한은경
+                            </li>
+                            <hr>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">Wee클래스</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019047">
+                                김종주
+                            </li>
+                            <hr>
+                        </div>
+                        <div class="subject">
+                            <p style="font-size:80%;margin:5px;margin-left:10px;">도서관</p>
+                            <li class="mdc-list-item mdc-ripple teacher" data-value="2019048">
+                                박해인
+                            </li>
+                            <hr>
+                        </div>
+                        <p style="margin-left:10px;" id="noResult">검색 결과가 없습니다.</p>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2-desktop mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-12-phone">
+            <div class="mdc-text-field mdc-text-field--outlined" id="mybPlace" style="width:100%;">
+                <input class="mdc-text-field__input">
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label for="text-field-hero-input" class="mdc-floating-label">면불 장소</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+            <div class="mdc-text-field-helper-line">
+                <div class="mdc-text-field-helper-text">채우지 않으면 선생님이 지정합니다.</div>
+            </div>
+        </div>
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-5-desktop mdc-layout-grid__cell--span-5-tablet mdc-layout-grid__cell--span-12-phone">
+            <div class="mdc-text-field mdc-text-field--outlined" id="mybReason"
+                 style="width:100%;">
+                <input class="mdc-text-field__input">
+                <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                        <label for="text-field-hero-input" class="mdc-floating-label">면불
+                            사유</label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                </div>
+            </div>
+        </div>
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-12-phone">
+            <div class="mdc-layout-grid__inner">
+                <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-5-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
+                    <div class="mdc-form-field">
+                        <div class="mdc-checkbox">
+                            <input type="checkbox"
+                                   class="mdc-checkbox__native-control"
+                                   id="mybTime1"/>
+                            <div class="mdc-checkbox__background">
+                                <svg class="mdc-checkbox__checkmark"
+                                     viewBox="0 0 24 24">
+                                    <path class="mdc-checkbox__checkmark-path"
+                                          fill="none"
+                                          d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                                </svg>
+                                <div class="mdc-checkbox__mixedmark"></div>
+                            </div>
+                            <div class="mdc-checkbox__ripple"></div>
+                        </div>
+                        <label for="mybTime1">1차</label>
+                    </div>
+                    <div class="mdc-form-field">
+                        <div class="mdc-checkbox">
+                            <input type="checkbox"
+                                   class="mdc-checkbox__native-control"
+                                   id="mybTime2"/>
+                            <div class="mdc-checkbox__background">
+                                <svg class="mdc-checkbox__checkmark"
+                                     viewBox="0 0 24 24">
+                                    <path class="mdc-checkbox__checkmark-path"
+                                          fill="none"
+                                          d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                                </svg>
+                                <div class="mdc-checkbox__mixedmark"></div>
+                            </div>
+                            <div class="mdc-checkbox__ripple"></div>
+                        </div>
+                        <label for="mybTime2">2차</label>
+                    </div>
+                </div>
+                <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-7-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
+                    <button class="mdc-button mdc-button--outlined mdc-ripple"
+                            style="width:100%;height:56px;"
+                            id="myeonbulSubmit" onclick="requestMyeonbul();">
+                        <div class="mdc-button__ripple"></div>
+                        <i class="material-icons mdc-button__icon" aria-hidden="true">send</i>
+                        <span class="mdc-button__label">신청</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<h1>오늘의 면불</h1>
+<div class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner" id="myeonbulToday">
+    </div>
+</div>
+<h1>면불 신청 기록</h1>
+<div class="mdc-data-table" style="width:calc(100vw - 50px);">
+    <table class="mdc-data-table__table" style="width:calc(100vw - 50px);">
+        <thead>
+        <tr class="mdc-data-table__header-row">
+            <th class="mdc-data-table__header-cell" role="columnheader" scope="col">담당 선생님</th>
+            <th class="mdc-data-table__header-cell" role="columnheader"
+                scope="col">면불 장소
+            </th>
+            <th class="mdc-data-table__header-cell" role="columnheader"
+                scope="col">시간
+            </th>
+            <th class="mdc-data-table__header-cell" role="columnheader"
+                scope="col">날짜
+            </th>
+            <th class="mdc-data-table__header-cell" role="columnheader" scope="col">결과</th>
+        </tr>
+        </thead>
+        <tbody class="mdc-data-table__content" id="myeonbulList">
+        </tbody>
+    </table>
+</div>
+<div style="width:100%;height:15px;display: flex;"></div>
+<div style="width:100%;display: flex;">
+    <div style="width:100%;">
+        <button class="mdc-button mdc-ripple"
+                style="width:100px;float:right;margin-right:25px;"
+                onclick="getMyeonbul();"
+                id="fidContinue">새로고침
+        </button>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 if (location.protocol != 'https:') {
+    document.querySelector('body').style.display = 'none';
     location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 }
 
@@ -98,6 +99,24 @@ window.addEventListener('DOMContentLoaded', function () {
             return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
         };
     }
+    (function (arr) {
+        arr.forEach(function (item) {
+            if (item.hasOwnProperty('remove')) {
+                return;
+            }
+            Object.defineProperty(item, 'remove', {
+                configurable: true,
+                enumerable: true,
+                writable: true,
+                value: function remove() {
+                    if (this.parentNode === null) {
+                        return;
+                    }
+                    this.parentNode.removeChild(this);
+                }
+            });
+        });
+    })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
 });
 
 function __scroll_animate() {
@@ -146,12 +165,12 @@ function getDate() {
 
 function logOut() {
     eraseCookie('auth');
-    location.replace('/login/index.html?next=' + btoa(location.pathname + location.search));
+    location.replace('/login?next=' + btoa(location.pathname + location.search));
 }
 
 function logIn() {
-    if (location.pathname == '/about.html') location.href = '/login/';
-    else location.replace('/login/index.html?next=' + btoa(location.pathname + location.search));
+    if (location.pathname == '/about') location.href = '/login';
+    else location.replace('/login?next=' + btoa(location.pathname + location.search));
 }
 
 function isLogin() {

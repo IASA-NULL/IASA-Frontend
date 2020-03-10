@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -177,48 +176,39 @@
     <!--Splash-->
     <link href="/res/mdc-3.2.0.min.css" rel="stylesheet">
     <script src="/res/mdc-3.2.0.min.js"></script>
-    <script src="/res/fetch.umd.js"></script>
-    <script src="/res/promise-polyfill.js"></script>
-    <script src="res/teacher.2019.js"></script>
-    <script src="/res/siema.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/res/common/common.css">
-    <link rel="stylesheet" href="/pageCss/index.css">
+    <link rel="stylesheet" href="/pageCss/about.css">
 </head>
-
 <body>
 <script src="/res/common/common.js"></script>
-<script src="/pageJs/main.js"></script>
-<header class="mdc-top-app-bar app-bar mdc-top-app-bar--fixed" id="app-bar">
-    <div role="progressbar" class="mdc-linear-progress fade"
-         style="width:100%;z-index:1000;--mdc-theme-primary:#8cc4de;" id="iProg">
-        <div class="mdc-linear-progress__buffering-dots"></div>
-        <div class="mdc-linear-progress__buffer" style="background-color: #5351db;"></div>
-        <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
-            <span class="mdc-linear-progress__bar-inner"></span>
-        </div>
-        <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
-            <span class="mdc-linear-progress__bar-inner"></span>
-        </div>
-    </div>
+<script src="/pageJs/about.js"></script>
+<header class="mdc-top-app-bar app-bar mdc-top-app-bar--fixed header-top" id="app-bar">
     <div class="mdc-top-app-bar__row">
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-            <a class="demo-menu material-icons mdc-top-app-bar__navigation-icon" style="cursor: pointer;">menu</a>
             <span class="mdc-top-app-bar__title"><a href="/">IASA Portal</a></span>
         </section>
         <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
             <div class="mdc-menu-surface--anchor">
-                <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" id="accountInfo"
-                        onclick="mdcInstance.accountmenu.open=true;">
-                    account_circle
+                <button class="mdc-button mdc-ripple loginBtn-top" id="navLoginBtn">
+                    <i class="material-icons mdc-button__icon" aria-hidden="true" id="navLoginIcon"
+                       style="margin-right: 0;margin-left: 60px;">account_circle</i>
+                    <span class="mdc-button__label" id="navLoginLabel"
+                          style="width:80px;white-space: nowrap;opacity: 0;">로그인</span>
                 </button>
                 <div class="mdc-menu mdc-menu-surface" id="accountMenu">
                     <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                        <h4 style="margin:10px;">이서현</h4>
-                        <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="logOut();">
+                        <li role="menuitem" id="loginMenu_info">
+                            <h4 style="margin:10px;" id="userId">이서현</h4>
+                        </li>
+                        <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="logIn();"
+                            id="loginMenu_login">
+                            <span class="mdc-list-item__text">로그인</span>
+                        </li>
+                        <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="logOut();" id="loginMenu_logout">
                             <span class="mdc-list-item__text">로그아웃</span>
                         </li>
-                        <li class="mdc-list-item mdc-ripple" role="menuitem">
+                        <li class="mdc-list-item mdc-ripple" role="menuitem" id="loginMenu_mypage">
                             <span class="mdc-list-item__text">마이페이지</span>
                         </li>
                     </ul>
@@ -227,37 +217,71 @@
         </section>
     </div>
 </header>
-<aside class="mdc-drawer mdc-drawer--dismissible mdc-top-app-bar--fixed-adjust">
-    <div class="mdc-drawer__content">
-        <nav class="mdc-list">
-            <a id="li_alert" class="mdc-list-item mdc-ripple" onclick="selectSection('alert')">
-                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">notifications</i>
-                <span class="mdc-list-item__text">알림</span>
-            </a>
-            <a id="li_meal" class="mdc-list-item mdc-ripple" aria-current="page" onclick="selectSection('meal')">
-                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">fastfood</i>
-                <span class="mdc-list-item__text">급식</span>
-            </a>
-            <a id="li_calendar" class="mdc-list-item mdc-ripple" onclick="selectSection('calendar')">
-                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">calendar_today</i>
-                <span class="mdc-list-item__text">학사일정</span>
-            </a>
-            <hr class="mdc-list-divider">
-            <h6 class="mdc-list-group__subheader">신청</h6>
-            <a id="li_myeonbul" class="mdc-list-item  mdc-ripple" onclick="selectSection('myeonbul')">
-                <i class="material-icons mdc-list-item__graphic" aria-hidden="true">event</i>
-                <span class="mdc-list-item__text">면불 신청</span>
-            </a>
-        </nav>
-    </div>
-</aside>
-<div class="mdc-drawer-scrim" id="modalBack"></div>
 <div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust" id="mdc-content">
     <main class="main-content" id="main-content">
-        <div id="sec_meal" class="section section-disabled"></div>
-        <div id="sec_alert" class="section section-disabled"></div>
-        <div id="sec_calendar" class="section section-disabled"></div>
-        <div id="sec_myeonbul" class="section section-disabled"></div>
+        <div id="body" class="section">
+            <div style="display: table;" id="firstSec">
+                <div style="display: table-cell;vertical-align: middle;">
+                    <div class="mdc-layout-grid__inner" id="firstObj">
+                        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-5-desktop mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone"
+                             style="display: table;height: 100%;">
+                            <div style="display: table-cell;vertical-align: middle;margin-left:30px;">
+                                <h2>IASA Portal</h2>
+                                <p>인천과학예술영재학교 통합 학사사이트</p>
+                                <button class="mdc-button mdc-button--unelevated mdc-ripple"
+                                        style="font-size:150%;width:150px;height:60px;" onclick="logIn()" id="loginBtn">
+                                    로그인
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-7-desktop mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone">
+                            <img src="/res/img/landing_1.png" style="width:100%;margin:10px;" id="img1">
+                        </div>
+                        <div style="width:100%;height:20px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div style="width:100%;text-align: center;">
+                <h2>어느 기기에서나 편리한 학사시스템</h2>
+                <p>데스크탑, 태블릿, 심지어 모바일에서도 학사관리를 간편하게.</p>
+                <img src="/res/img/landing_2.png" style="width:100%;">
+            </div>
+            <div style="width:100%;text-align: center;">
+                <svg width="504" height="489" viewBox="0 0 504 489" xmlns="http://www.w3.org/2000/svg"
+                     style="width:30%;min-width:250px;">
+                    <g transform="translate(-22 -115)">
+                        <path d="M120 154l135 78.5L120 311z" fill="#FFFF2D" fill-rule="evenodd"/>
+                        <path fill="#5351DB" d="M127 365h389v233H127z"/>
+                        <path d="M237.462 202.729 98.5001 122.5 " stroke="#404040" stroke-width="13.3333"
+                              stroke-linecap="round"
+                              stroke-miterlimit="8" fill="none" fill-rule="evenodd"/>
+                        <path d="M0 0 207.128 119.585" stroke="#404040" stroke-width="13.3333" stroke-linecap="round"
+                              stroke-miterlimit="8" fill="none" fill-rule="evenodd"
+                              transform="matrix(1 0 0 -1 30.5001 323.085)"/>
+                        <path d="M97.5001 122.5 97.5002 570.347" stroke="#404040" stroke-width="13.3333"
+                              stroke-linecap="round"
+                              stroke-miterlimit="8" fill="none" fill-rule="evenodd"/>
+                        <path d="M97.5001 570.5 518.665 570.5" stroke="#404040" stroke-width="13.3333"
+                              stroke-linecap="round"
+                              stroke-miterlimit="8" fill="none" fill-rule="evenodd"/>
+                        <path d="M0 0 0.000104987 256.624" stroke="#404040" stroke-width="13.3333"
+                              stroke-linecap="round"
+                              stroke-miterlimit="8" fill="none" fill-rule="evenodd"
+                              transform="matrix(1 0 0 -1 487.5 597.124)"/>
+                        <path d="M0 0 418.119 0.000104987" stroke="#404040" stroke-width="13.3333"
+                              stroke-linecap="round"
+                              stroke-miterlimit="8" fill="none" fill-rule="evenodd"
+                              transform="matrix(-1 -8.74228e-08 -8.74228e-08 1 486.619 339.5)"/>
+                    </g>
+                </svg>
+                <h2>지금 IASA Portal 시작하기</h2>
+                <button class="mdc-button mdc-button--unelevated mdc-ripple"
+                        style="font-size:150%;width:150px;height:60px;" onclick="logIn()">
+                    로그인
+                </button>
+            </div>
+            <div style="width:100%;text-align: center;height:20px;"></div>
+        </div>
         <footer>
             <div class="mdc-layout-grid">
                 <div class="mdc-layout-grid__inner">
@@ -284,116 +308,5 @@
         </footer>
     </main>
 </div>
-<div class="mdc-snackbar" id="noIE">
-    <div class="mdc-snackbar__surface">
-        <div class="mdc-snackbar__label"
-             role="status"
-             aria-live="polite">
-            인터넷 익스플로러에서는 정상적인 작동을 보증하지 않습니다. 크롬 등 타 브라우저를 사용해주세요.
-        </div>
-        <div class="mdc-snackbar__actions">
-            <button type="button" class="mdc-button mdc-snackbar__action mdc-ripple"
-                    onclick="win = window.open('https://chrome.com', '_blank');win.focus();">크롬 다운로드
-            </button>
-            <button type="button" class="mdc-button mdc-snackbar__action mdc-ripple">닫기</button>
-        </div>
-    </div>
-</div>
-<div class="mdc-snackbar" id="doneRequest">
-    <div class="mdc-snackbar__surface">
-        <div class="mdc-snackbar__label"
-             role="status"
-             aria-live="polite">
-            정상적으로 처리되었습니다.
-        </div>
-        <div class="mdc-snackbar__actions">
-            <button type="button" class="mdc-button mdc-snackbar__action mdc-ripple">닫기</button>
-        </div>
-    </div>
-</div>
-<div class="mdc-snackbar" id="reqFailed">
-    <div class="mdc-snackbar__surface">
-        <div class="mdc-snackbar__label"
-             role="status"
-             aria-live="polite">
-            서버와의 통신에 실패했습니다.
-        </div>
-        <div class="mdc-snackbar__actions">
-            <button type="button" class="mdc-button mdc-snackbar__action mdc-ripple" id="reTry">다시 시도
-            </button>
-            <button type="button" class="mdc-button mdc-snackbar__action mdc-ripple">닫기</button>
-        </div>
-    </div>
-</div>
-<div class="mdc-snackbar" id="formRequired">
-    <div class="mdc-snackbar__surface">
-        <div class="mdc-snackbar__label"
-             role="status"
-             aria-live="polite">
-            항목을 모두 채워 주세요.
-        </div>
-        <div class="mdc-snackbar__actions">
-            <button type="button" class="mdc-button mdc-snackbar__action mdc-ripple">닫기</button>
-        </div>
-    </div>
-</div>
-<div class="mdc-snackbar" id="loadingSnackbar">
-    <div class="mdc-snackbar__surface">
-        <div class="mdc-snackbar__label"
-             role="status"
-             aria-live="polite">
-            서버와 통신 중...
-        </div>
-        <div class="mdc-snackbar__actions">
-            <button type="button" class="mdc-button mdc-snackbar__action mdc-ripple">닫기</button>
-        </div>
-    </div>
-</div>
-<div class="mdc-dialog"
-     role="alertdialog"
-     aria-modal="true"
-     aria-labelledby="my-dialog-title"
-     aria-describedby="my-dialog-content" id="askCancelMyb">
-    <div class="mdc-dialog__container">
-        <div class="mdc-dialog__surface">
-            <h2 class="mdc-dialog__title">경고</h2>
-            <div class="mdc-dialog__content">
-                정말로 요청을 취소하겠습니까?
-            </div>
-            <footer class="mdc-dialog__actions">
-                <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
-                    <span class="mdc-button__label">아니요</span>
-                </button>
-                <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes"
-                        onclick="cancelMyeonbulConfirm();">
-                    <span class="mdc-button__label">네</span>
-                </button>
-            </footer>
-        </div>
-    </div>
-    <div class="mdc-dialog__scrim"></div>
-</div>
-<div class="mdc-dialog"
-     role="alertdialog"
-     aria-modal="true"
-     aria-labelledby="my-dialog-title"
-     aria-describedby="my-dialog-content" id="errInit">
-    <div class="mdc-dialog__container">
-        <div class="mdc-dialog__surface">
-            <h2 class="mdc-dialog__title">오류</h2>
-            <div class="mdc-dialog__content">
-                웹 사이트를 초기화할수 없습니다.
-            </div>
-            <footer class="mdc-dialog__actions">
-                <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="refresh"
-                        onclick="location.reload();">
-                    <span class="mdc-button__label">새로고침</span>
-                </button>
-            </footer>
-        </div>
-    </div>
-    <div class="mdc-dialog__scrim"></div>
-</div>
 </body>
-
 </html>
