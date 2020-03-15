@@ -5,6 +5,28 @@ if (location.protocol != 'https:') {
 
 let mdcInstance = Object();
 
+let nowProgressProc = 0;
+
+function setProgressBar(proc) {
+    document.getElementById('iProg').style.opacity = '1';
+    if (proc == 1) document.querySelector('.mdc-linear-progress__primary-bar').style.transition = '';
+    else if (nowProgressProc < proc) document.querySelector('.mdc-linear-progress__primary-bar').style.transition = 'transform 10s 0ms cubic-bezier(.23,.9,.39,1.01)';
+    else {
+        document.querySelector('.mdc-linear-progress__primary-bar').style.transition = 'none';
+        mdcInstance.progress.progress = 0;
+        setTimeout(function () {
+            document.querySelector('.mdc-linear-progress__primary-bar').style.transition = 'transform 10s 0ms cubic-bezier(.23,.9,.39,1.01)';
+        }, 50);
+    }
+    nowProgressProc = proc;
+    setTimeout(function () {
+        mdcInstance.progress.progress = proc;
+    }, 100);
+    setTimeout(function () {
+        if (nowProgressProc == 1) document.getElementById('iProg').style.opacity = '0';
+    }, 500);
+}
+
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));

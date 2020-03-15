@@ -24,6 +24,9 @@ function frameInit_myeonbul() {
 }
 
 function getMyeonbul() {
+    setTimeout(function () {
+        setProgressBar(0.8);
+    }, 400);
     document.body.style.cursor = 'wait';
     document.getElementById('myeonbulList').innerHTML = '<tr class="mdc-data-table__row"><td class="mdc-data-table__cell" colspan="5">불러오는 중...</td></tr>';
     fetch('https://api.iasa.kr/myeonbul?student=2018001', {
@@ -83,6 +86,9 @@ function getMyeonbul() {
             mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
         document.body.style.cursor = 'default';
         loadFin();
+        setTimeout(function () {
+            setProgressBar(1);
+        }, 600);
     }).catch(function (err) {
         document.body.style.cursor = 'default';
         mdcInstance.errinit.open();
@@ -97,13 +103,12 @@ function cancelMyeonbulReq(myeonbulId) {
 }
 
 function cancelMyeonbulConfirm() {
+    setProgressBar(0.3);
     closeSnackbar();
-    document.getElementById("iProg").style.opacity = 1;
     mdcInstance.loading.open();
     fetch('https://api.iasa.kr/myeonbul?id=' + mybId, {
         method: 'DELETE'
     }).then(function (response) {
-        document.getElementById("iProg").style.opacity = 0;
         if (response.status != 200) {
             document.getElementById('reTry').onclick = cancelMyeonbulConfirm();
             closeSnackbar();
@@ -113,6 +118,9 @@ function cancelMyeonbulConfirm() {
         closeSnackbar();
         mdcInstance.reqsucc.open();
         getMyeonbul();
+        setTimeout(function () {
+            setProgressBar(1);
+        }, 100);
         return;
     }).catch(function (err) {
         document.getElementById("iProg").style.opacity = 0;
@@ -130,7 +138,7 @@ function requestMyeonbul() {
         mdcInstance.reqForm.open();
         return;
     }
-    document.getElementById("iProg").style.opacity = 1;
+    setProgressBar(0.3);
     mdcInstance.loading.open();
     document.getElementById('myeonbulSubmit').disabled = true;
     let stTime, fiTime;
@@ -173,11 +181,14 @@ function requestMyeonbul() {
         closeSnackbar();
         mdcInstance.reqsucc.open();
         getMyeonbul();
+        setTimeout(function () {
+            setProgressBar(1);
+        }, 100);
     }).catch(function (err) {
         document.getElementById('reTry').onclick = requestMyeonbul;
         closeSnackbar();
+        document.getElementById("iProg").style.opacity = 0;
         mdcInstance.fail.open();
     })
     document.getElementById('myeonbulSubmit').disabled = false;
-    document.getElementById("iProg").style.opacity = 0;
 }

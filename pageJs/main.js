@@ -1,5 +1,6 @@
 var nowLoadStat = 0, totalLoadStat = 2;
 var isFrameLoaded = Object();
+var isFirstFrame = true;
 
 if (!isLogin()) {
     document.querySelector('body').style.display = 'none';
@@ -39,7 +40,6 @@ function initMdc() {
     mdcInstance.accountmenu.setFixedPosition(true);
     mdcInstance.accountButton = new mdc.ripple.MDCRipple(document.getElementById('accountInfo'));
     mdcInstance.accountButton.unbounded = true;
-    mdcInstance.progress.determinate = false;
     mdcInstance.errinit.scrimClickAction = "";
     mdcInstance.errinit.escapeKeyAction = "";
 }
@@ -70,13 +70,16 @@ function searchRes(str) {
     }
 }
 
-var gSecName;
+var gSecName, nProg;
 
 function selectSection(secName, laSection) {
     if (secName == activeSection && laSection === undefined) return;
+    isFirstFrame = false;
+    setProgressBar(0.1);
     fetch('//api.iasa.kr/frame?file=' + secName).then(function (res) {
         return res.text()
     }).then(function (text) {
+        setProgressBar(0.6);
         document.getElementById('sec_' + secName).innerHTML = "";
         document.getElementById('sec_' + secName).innerHTML = text;
         if (!isFrameLoaded[secName]) {
@@ -92,10 +95,12 @@ function selectSection(secName, laSection) {
             try {
                 window['initMdc_' + gSecName]();
                 window['frameInit_' + gSecName]();
-                console.log(1);
-                clearInterval(scrIntv)
+                setTimeout(function () {
+                    setProgressBar(1);
+                }, 100);
+                clearInterval(scrIntv);
             } catch (e) {
-                console.log(e)
+
             }
         }
 
@@ -131,7 +136,9 @@ function selectSection(secName, laSection) {
         }
 
         addClass(document.getElementById('li_' + activeSection), 'mdc-list-item--activated');
-    })
+    }).catch(function () {
+        mdcInstance.errinit.open();
+    });
 }
 
 addEventListener("popstate", function (e) {

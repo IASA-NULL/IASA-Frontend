@@ -116,3 +116,7 @@ header a {
 main {
     margin-top: 4px;
 }
+
+#iProg {
+    transition: opacity .5s;
+}
