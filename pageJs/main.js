@@ -76,9 +76,19 @@ function selectSection(secName, laSection) {
     if (secName == activeSection && laSection === undefined) return;
     isFirstFrame = false;
     setProgressBar(0.1);
-    fetch('//api.iasa.kr/frame?file=' + secName).then(function (res) {
-        return res.text()
-    }).then(function (text) {
+    fetch('//api.iasa.kr/frame?file=' + secName + '&id=' + getCookie('id') + '&token=' + getCookie('auth')).then(function (res) {
+        return res.text().then(function (data) {
+            return {
+                status: res.status,
+                body: data
+            };
+        });
+    }).then(function (res) {
+        if (res.status == 403 || res.status == 400) {
+            alert('로그인 토큰이 만료되었습니다. 다시 로그인 해 주세요.');
+            logOut();
+        }
+        const text = res.body;
         setProgressBar(0.6);
         document.getElementById('sec_' + secName).innerHTML = "";
         document.getElementById('sec_' + secName).innerHTML = text;
@@ -169,9 +179,19 @@ function init() {
         })
     }
     document.getElementById("iProg").style.opacity = 0;
-    fetch('//api.iasa.kr/frame?file=' + activeSection).then(function (res) {
-        return res.text()
-    }).then(function (text) {
+    fetch('//api.iasa.kr/frame?file=' + activeSection + '&id=' + getCookie('id') + '&token=' + getCookie('auth')).then(function (res) {
+        return res.text().then(function (data) {
+            return {
+                status: res.status,
+                body: data
+            };
+        });
+    }).then(function (res) {
+        if (res.status == 403 || res.status == 400) {
+            alert('로그인 토큰이 만료되었습니다. 다시 로그인 해 주세요.');
+            logOut();
+        }
+        const text = res.body;
         document.getElementById('sec_' + activeSection).innerHTML = text;
 
         var script = document.createElement("script");

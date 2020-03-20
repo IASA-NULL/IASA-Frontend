@@ -212,7 +212,7 @@
                 <div class="mdc-menu mdc-menu-surface" id="accountMenu">
                     <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
                         <li role="menuitem" id="loginMenu_info">
-                            <h4 style="margin:10px;" id="userId">이서현</h4>
+                            <h4 style="margin:10px;" id="userId"></h4>
                         </li>
                         <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="logIn();"
                             id="loginMenu_login">

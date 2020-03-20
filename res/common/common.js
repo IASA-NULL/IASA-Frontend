@@ -139,6 +139,11 @@ window.addEventListener('DOMContentLoaded', function () {
             });
         });
     })([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+    try {
+        document.getElementById('userId').innerText = getCookie('name');
+    } catch (e) {
+
+    }
 });
 
 function __scroll_animate() {
@@ -187,6 +192,8 @@ function getDate() {
 
 function logOut() {
     eraseCookie('auth');
+    eraseCookie('name');
+    eraseCookie('id');
     location.replace('/login?next=' + btoa(location.pathname + location.search));
 }
 
@@ -197,4 +204,31 @@ function logIn() {
 
 function isLogin() {
     return !!getCookie('auth');
+}
+
+function getCaretPosition(ctrl) {
+    let CaretPos = 0;
+    if (ctrl.selectionStart || ctrl.selectionStart == 0) {// Standard.
+        CaretPos = ctrl.selectionStart;
+    } else if (document.selection) {// Legacy IE
+        ctrl.focus();
+        var Sel = document.selection.createRange();
+        Sel.moveStart('character', -ctrl.value.length);
+        CaretPos = Sel.text.length;
+    }
+    return (CaretPos);
+}
+
+
+function setCaretPosition(ctrl, pos) {
+    if (ctrl.setSelectionRange) {
+        ctrl.focus();
+        ctrl.setSelectionRange(pos, pos);
+    } else if (ctrl.createTextRange) {
+        var range = ctrl.createTextRange();
+        range.collapse(true);
+        range.moveEnd('character', pos);
+        range.moveStart('character', pos);
+        range.select();
+    }
 }

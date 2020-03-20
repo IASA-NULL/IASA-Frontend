@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오류 - IASA Portal</title>
+    <title>IASA Portal - 회원가입</title>
     <!--Splash-->
     <script>var timerStart = Date.now();</script>
     <style>
@@ -177,90 +177,14 @@
     <link href="/res/mdc-3.2.0.min.css" rel="stylesheet">
     <script src="/res/mdc-3.2.0.min.js"></script>
     <script src="/res/fetch.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
+    <script src="/res/promise-polyfill.js"></script>
     <script src="res/teacher.2019.js"></script>
+    <script src="/res/siema.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/res/common/common.css">
-    <link rel="stylesheet" href="/pageCss/error.css">
 </head>
 <body>
 <script src="/res/common/common.js"></script>
-<script src="/pageJs/error.js"></script>
-<header class="mdc-top-app-bar app-bar mdc-top-app-bar--fixed" id="app-bar">
-    <div role="progressbar" class="mdc-linear-progress fade"
-         style="width:100%;z-index:1000;--mdc-theme-primary:#8cc4de;" id="iProg">
-        <div class="mdc-linear-progress__buffering-dots"></div>
-        <div class="mdc-linear-progress__buffer" style="background-color: #5351db;"></div>
-        <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
-            <span class="mdc-linear-progress__bar-inner"></span>
-        </div>
-        <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
-            <span class="mdc-linear-progress__bar-inner"></span>
-        </div>
-    </div>
-    <div class="mdc-top-app-bar__row">
-        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-            <a class="demo-menu material-icons mdc-top-app-bar__navigation-icon" style="cursor: pointer;">menu</a>
-            <span class="mdc-top-app-bar__title"><a href="/">IASA Portal</a></span>
-        </section>
-        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
-            <div class="mdc-menu-surface--anchor">
-                <button class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded" id="accountInfo"
-                        onclick="mdcInstance.accountmenu.open=true;">
-                    account_circle
-                </button>
-                <div class="mdc-menu mdc-menu-surface" id="accountMenu">
-                    <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                        <li role="menuitem" id="loginMenu_info">
-                            <h4 style="margin:10px;" id="userId"></h4>
-                        </li>
-                        <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="logIn();"
-                            id="loginMenu_login">
-                            <span class="mdc-list-item__text">로그인</span>
-                        </li>
-                        <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="logOut();" id="loginMenu_logout">
-                            <span class="mdc-list-item__text">로그아웃</span>
-                        </li>
-                        <li class="mdc-list-item mdc-ripple" role="menuitem" id="loginMenu_mypage">
-                            <span class="mdc-list-item__text">마이페이지</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    </div>
-</header>
-<div class="mdc-drawer-app-content mdc-top-app-bar--fixed-adjust" id="mdc-content">
-    <main class="main-content" id="main-content">
-        <div id="body" class="section">
-            <h1>404</h1>
-            <h4>???????</h4>
-        </div>
-        <footer>
-            <div class="mdc-layout-grid">
-                <div class="mdc-layout-grid__inner">
-                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-5-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
-                        <h1>IASA Portal</h1>
-                    </div>
-                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-7-desktop mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-12-phone">
-                        <div class="mdc-layout-grid">
-                            <div class="mdc-layout-grid__inner">
-                                <div class=" mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
-                                    <a href="/terms">이용약관</a></div>
-                                <div class=" mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
-                                    <a href="/userdata">개인정보처리방침</a></div>
-                                <div class=" mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
-                                    <a href="/opensource">오픈소스 사용고지</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12-desktop mdc-layout-grid__cell--span-12-tablet mdc-layout-grid__cell--span-12-phone">
-                        <h3>Copyright 2019-2020 NULL®. All right reserved.</h3>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </main>
-</div>
+<script src="/pageJs/signupFinalize.js"></script>
 </body>
 </html>

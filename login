@@ -234,6 +234,31 @@
                 clickFindId();
             }
         });
+        let signupCode = document.getElementById("signupCode");
+        signupCode.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                enterCode();
+            }
+        });
+        signupCode.addEventListener('input', function (e) {
+            let pos = getCaretPosition(signupCode);
+            let code = signupCode.value;
+            code = code.toUpperCase();
+            code = code.replaceAll('-', '');
+            code = code.replaceAll(' ', '');
+            let formatedCode = "";
+            while (code.length > 4) {
+                formatedCode += code.substr(0, 4);
+                code = code.substr(4);
+                formatedCode += ' - ';
+            }
+            formatedCode += code;
+            signupCode.value = formatedCode;
+            if (pos % 7 === 5) pos += 3;
+            if (pos % 7 === 0 && pos > 0) pos -= 3;
+            setCaretPosition(signupCode, pos);
+        });
     }
 
     function stopVideo() {
@@ -260,6 +285,7 @@
         document.getElementById("idForm").style.display = "block";
         setPrevForm("");
         document.getElementById("errId").style.display = 'none';
+        document.getElementById("errCode").style.display = 'none';
         document.getElementById("errPass").style.display = 'none';
         document.getElementById("errFId").style.display = 'none';
         document.getElementById("loginCont").style.width = document.getElementById('loginCont').children.length * 500 + 'px';
@@ -310,10 +336,10 @@
                                 </div>
                             </div>
                             <div style="width:100%;height:5px;display: flex;"></div>
-                            <span id="errId" style="color:#e36346;margin-top:2px;"><i class="material-icons"
-                                                                                      style="font-size: 100%;margin-top:5px;display: inline-block;">error_outline</i>
-                            <p id="errIdMsg" style="color:#e36346;display: inline-block;"></p>
-                        </span>
+                            <span id="errId" style="color:#e36346;margin-top:2px;">
+                                <i class="material-icons" style="font-size: 100%;margin-top:5px;display: inline-block;">error_outline</i>
+                                <p id="errIdMsg" style="color:#e36346;display: inline-block;"></p>
+                            </span>
                             <div style="width:100%;height:15px;display: flex;"></div>
                             <div style="width:100%;display: flex;">
                                 <button class="mdc-button mdc-ripple" style="width:175px;float:left;"
@@ -385,7 +411,7 @@
                             </div>
                         </div>
                         <div class="innerCont" id="idFoundForm">
-                            <p style="font-size: 150%;">사용자의 ID는 <b style="font-size: 130%;">hi</b>입니다.</p>
+                            <p style="font-size: 150%;">사용자의 ID는 <b style="font-size: 130%;" id="foundID"></b>입니다.</p>
                             <div style="width:100%;height:15px;display: flex;"></div>
                             <div style="width:100%;display: flex;">
                                 <div style="width:100%;">
@@ -428,7 +454,7 @@
                                     id="clickFindId">다음
                             </button>
                         </div>
-                        <div class="innerCont" id="findPassForm" style="background-color: #5351db;"></div>
+                        <div class="innerCont" id="findPassForm"></div>
                         <div class="innerCont" id="signup1Form">
                             <video autoplay loop muted playsinline src="/res/vid/card.mp4"
                                    style="width:430px;transform:translate(-0.5px, 0);"
@@ -449,7 +475,6 @@
                             </button>
                         </div>
                         <div class="innerCont" id="signup3Form">
-
                             <div class="mdc-text-field mdc-text-field--outlined" style="width:90%;"
                                  id="signupCodeForm">
                                 <input class="mdc-text-field__input" id="signupCode">
@@ -461,9 +486,15 @@
                                     <div class="mdc-notched-outline__trailing"></div>
                                 </div>
                             </div>
+                            <div style="width:100%;height:5px;display: flex;"></div>
+                            <span id="errCode" style="color:#e36346;margin-top:2px;">
+                                    <i class="material-icons"
+                                       style="font-size: 100%;margin-top:5px;display: inline-block;">error_outline</i>
+                                    <p id="errCodeMsg" style="color:#e36346;display: inline-block;"></p>
+                                </span>
                             <div style="width:100%;height:15px;display: flex;"></div>
                             <button class="mdc-button mdc-button--raised mdc-ripple"
-                                    style="width:100px;float:right;margin-right:25px;" onclick="reqSignup2();">다음
+                                    style="width:100px;float:right;margin-right:25px;" onclick="enterCode();">다음
                             </button>
                         </div>
                         <div class="innerCont" id="signupData1Form">

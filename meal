@@ -214,7 +214,7 @@
                 </button>
                 <div class="mdc-menu mdc-menu-surface" id="accountMenu">
                     <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-                        <h4 style="margin:10px;">이서현</h4>
+                        <h4 style="margin:10px;" id="userId"></h4>
                         <li class="mdc-list-item mdc-ripple" role="menuitem" onclick="logOut();">
                             <span class="mdc-list-item__text">로그아웃</span>
                         </li>

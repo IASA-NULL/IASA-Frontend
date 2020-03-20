@@ -34,7 +34,9 @@ function reqSignup2() {
         }
     }, function (err) {
         if (err) {
-            reqSignup3();
+            setTimeout(function () {
+                reqSignup3();
+            }, 400);
             return;
         }
         Quagga.onDetected(function (data) {
@@ -54,11 +56,44 @@ function reqSignup2() {
 function reqSignup3() {
     document.getElementById("iProg").style.opacity = 1;
     moveToForm('signup3');
-    setHeader('본인인증 코드 입력', '계속하려면 NULL에 본인인증을 위한 25자리 코드를 요청하세요.');
+    setHeader('본인인증 코드 입력', '계속하려면 NULL에 본인인증을 위한 24자리 코드를 요청하세요.');
     setPrevForm("id");
     setTimeout(function () {
         document.getElementById("iProg").style.opacity = 0;
     }, 400);
+    setTimeout(function () {
+        mdcInstance.signupCode.focus();
+    }, 500);
+}
+
+function enterCode() {
+    document.getElementById("iProg").style.opacity = 1;
+    let code = document.getElementById('signupCode').value;
+    code = code.toUpperCase();
+    code = code.replaceAll('-', '');
+    code = code.replaceAll(' ', '');
+    fetch('https://api.iasa.kr/account/decryptcode?code=' + code).then(function (res) {
+        return res.text().then(function (data) {
+            return {
+                status: res.status,
+                body: data
+            };
+        });
+    }).then(function (res) {
+        if (res.status == 200) {
+            setTimeout(function () {
+                document.getElementById("iProg").style.opacity = 0;
+                reqSignupData1();
+            }, 400);
+            setTimeout(function () {
+                document.getElementById("signupCode").disabled = false;
+            }, 1000);
+        } else {
+            loginError(3, "코드가 올바르지 않습니다.");
+        }
+    }).catch(function () {
+        loginError(3, "코드가 올바르지 않습니다.");
+    });
 }
 
 function reqSignupData1() {

@@ -50,7 +50,7 @@ function getMyeonbul() {
             if (String(res[i].date) == getDate()) {
                 fl = false;
                 document.getElementById('myeonbulToday').innerHTML +=
-                    '<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone">' +
+                    '<div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone">' +
                     '<div class="mdc-card myb-card mdc-elevation--z5">' +
                     '<div class="mdc-card__primary-action mdc-ripple" tabindex="0">' +
                     '<h1>' + res[i].title + '</h1>' +

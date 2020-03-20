@@ -55,6 +55,7 @@ function backToForm() {
             document.getElementById("uid").disabled = false;
             document.getElementById("enterId").disabled = false;
             document.getElementById("forgotId").disabled = false;
+            document.getElementById("signupButton").disabled = false;
             mdcInstance.idInput.focus();
             setPrevForm("");
             setHeader('로그인', 'IASA Portal(으)로 계속');
