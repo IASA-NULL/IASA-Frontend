@@ -66,6 +66,8 @@ function reqSignup3() {
     }, 500);
 }
 
+let userType, userId;
+
 function enterCode() {
     document.getElementById("iProg").style.opacity = 1;
     let code = document.getElementById('signupCode').value;
@@ -83,6 +85,7 @@ function enterCode() {
         if (res.status == 200) {
             setTimeout(function () {
                 document.getElementById("iProg").style.opacity = 0;
+                userId = JSON.parse(res.body).stuid;
                 reqSignupData1();
             }, 400);
             setTimeout(function () {
@@ -104,4 +107,59 @@ function reqSignupData1() {
     setTimeout(function () {
         document.getElementById("iProg").style.opacity = 0;
     }, 400);
+    setTimeout(function () {
+        mdcInstance.signupId.focus();
+    }, 500);
+}
+
+function enterSignup() {
+    document.getElementById("iProg").style.opacity = 1;
+    mdcInstance.signupId.disabled = true;
+    mdcInstance.signupEmail.disabled = true;
+    mdcInstance.signupPass.disabled = true;
+    mdcInstance.signupPassConf.disabled = true;
+    if (document.getElementById('signupId').value == "") {
+        loginError(4, '사용할 아이디를 입력해주세요.');
+        return;
+    }
+    if (document.getElementById('signupEmail').value == "") {
+        loginError(4, '메일 주소를 입력해주세요.');
+        return;
+    }
+    if (document.getElementById('signupEmail').checkValidity() === false) {
+        loginError(4, '메일 주소가 올바르지 않습니다.');
+        return;
+    }
+    if (document.getElementById('signupPass').value == "") {
+        loginError(4, '사용할 비밀번호를 입력해주세요.');
+        return;
+    }
+    if (document.getElementById('signupPassConf').value == "") {
+        loginError(4, '비밀번호를 다시 입력해주세요.');
+        return;
+    }
+    if (document.getElementById('signupPass').value != document.getElementById('signupPassConf').value) {
+        loginError(4, '비밀번호가 같지 않습니다.');
+        return;
+    }
+    fetch('https://api.iasa.kr/account/sendmail?stuid=' + userId + '&id=' + document.getElementById('signupId').value + '&password=' + document.getElementById('signupPass').value + '&mail=' + document.getElementById('signupEmail').value, {
+        method: 'POST'
+    }).then(function (res) {
+        return res.text().then(function (data) {
+            return {
+                status: res.status,
+                body: data
+            };
+        });
+    }).then(function (res) {
+        if (res.status == 200) {
+            moveToForm('finSignup');
+            setHeader('메일으로 인증하기', '회원가입을 완료하려면 메일함을 확인하세요.');
+            setTimeout(function () {
+                document.getElementById("iProg").style.opacity = 0;
+            }, 500)
+        } else loginError(4, '오류가 발생했습니다.');
+    }).catch(function (e) {
+        loginError(4, '오류가 발생했습니다.');
+    });
 }

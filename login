@@ -203,6 +203,10 @@
         mdcInstance.userrightMenu.setAnchorElement(document.getElementById('userRight'));
 
         mdcInstance.signupCode = new mdc.textField.MDCTextField(document.getElementById("signupCodeForm"));
+        mdcInstance.signupId = new mdc.textField.MDCTextField(document.getElementById("signupIdForm"));
+        mdcInstance.signupEmail = new mdc.textField.MDCTextField(document.getElementById("signupEmailForm"));
+        mdcInstance.signupPass = new mdc.textField.MDCTextField(document.getElementById("signupPassForm"));
+        mdcInstance.signupPassConf = new mdc.textField.MDCTextField(document.getElementById("signupPassConfForm"));
     }
 
     function initEvent() {
@@ -259,6 +263,34 @@
             if (pos % 7 === 0 && pos > 0) pos -= 3;
             setCaretPosition(signupCode, pos);
         });
+        let signupId = document.getElementById("signupId");
+        signupId.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("signupEmail").focus();
+            }
+        });
+        let signupEmail = document.getElementById("signupEmail");
+        signupEmail.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                if (document.getElementById('signupEmail').checkValidity()) document.getElementById("signupPass").focus();
+            }
+        });
+        let signupPass = document.getElementById("signupPass");
+        signupPass.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("signupPassConf").focus();
+            }
+        });
+        let signupPassConf = document.getElementById("signupPassConf");
+        signupPassConf.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                enterSignup();
+            }
+        });
     }
 
     function stopVideo() {
@@ -281,11 +313,12 @@
     window.addEventListener('DOMContentLoaded', function () {
         initMdc();
         initEvent();
-        setHeader('로그인', 'IASA Portal(으)로 계속');
+        setHeader('로그인', 'IASA Portal로 계속');
         document.getElementById("idForm").style.display = "block";
         setPrevForm("");
         document.getElementById("errId").style.display = 'none';
         document.getElementById("errCode").style.display = 'none';
+        document.getElementById("errSignup").style.display = 'none';
         document.getElementById("errPass").style.display = 'none';
         document.getElementById("errFId").style.display = 'none';
         document.getElementById("loginCont").style.width = document.getElementById('loginCont').children.length * 500 + 'px';
@@ -392,10 +425,10 @@
                                 </div>
                             </div>
                             <div style="width:100%;height:5px;display: flex;"></div>
-                            <span id="errPass" style="color:#e36346;margin-top:2px;"><i class="material-icons"
-                                                                                        style="font-size: 100%;margin-top:5px;display: inline-block;">error_outline</i>
-                            <p id="errPassMsg" style="color:#e36346;display: inline-block;"></p>
-                        </span>
+                            <span id="errPass" style="color:#e36346;margin-top:2px;">
+                                <i class="material-icons" style="font-size: 100%;margin-top:5px;display: inline-block;">error_outline</i>
+                                <p id="errPassMsg" style="color:#e36346;display: inline-block;"></p>
+                            </span>
                             <div style="width:100%;height:15px;display: flex;"></div>
                             <div style="width:100%;display: flex;">
                                 <div style="width:100%;">
@@ -462,6 +495,10 @@
                             <button class="mdc-button mdc-button--raised mdc-ripple"
                                     style="width:100px;float:right;margin-right:25px;" onclick="reqSignup2();">다음
                             </button>
+                            <button class="mdc-button mdc-ripple" style="width:150px;float:left;"
+                                    onclick="reqSignup3();">
+                                학생증이 없음
+                            </button>
                         </div>
                         <div class="innerCont" id="signup2Form">
                             <div id="qrContainer"></div>
@@ -499,8 +536,20 @@
                         </div>
                         <div class="innerCont" id="signupData1Form">
                             <div class="mdc-text-field mdc-text-field--outlined" style="width:90%;"
+                                 id="signupIdForm">
+                                <input class="mdc-text-field__input" id="signupId">
+                                <div class="mdc-notched-outline">
+                                    <div class="mdc-notched-outline__leading"></div>
+                                    <div class="mdc-notched-outline__notch">
+                                        <label for="signupId" class="mdc-floating-label">아이디</label>
+                                    </div>
+                                    <div class="mdc-notched-outline__trailing"></div>
+                                </div>
+                            </div>
+                            <div style="width:100%;height:15px;display: flex;"></div>
+                            <div class="mdc-text-field mdc-text-field--outlined" style="width:90%;"
                                  id="signupEmailForm">
-                                <input class="mdc-text-field__input" id="signupEmail">
+                                <input class="mdc-text-field__input" id="signupEmail" type="email">
                                 <div class="mdc-notched-outline">
                                     <div class="mdc-notched-outline__leading"></div>
                                     <div class="mdc-notched-outline__notch">
@@ -512,7 +561,7 @@
                             <div style="width:100%;height:15px;display: flex;"></div>
                             <div class="mdc-text-field mdc-text-field--outlined" style="width:90%;"
                                  id="signupPassForm">
-                                <input class="mdc-text-field__input" id="signupPass">
+                                <input class="mdc-text-field__input" id="signupPass" type="password">
                                 <div class="mdc-notched-outline">
                                     <div class="mdc-notched-outline__leading"></div>
                                     <div class="mdc-notched-outline__notch">
@@ -524,7 +573,7 @@
                             <div style="width:100%;height:15px;display: flex;"></div>
                             <div class="mdc-text-field mdc-text-field--outlined" style="width:90%;"
                                  id="signupPassConfForm">
-                                <input class="mdc-text-field__input" id="signupPassConf">
+                                <input class="mdc-text-field__input" id="signupPassConf" type="password">
                                 <div class="mdc-notched-outline">
                                     <div class="mdc-notched-outline__leading"></div>
                                     <div class="mdc-notched-outline__notch">
@@ -534,10 +583,22 @@
                                 </div>
                             </div>
                             <div style="width:100%;height:15px;display: flex;"></div>
+                            <span id="errSignup" style="color:#e36346;margin-top:2px;">
+                                <i class="material-icons" style="font-size: 100%;margin-top:5px;display: inline-block;">error_outline</i>
+                                <p id="errSignupMsg" style="color:#e36346;display: inline-block;"></p>
+                            </span>
+                            <div style="width:100%;height:15px;display: flex;"></div>
                             <button class="mdc-button mdc-button--raised mdc-ripple"
                                     style="width:100px;float:right;margin-right:25px;"
-                                    onclick="">
+                                    onclick="enterSignup();">
                                 다음
+                            </button>
+                        </div>
+                        <div class="innerCont" id="finSignupForm">
+                            <button class="mdc-button mdc-button--raised mdc-ripple"
+                                    style="width:100px;float:right;margin-right:25px;"
+                                    onclick="moveToForm('id');setHeader('로그인', 'IASA Portal로 계속');">
+                                확인
                             </button>
                         </div>
                     </div>

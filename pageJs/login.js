@@ -155,7 +155,7 @@ function togglePassword(id) {
 function loginWithFoundId() {
     document.getElementById("iProg").style.opacity = 1;
     moveToForm('id');
-    setHeader('로그인', 'IASA Portal(으)로 계속');
+    setHeader('로그인', 'IASA Portal로 계속');
     setTimeout(function () {
         mdcInstance.idInput.focus();
         document.getElementById("iProg").style.opacity = 0;
@@ -207,6 +207,18 @@ function loginError(type, msg) {
         mdcInstance.signupCode.valid = false;
         document.getElementById("signupCode").disabled = false;
         document.getElementById("signupCode").focus();
+        setTimeout(function () {
+            document.getElementById("iProg").style.opacity = 0;
+        }, 200);
+    }
+    if (type == 4) {
+        document.getElementById('errSignupMsg').innerHTML = msg;
+        document.getElementById("errSignup").style.display = 'inherit';
+        mdcInstance.signupId.disabled = false;
+        mdcInstance.signupEmail.disabled = false;
+        mdcInstance.signupPass.disabled = false;
+        mdcInstance.signupPassConf.disabled = false;
+        document.getElementById("signupId").focus();
         setTimeout(function () {
             document.getElementById("iProg").style.opacity = 0;
         }, 200);
