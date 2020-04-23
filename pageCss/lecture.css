@@ -1,0 +1,27 @@
+#body {
+    padding: 10px;
+    line-height: 30px;
+}
+
+#video {
+    width: 100%;
+    max-height: 80vh;
+    height: auto;
+    min-height: calc(100vh - 247px - 71px);
+}
+
+#video:not(.vjs-fullscreen) video {
+    max-height: 80vh;
+    min-height: calc(100vh - 247px - 71px);
+    position: initial;
+}
+
+@media (max-width: 1344px) {
+    #video:not(.vjs-fullscreen) video {
+        height: initial;
+    }
+}
+
+.section {
+    min-height: calc(100vh - 247px - 71px);
+}
