@@ -456,12 +456,14 @@
                     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-7-desktop mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-12-phone">
                         <div class="mdc-layout-grid">
                             <div class="mdc-layout-grid__inner">
-                                <div class=" mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
+                                <div class=" mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
                                     <a href="/terms">이용약관</a></div>
-                                <div class=" mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
+                                <div class=" mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
                                     <a href="/userdata">개인정보처리방침</a></div>
-                                <div class=" mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
+                                <div class=" mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
                                     <a href="/opensource">오픈소스 사용고지</a></div>
+                                <div class=" mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-12-phone">
+                                    <a href="//docs.iasa.kr">OpenAPI</a></div>
                             </div>
                         </div>
                     </div>
