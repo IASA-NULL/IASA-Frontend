@@ -158,7 +158,9 @@ function enterSignup() {
             setTimeout(function () {
                 document.getElementById("iProg").style.opacity = 0;
             }, 500)
-        } else loginError(4, '오류가 발생했습니다.');
+        } else {
+            loginError(4, JSON.parse(res.body).message);
+        }
     }).catch(function (e) {
         loginError(4, '오류가 발생했습니다.');
     });
