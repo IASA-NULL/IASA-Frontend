@@ -1,6 +1,8 @@
+let signupMode;
+
 function reqSignup() {
     if (isIE()) {
-        reqSignup3();
+        reqSignup3('s');
         return;
     }
     moveToForm('signup1');
@@ -35,7 +37,7 @@ function reqSignup2() {
     }, function (err) {
         if (err) {
             setTimeout(function () {
-                reqSignup3();
+                reqSignup3('s');
             }, 400);
             return;
         }
@@ -53,7 +55,8 @@ function reqSignup2() {
     setPrevForm("id");
 }
 
-function reqSignup3() {
+function reqSignup3(mode) {
+    signupMode = mode;
     document.getElementById("iProg").style.opacity = 1;
     moveToForm('signup3');
     setHeader('본인인증 코드 입력', '계속하려면 NULL에 본인인증을 위한 24자리 코드를 요청하세요.');
@@ -83,17 +86,16 @@ function enterCode() {
         });
     }).then(function (res) {
         if (res.status == 200) {
+            if (JSON.parse(res.body).type != signupMode) throw new Error();
             setTimeout(function () {
                 document.getElementById("iProg").style.opacity = 0;
-                userId = JSON.parse(res.body).stuid;
+                userId = JSON.parse(res.body).uniqueid;
                 reqSignupData1();
             }, 400);
             setTimeout(function () {
                 document.getElementById("signupCode").disabled = false;
             }, 1000);
-        } else {
-            loginError(3, "코드가 올바르지 않습니다.");
-        }
+        } else throw new Error();
     }).catch(function () {
         loginError(3, "코드가 올바르지 않습니다.");
     });
@@ -142,7 +144,7 @@ function enterSignup() {
         loginError(4, '비밀번호가 같지 않습니다.');
         return;
     }
-    fetch('https://api.iasa.kr/account/sendmail?stuid=' + userId + '&id=' + document.getElementById('signupId').value + '&password=' + document.getElementById('signupPass').value + '&mail=' + document.getElementById('signupEmail').value, {
+    fetch('https://api.iasa.kr/account/sendmail?uniqueid=' + userId + '&id=' + document.getElementById('signupId').value + '&password=' + document.getElementById('signupPass').value + '&mail=' + document.getElementById('signupEmail').value, {
         method: 'POST'
     }).then(function (res) {
         return res.text().then(function (data) {

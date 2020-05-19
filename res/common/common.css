@@ -121,3 +121,11 @@ main {
 #iProg {
     transition: opacity .5s;
 }
+
+.mdc-dialog {
+    z-index: 10000;
+}
+
+.mdc-dialog__scrim {
+    backdrop-filter: blur(5px);
+}

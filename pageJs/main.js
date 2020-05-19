@@ -231,7 +231,9 @@ function init() {
         })
     }).catch(() => {
         mdcInstance.errinit = new mdc.dialog.MDCDialog(document.getElementById('errInit'));
-        mdcInstance.errinit.show();
+        mdcInstance.errinit.scrimClickAction = "";
+        mdcInstance.errinit.escapeKeyAction = "";
+        mdcInstance.errinit.open();
     });
 }
 

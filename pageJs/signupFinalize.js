@@ -10,10 +10,14 @@ fetch('https://api.iasa.kr/account/signup?token=' + token, {
     });
 }).then(function (res) {
     if (res.status == 200) {
-        alert('회원가입이 완료되었습니다!');
-        location.replace('/login');
-    }
+        mdcInstance.succ = new mdc.dialog.MDCDialog(document.getElementById('succ'));
+        mdcInstance.succ.scrimClickAction = "";
+        mdcInstance.succ.escapeKeyAction = "";
+        mdcInstance.succ.open();
+    } else throw new Error();
 }).catch(function () {
-    alert('회원가입에 실패했습니다. 다시 시도해주세요.');
-    location.replace('/about');
+    mdcInstance.err = new mdc.dialog.MDCDialog(document.getElementById('err'));
+    mdcInstance.err.scrimClickAction = "";
+    mdcInstance.err.escapeKeyAction = "";
+    mdcInstance.err.open();
 });

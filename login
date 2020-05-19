@@ -396,7 +396,7 @@
                                                     <span class="mdc-list-item__text">학생</span>
                                                 </li>
                                                 <li class="mdc-list-item mdc-ripple" role="menuitem"
-                                                    onclick="reqSignup3();">
+                                                    onclick="reqSignup3('t');">
                                                     <span class="mdc-list-item__text">선생님</span>
                                                 </li>
                                             </ul>
@@ -496,7 +496,7 @@
                                     style="width:100px;float:right;margin-right:25px;" onclick="reqSignup2();">다음
                             </button>
                             <button class="mdc-button mdc-ripple" style="width:150px;float:left;"
-                                    onclick="reqSignup3();">
+                                    onclick="reqSignup3('s');">
                                 학생증이 없음
                             </button>
                         </div>
@@ -507,7 +507,7 @@
                                    id="camAnim"></video>
                             <div style="width:100%;height:15px;display: flex;"></div>
                             <button class="mdc-button mdc-ripple" style="width:150px;float:left;"
-                                    onclick="reqSignup3();">
+                                    onclick="reqSignup3('s');">
                                 학생증이 없음
                             </button>
                         </div>

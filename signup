@@ -186,5 +186,52 @@
 <body>
 <script src="/res/common/common.js"></script>
 <script src="/pageJs/signupFinalize.js"></script>
+<div class="mdc-dialog"
+     role="alertdialog"
+     aria-modal="true"
+     aria-labelledby="my-dialog-title"
+     aria-describedby="my-dialog-content" id="succ">
+    <div class="mdc-dialog__container">
+        <div class="mdc-dialog__surface">
+            <h2 class="mdc-dialog__title">회원가입 완료</h2>
+            <div class="mdc-dialog__content">
+                <p>회원가입이 완료되었습니다.</p>
+                <p>IASA Portal에서 편리한 학사시스템을 이용하세요!</p>
+            </div>
+            <footer class="mdc-dialog__actions">
+                <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="refresh"
+                        onclick="location.replace('/login');">
+                    <span class="mdc-button__label">로그인</span>
+                </button>
+                <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="refresh"
+                        onclick="location.replace('/');">
+                    <span class="mdc-button__label">메인으로</span>
+                </button>
+            </footer>
+        </div>
+    </div>
+    <div class="mdc-dialog__scrim"></div>
+</div>
+<div class="mdc-dialog"
+     role="alertdialog"
+     aria-modal="true"
+     aria-labelledby="my-dialog-title"
+     aria-describedby="my-dialog-content" id="err">
+    <div class="mdc-dialog__container">
+        <div class="mdc-dialog__surface">
+            <h2 class="mdc-dialog__title">오류</h2>
+            <div class="mdc-dialog__content">
+                올바르지 않은 가입 링크입니다.
+            </div>
+            <footer class="mdc-dialog__actions">
+                <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="refresh"
+                        onclick="location.replace('/');">
+                    <span class="mdc-button__label">메인으로</span>
+                </button>
+            </footer>
+        </div>
+    </div>
+    <div class="mdc-dialog__scrim"></div>
+</div>
 </body>
 </html>
