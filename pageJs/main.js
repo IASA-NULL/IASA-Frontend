@@ -228,11 +228,13 @@ function init() {
             }, 100);
             loadFin();
             isFrameLoaded[activeSection] = true;
-        })
+        }).catch(() => {
+            mdcInstance.errinit = new mdc.dialog.MDCDialog(document.getElementById('errInit'));
+            mdcInstance.errinit.scrimClickAction = "";
+            mdcInstance.errinit.escapeKeyAction = "";
+            mdcInstance.errinit.open();
+        });
     }).catch(() => {
-        mdcInstance.errinit = new mdc.dialog.MDCDialog(document.getElementById('errInit'));
-        mdcInstance.errinit.scrimClickAction = "";
-        mdcInstance.errinit.escapeKeyAction = "";
         mdcInstance.errinit.open();
     });
 }

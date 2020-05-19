@@ -43,6 +43,7 @@ function reqSignup2() {
         }
         Quagga.onDetected(function (data) {
             stuId = data.codeResult.code;
+            signupMode = 's';
             reqSignupData1();
         });
         Quagga.start();
@@ -144,7 +145,7 @@ function enterSignup() {
         loginError(4, '비밀번호가 같지 않습니다.');
         return;
     }
-    fetch('https://api.iasa.kr/account/sendmail?uniqueid=' + userId + '&id=' + document.getElementById('signupId').value + '&password=' + document.getElementById('signupPass').value + '&mail=' + document.getElementById('signupEmail').value, {
+    fetch('https://api.iasa.kr/account/sendmail?uniqueid=' + userId + '&id=' + document.getElementById('signupId').value + '&password=' + document.getElementById('signupPass').value + '&mail=' + document.getElementById('signupEmail').value + '&type=' + signupMode, {
         method: 'POST'
     }).then(function (res) {
         return res.text().then(function (data) {
