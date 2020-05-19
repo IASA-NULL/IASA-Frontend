@@ -8,7 +8,7 @@ if (!isLogin()) {
 }
 
 let activeSection = location.pathname.split('/')[1];
-if (activeSection == "") activeSection = "myeonbul";
+if (activeSection == "") activeSection = "alert";
 if (activeSection == 'myeonbul') totalLoadStat++;
 
 function initMdc() {
@@ -70,7 +70,7 @@ function searchRes(str) {
     }
 }
 
-var gSecName, nProg;
+var gSecName;
 
 function selectSection(secName, laSection) {
     if (secName == activeSection && laSection === undefined) return;
@@ -90,6 +90,12 @@ function selectSection(secName, laSection) {
         }
         const text = res.body;
         setProgressBar(0.6);
+        if (document.getElementById('sec_' + secName) === null) {
+            let newEl = document.createElement('div');
+            newEl.id = "sec_" + secName;
+            newEl.className = "section";
+            document.getElementById('sec-wrapper').appendChild(newEl);
+        }
         document.getElementById('sec_' + secName).innerHTML = "";
         document.getElementById('sec_' + secName).innerHTML = text;
         if (!isFrameLoaded[secName]) {
@@ -166,20 +172,7 @@ function closeSnackbar() {
 let res;
 
 function init() {
-    history.replaceState(null, null, '/' + activeSection);
-    removeClass(document.getElementById('sec_' + activeSection), 'section-disabled');
-    addClass(document.getElementById('li_' + activeSection), 'mdc-list-item--activated');
-    initMdc();
-    modalHandle();
-    if (isIE()) mdcInstance.noIE.open();
-    menuEl = document.querySelector('aside').querySelectorAll('a');
-    for (i = 0; i < menuEl.length; i++) {
-        menuEl[i].addEventListener('click', function () {
-            if (asideStat == 0) mdcInstance.drawer.open = false;
-        })
-    }
-    document.getElementById("iProg").style.opacity = 0;
-    fetch('//api.iasa.kr/frame?file=' + activeSection + '&id=' + getCookie('id') + '&token=' + getCookie('auth')).then(function (res) {
+    fetch('//api.iasa.kr/frame?file=_list&id=' + getCookie('id') + '&token=' + getCookie('auth')).then(function (res) {
         return res.text().then(function (data) {
             return {
                 status: res.status,
@@ -187,35 +180,65 @@ function init() {
             };
         });
     }).then(function (res) {
-        if (res.status == 403 || res.status == 400) {
-            alert('로그인 토큰이 만료되었습니다. 다시 로그인 해 주세요.');
-            logOut();
+        if (res.status !== 200) throw new Error;
+        document.getElementById('menu-list').innerHTML = res.body;
+        history.replaceState(null, null, '/' + activeSection);
+        removeClass(document.getElementById('sec_' + activeSection), 'section-disabled');
+        addClass(document.getElementById('li_' + activeSection), 'mdc-list-item--activated');
+        initMdc();
+        modalHandle();
+        if (isIE()) mdcInstance.noIE.open();
+        menuEl = document.querySelector('aside').querySelectorAll('a');
+        for (i = 0; i < menuEl.length; i++) {
+            menuEl[i].addEventListener('click', function () {
+                if (asideStat == 0) mdcInstance.drawer.open = false;
+            })
         }
-        const text = res.body;
-        document.getElementById('sec_' + activeSection).innerHTML = text;
-
-        var script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = '/pageJs/frame/' + activeSection + '.js';
-        document.body.appendChild(script);
-        let scrIntv = setInterval(function () {
-            try {
-                window['initMdc_' + activeSection]();
-                window['frameInit_' + activeSection]();
-                clearInterval(scrIntv)
-            } catch (e) {
-
+        document.getElementById("iProg").style.opacity = 0;
+        fetch('//api.iasa.kr/frame?file=' + activeSection + '&id=' + getCookie('id') + '&token=' + getCookie('auth')).then(function (res) {
+            return res.text().then(function (data) {
+                return {
+                    status: res.status,
+                    body: data
+                };
+            });
+        }).then(function (res) {
+            if (res.status == 403 || res.status == 400) {
+                alert('로그인 토큰이 만료되었습니다. 다시 로그인 해 주세요.');
+                logOut();
             }
-        }, 100);
-        loadFin();
-        isFrameLoaded[activeSection] = true;
-    })
+            let newEl = document.createElement('div');
+            newEl.id = "sec_" + activeSection;
+            newEl.className = "section";
+            document.getElementById('sec-wrapper').appendChild(newEl);
+            const text = res.body;
+            document.getElementById('sec_' + activeSection).innerHTML = text;
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = '/pageJs/frame/' + activeSection + '.js';
+            document.body.appendChild(script);
+            let scrIntv = setInterval(function () {
+                try {
+                    window['initMdc_' + activeSection]();
+                    window['frameInit_' + activeSection]();
+                    clearInterval(scrIntv)
+                } catch (e) {
+
+                }
+            }, 100);
+            loadFin();
+            isFrameLoaded[activeSection] = true;
+        })
+    }).catch(() => {
+        mdcInstance.errinit = new mdc.dialog.MDCDialog(document.getElementById('errInit'));
+        mdcInstance.errinit.show();
+    });
 }
 
 loadIntv = setInterval(function () {
     if (document.readyState == 'complete') {
         init();
-        clearInterval(loadIntv)
+        clearInterval(loadIntv);
     }
 }, 100);
 
