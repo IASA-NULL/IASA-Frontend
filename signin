@@ -455,7 +455,7 @@
         </div>
         <div style="width:100%;height:5px;display: flex;"></div>
     </div>
-    <div style="width:100%;display: flex;">
+    <div style="width:100%;display: flex;" id="bottomMenu">
         <div style="width:100%;">
 
             <div id="demo-menu" class="mdc-menu-surface--anchor" style="float:left;">
