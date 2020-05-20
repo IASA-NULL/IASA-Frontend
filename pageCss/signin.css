@@ -1,0 +1,153 @@
+
+:root {
+    --mdc-theme-primary: #5351db !important;
+    --mdc-theme-secondary: #8cc4de !important;
+    --mdc-theme-on-primary: #fff !important;
+    --mdc-theme-on-secondary: #fff !important;
+}
+
+.mdc-text-field {
+    transform: translate(0.5px, 0.5px);
+}
+
+
+#cont {
+    max-width: 90vw;
+    width: 500px;
+    height: auto;
+    overflow: hidden;
+}
+
+#fullCont {
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(calc(-50% - 0.5px), calc(-50% - 0.5px));
+}
+
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+    #fullCont {
+        position: absolute;
+        top: 50vh;
+        left: 50vw;
+        transform: translate(-50%, -50%) !important;
+    }
+}
+
+#cardCont {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #bbbbbb !important;
+    margin-bottom: 20px;
+}
+
+a {
+    text-decoration: none !important;
+    color: inherit !important;
+}
+
+.loginBox {
+    margin: 0;
+    text-align: center;
+    display: flex;
+    max-width: 77.4vw;
+    width: 430px;
+    min-height: 496px;
+    align-items: center;
+    justify-content: center;
+    float: left;
+    padding: 35px 35px 15px;
+}
+
+@media (min-height: 581px) {
+    #cont {
+        min-height: 560px;
+    }
+}
+
+@media (max-height: 580px) {
+    .loginBox {
+        height: calc(72.1vh - 80px) !important;
+        padding: 15px 20px 15px 20px;
+    }
+
+    #cont {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        height: calc(70vh - 10px) !important;
+    }
+
+    #cont::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+
+.loginBox > * {
+    margin: 15px;
+}
+
+.fade {
+    transition: opacity .5s ease;
+}
+
+@font-face {
+    font-family: 'nanum';
+    font-display: auto;
+    src: local('Pacifico Regular'), local('Pacifico-Regular'), local('나눔스퀘어'), url("/res/NSR.woff");
+    font-display: swap;
+}
+
+* {
+    font-family: 'nanum';
+}
+
+#loginCont {
+    height: 100%;
+    display: flex;
+    position: relative;
+    transition: left .3s ease;
+    left: 0;
+}
+
+.innerCont {
+    max-width: 77.4vw;
+    width: 430px;
+    margin: 35px;
+    display: none;
+}
+
+.innerCont:first-child {
+    margin-left: 0;
+}
+
+#findIdForm > * {
+    margin: 5px;
+}
+
+.material-icons {
+    transition: all .3s ease;
+}
+
+video {
+    max-width: 73.8vw !important;
+    width: 410px !important;
+}
+
+#qrContainer {
+    max-width: 73.8vw !important;
+    width: 410px !important;
+}
+
+#qrContainer > video {
+    max-width: 73.8vw !important;
+    width: 410px !important;
+}
+
+#qrContainer > canvas {
+    display: none !important;
+}
+
+#signupMenu {
+    z-index: 1000;
+}
