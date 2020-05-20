@@ -42,6 +42,8 @@ function initMdc() {
     mdcInstance.accountButton.unbounded = true;
     mdcInstance.errinit.scrimClickAction = "";
     mdcInstance.errinit.escapeKeyAction = "";
+    for (var i = 0; i < document.querySelectorAll('.mdc-ripple').length; i++)
+        mdc.ripple.MDCRipple.attachTo(document.querySelectorAll('.mdc-ripple')[i]);
 }
 
 function searchRes(str) {
