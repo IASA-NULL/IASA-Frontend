@@ -228,13 +228,13 @@ function init() {
             }, 100);
             loadFin();
             isFrameLoaded[activeSection] = true;
-        }).catch(() => {
+        }).catch(function () {
             mdcInstance.errinit = new mdc.dialog.MDCDialog(document.getElementById('errInit'));
             mdcInstance.errinit.scrimClickAction = "";
             mdcInstance.errinit.escapeKeyAction = "";
             mdcInstance.errinit.open();
         });
-    }).catch(() => {
+    }).catch(function () {
         mdcInstance.errinit.open();
     });
 }
