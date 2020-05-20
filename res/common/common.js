@@ -194,12 +194,12 @@ function logOut() {
     eraseCookie('auth');
     eraseCookie('name');
     eraseCookie('id');
-    location.replace('/login?next=' + btoa(location.pathname + location.search));
+    location.replace('/signin?next=' + btoa(location.pathname + location.search));
 }
 
 function logIn() {
-    if (location.pathname == '/about') location.href = '/login';
-    else location.replace('/login?next=' + btoa(location.pathname + location.search));
+    if (location.pathname == '/about') location.href = '/signin';
+    else location.replace('/signin?next=' + btoa(location.pathname + location.search));
 }
 
 function isLogin() {

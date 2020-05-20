@@ -51,7 +51,7 @@ function backToForm() {
         document.getElementById("loginCont").style.left = "0";
     }, 100);
     setTimeout(function () {
-        if (formId == "id") {
+        if (formId === "id") {
             document.getElementById("uid").disabled = false;
             document.getElementById("enterId").disabled = false;
             document.getElementById("forgotId").disabled = false;
@@ -60,9 +60,9 @@ function backToForm() {
             setPrevForm("");
             setHeader('로그인', 'IASA Portal(으)로 계속');
         }
-        if (formId == "pass") {
+        if (formId === "pass") {
             setPrevForm("id");
-            setHeader('hi', '비밀번호를 입력해서 로그인');
+            setHeader(uName + '님, 안녕하세요.', '비밀번호를 입력해서 로그인');
         }
         document.getElementById(nextForm + "Form").style.display = "none";
     }, 400);
@@ -72,16 +72,16 @@ function backToForm() {
 }
 
 function moveToForm(formId) {
-    if (currentState == 0 && currentForm == formId) return;
-    if (currentState == 1 && nextForm == formId) return;
+    if (currentState === 0 && currentForm === formId) return;
+    if (currentState === 1 && nextForm === formId) return;
     stopVideo();
     document.getElementById(nextForm + "Form").style.display = "none";
     document.getElementById(currentForm + "Form").style.display = "none";
-    if (currentState == 0) {
+    if (currentState === 0) {
         swapForm(nextForm, formId);
         nextForm = formId;
     }
-    if (currentState == 1) {
+    if (currentState === 1) {
         swapForm(currentForm, nextForm);
         swapForm(currentForm, formId);
         currentForm = nextForm;

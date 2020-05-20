@@ -188,7 +188,7 @@
         mdcInstance.idInput = new mdc.textField.MDCTextField(document.getElementById("uidCont"));
         mdcInstance.passInput = new mdc.textField.MDCTextField(document.getElementById("upassCont"));
         mdcInstance.fidName = new mdc.textField.MDCTextField(document.getElementById("fidNameForm"));
-        mdcInstance.fidStuid = new mdc.textField.MDCTextField(document.getElementById("fidStuidForm"));
+        mdcInstance.fidEmail = new mdc.textField.MDCTextField(document.getElementById("fidEmailForm"));
         mdcInstance.progress = new mdc.linearProgress.MDCLinearProgress.attachTo(document.querySelector('.mdc-linear-progress'));
         mdcInstance.menu = new mdc.menu.MDCMenu(document.getElementById('langMenu'));
         mdcInstance.menu.setAnchorElement(document.getElementById('menu-button'));
@@ -228,11 +228,11 @@
         fidName.addEventListener("keyup", function (event) {
             if (event.keyCode === 13) {
                 event.preventDefault();
-                document.getElementById("fidStuid").focus();
+                document.getElementById("fidEmail").focus();
             }
         });
-        let fidStuid = document.getElementById("fidStuid");
-        fidStuid.addEventListener("keyup", function (event) {
+        let fidEmail = document.getElementById("fidEmail");
+        fidEmail.addEventListener("keyup", function (event) {
             if (event.keyCode === 13) {
                 event.preventDefault();
                 clickFindId();
@@ -467,12 +467,12 @@
                                     <div class="mdc-notched-outline__trailing"></div>
                                 </div>
                             </div>
-                            <div class="mdc-text-field mdc-text-field--outlined" id="fidStuidForm" style="width:90%;">
-                                <input class="mdc-text-field__input" id="fidStuid">
+                            <div class="mdc-text-field mdc-text-field--outlined" id="fidEmailForm" style="width:90%;">
+                                <input class="mdc-text-field__input" id="fidEmail">
                                 <div class="mdc-notched-outline">
                                     <div class="mdc-notched-outline__leading"></div>
                                     <div class="mdc-notched-outline__notch">
-                                        <label for="fidStuid" class="mdc-floating-label">학번</label>
+                                        <label for="fidEmail" class="mdc-floating-label">이메일</label>
                                     </div>
                                     <div class="mdc-notched-outline__trailing"></div>
                                 </div>

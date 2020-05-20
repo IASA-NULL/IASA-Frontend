@@ -83,19 +83,19 @@ function setHeader(primary, secondary) {
 function clickFindId() {
     document.getElementById("iProg").style.opacity = 1;
     document.getElementById("fidName").disabled = true;
-    document.getElementById("fidStuid").disabled = true;
+    document.getElementById("fidEmail").disabled = true;
     document.getElementById("fidContinue").disabled = true;
     document.getElementById("errFId").style.display = 'none';
     if (String(document.getElementById("fidName").value).length == 0) {
         loginError(2, "이름을 입력하세요.");
         return;
     }
-    if (String(document.getElementById("fidStuid").value).length == 0) {
-        loginError(2, "학번을 입력하세요.");
+    if (String(document.getElementById("fidEmail").value).length == 0) {
+        loginError(2, "이메일을 입력하세요.");
         return;
     }
 
-    fetch('https://api.iasa.kr/account/findid?name=' + document.getElementById("fidName").value + '&stuid=' + document.getElementById("fidStuid").value, {
+    fetch('https://api.iasa.kr/account/findid?name=' + document.getElementById("fidName").value + '&email=' + document.getElementById("fidEmail").value, {
         method: 'POST'
     }).then(function (res) {
         return res.text().then(function (data) {
@@ -115,7 +115,7 @@ function clickFindId() {
         setHeader('아이디 찾기', '아이디를 찾았습니다.');
         setTimeout(function () {
             document.getElementById("fidName").disabled = false;
-            document.getElementById("fidStuid").disabled = false;
+            document.getElementById("fidEmail").disabled = false;
             document.getElementById("fidContinue").disabled = false;
             document.getElementById("fidContinue").focus();
             document.getElementById("iProg").style.opacity = 0;
@@ -191,10 +191,10 @@ function loginError(type, msg) {
         document.getElementById('errFIdMsg').innerHTML = msg;
         document.getElementById("errFId").style.display = 'inherit';
         mdcInstance.fidName.valid = false;
-        mdcInstance.fidStuid.valid = false;
+        mdcInstance.fidEmail.valid = false;
         document.getElementById("clickFindId").disabled = false;
         document.getElementById("fidName").disabled = false;
-        document.getElementById("fidStuid").disabled = false;
+        document.getElementById("fidEmail").disabled = false;
         document.getElementById("fidName").focus();
         setTimeout(function () {
             document.getElementById("iProg").style.opacity = 0;
