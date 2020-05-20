@@ -64,11 +64,27 @@ function backToForm() {
             setPrevForm("id");
             setHeader(uName + '님, 안녕하세요.', '비밀번호를 입력해서 로그인');
         }
+        if (formId === 'signup1') {
+            setPrevForm("id");
+            setHeader('가입하기', '다음 버튼을 누르고 웹캠에 학생증의 바코드를 보여주세요.');
+            var curVid = document.getElementById('cardAnim');
+            curVid.pause();
+            curVid.currentTime = '0';
+            setTimeout(function () {
+                curVid.play();
+            }, 400);
+        }
+        if (formId === 'signup3') {
+            if (signupMode === 's') setPrevForm("signup1");
+            else setPrevForm("id");
+            setHeader('본인인증 코드 입력', '계속하려면 NULL에 본인인증을 위한 24자리 코드를 요청하세요.');
+        }
         document.getElementById(nextForm + "Form").style.display = "none";
     }, 400);
     setTimeout(function () {
         document.getElementById("iProg").style.opacity = 0;
     }, 400);
+    history.back();
 }
 
 function moveToForm(formId) {
@@ -101,4 +117,8 @@ function moveToForm(formId) {
         document.getElementById("loginCont").style.left = "-35px";
         document.getElementById(currentForm + "Form").style.display = "none";
     }, 400);
+    pageStr = btoa(formId);
+    if (formId === 'finSignup' || formId === 'id' || formId === 'idFound') pageStr = '';
+    if (formId === 'pass' || formId === 'findPass' || formId === 'signup1' || formId === 'signup3' || formId === 'findId' || formId === 'signupData1') history.pushState(null, null, '/signin' + UpdateQueryString('signinform', pageStr, location.search));
+    else history.replaceState(null, null, '/signin' + UpdateQueryString('signinform', pageStr, location.search));
 }

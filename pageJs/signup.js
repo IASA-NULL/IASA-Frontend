@@ -44,6 +44,7 @@ function reqSignup2() {
         Quagga.onDetected(function (data) {
             stuId = data.codeResult.code;
             signupMode = 's';
+            byCode = false;
             reqSignupData1();
         });
         Quagga.start();
@@ -61,7 +62,8 @@ function reqSignup3(mode) {
     document.getElementById("iProg").style.opacity = 1;
     moveToForm('signup3');
     setHeader('본인인증 코드 입력', '계속하려면 NULL에 본인인증을 위한 24자리 코드를 요청하세요.');
-    setPrevForm("id");
+    if (mode === 's') setPrevForm("signup1");
+    else setPrevForm("id");
     setTimeout(function () {
         document.getElementById("iProg").style.opacity = 0;
     }, 400);
@@ -70,7 +72,7 @@ function reqSignup3(mode) {
     }, 500);
 }
 
-let userType, userId;
+let userType, userId, byCode;
 
 function enterCode() {
     document.getElementById("iProg").style.opacity = 1;
@@ -88,6 +90,7 @@ function enterCode() {
     }).then(function (res) {
         if (res.status == 200) {
             if (JSON.parse(res.body).type != signupMode) throw new Error();
+            byCode = true;
             setTimeout(function () {
                 document.getElementById("iProg").style.opacity = 0;
                 userId = JSON.parse(res.body).uniqueid;
@@ -106,7 +109,10 @@ function reqSignupData1() {
     document.getElementById("iProg").style.opacity = 1;
     moveToForm('signupData1');
     setHeader('가입하기', '아래 내용을 채워주세요.');
-    setPrevForm("id");
+    if (signupMode === 's') {
+        if (byCode) setPrevForm("signup3");
+        else setPrevForm("signup1");
+    } else setPrevForm("signup3");
     setTimeout(function () {
         document.getElementById("iProg").style.opacity = 0;
     }, 400);
@@ -158,9 +164,12 @@ function enterSignup() {
         if (res.status == 200) {
             moveToForm('finSignup');
             setHeader('메일으로 인증하기', '회원가입을 완료하려면 메일함을 확인하세요.');
+            setPrevForm("");
             setTimeout(function () {
                 document.getElementById("iProg").style.opacity = 0;
-            }, 500)
+            }, 500);
+            history.back();
+            if (signupMode == 's') history.back();
         } else {
             loginError(4, JSON.parse(res.body).message);
         }

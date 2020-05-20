@@ -113,6 +113,7 @@ function clickFindId() {
         document.getElementById('foundID').innerText = JSON.parse(res.body)['id'];
         moveToForm('idFound');
         setHeader('아이디 찾기', '아이디를 찾았습니다.');
+        history.back();
         setTimeout(function () {
             document.getElementById("fidName").disabled = false;
             document.getElementById("fidEmail").disabled = false;
@@ -126,7 +127,7 @@ function clickFindId() {
 
 function reqFindId() {
     moveToForm('findId');
-    setHeader('아이디 찾기', '이름과 학번을 입력하세요.');
+    setHeader('아이디 찾기', '이름과 이메일을 입력하세요.');
     setPrevForm("id");
     setTimeout(function () {
         document.getElementById("fidName").focus();
@@ -135,8 +136,11 @@ function reqFindId() {
 
 function reqFindPass() {
     moveToForm('findPass');
-    setHeader('비밀번호 찾기', '이름과 아이디, 그리고 이메일을 입력하세요.');
+    setHeader('비밀번호 찾기', '이름과 이메일을 입력하세요.');
     setPrevForm("pass");
+    setTimeout(function () {
+        document.getElementById("fpassName").focus();
+    }, 500);
 }
 
 function togglePassword(id) {
@@ -155,6 +159,7 @@ function loginWithFoundId() {
     document.getElementById("iProg").style.opacity = 1;
     moveToForm('id');
     setHeader('로그인', 'IASA Portal로 계속');
+    setPrevForm('');
     setTimeout(function () {
         mdcInstance.idInput.focus();
         document.getElementById("iProg").style.opacity = 0;

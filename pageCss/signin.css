@@ -122,6 +122,10 @@ a {
     margin: 5px;
 }
 
+#findPassForm > * {
+    margin: 5px;
+}
+
 .material-icons {
     transition: all .3s ease;
 }

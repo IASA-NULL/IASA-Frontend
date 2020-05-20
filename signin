@@ -37,6 +37,8 @@
         mdcInstance.passInput = new mdc.textField.MDCTextField(document.getElementById("upassCont"));
         mdcInstance.fidName = new mdc.textField.MDCTextField(document.getElementById("fidNameForm"));
         mdcInstance.fidEmail = new mdc.textField.MDCTextField(document.getElementById("fidEmailForm"));
+        mdcInstance.fpassName = new mdc.textField.MDCTextField(document.getElementById("fpassNameForm"));
+        mdcInstance.fpassEmail = new mdc.textField.MDCTextField(document.getElementById("fpassEmailForm"));
         mdcInstance.progress = new mdc.linearProgress.MDCLinearProgress.attachTo(document.querySelector('.mdc-linear-progress'));
         mdcInstance.menu = new mdc.menu.MDCMenu(document.getElementById('langMenu'));
         mdcInstance.menu.setAnchorElement(document.getElementById('menu-button'));
@@ -152,6 +154,18 @@
 
     let stuId;
 
+    function urlHandler() {
+        if (getQueryString('uid')) document.getElementById('uid').value = getQueryString('uid');
+        if (getQueryString('signinform')) {
+            try {
+                if (atob(getQueryString('signinform')) === 'passwd') enterId();
+                else if (atob(getQueryString('signinform')) === 'findid') reqFindId();
+            } catch (e) {
+
+            }
+        }
+    }
+
     window.addEventListener('load', function () {
         setTimeout(function () {
             document.getElementById("iProg").style.opacity = 0;
@@ -169,6 +183,7 @@
         document.getElementById("errSignup").style.display = 'none';
         document.getElementById("errPass").style.display = 'none';
         document.getElementById("errFId").style.display = 'none';
+        document.getElementById("errFPass").style.display = 'none';
         document.getElementById("loginCont").style.width = document.getElementById('loginCont').children.length * 500 + 'px';
         document.getElementById("passToggle").style.color = "#bbbbbb";
         document.getElementById("upass").type = 'password';
@@ -180,6 +195,7 @@
             document.body.style.cursor = 'default';
         }, 300);
         document.getElementById("iProg").style.opacity = 1;
+        urlHandler();
     });
 </script>
 <div id="fullCont">
@@ -326,16 +342,46 @@
                                 </div>
                             </div>
                             <div style="width:100%;height:5px;display: flex;"></div>
-                            <span id="errFId" style="color:#e36346;margin-top:2px;"><i class="material-icons"
-                                                                                       style="font-size: 100%;margin-top:5px;display: inline-block;">error_outline</i>
-                            <p id="errFIdMsg" style="color:#e36346;display: inline-block;"></p>
-                        </span>
+                            <span id="errFId" style="color:#e36346;margin-top:2px;">
+                                <i class="material-icons" style="font-size: 100%;margin-top:5px;display: inline-block;">error_outline</i>
+                                <p id="errFIdMsg" style="color:#e36346;display: inline-block;"></p>
+                            </span>
                             <button class="mdc-button mdc-button--raised mdc-ripple"
                                     style="width:100px;float:right;margin-right:25px;" onclick="clickFindId();"
                                     id="clickFindId">다음
                             </button>
                         </div>
-                        <div class="innerCont" id="findPassForm"></div>
+                        <div class="innerCont" id="findPassForm">
+                            <div class="mdc-text-field mdc-text-field--outlined" id="fpassNameForm" style="width:90%;">
+                                <input class="mdc-text-field__input" id="fpassName">
+                                <div class="mdc-notched-outline">
+                                    <div class="mdc-notched-outline__leading"></div>
+                                    <div class="mdc-notched-outline__notch">
+                                        <label for="fpassName" class="mdc-floating-label">이름</label>
+                                    </div>
+                                    <div class="mdc-notched-outline__trailing"></div>
+                                </div>
+                            </div>
+                            <div class="mdc-text-field mdc-text-field--outlined" id="fpassEmailForm" style="width:90%;">
+                                <input class="mdc-text-field__input" id="fpassEmail">
+                                <div class="mdc-notched-outline">
+                                    <div class="mdc-notched-outline__leading"></div>
+                                    <div class="mdc-notched-outline__notch">
+                                        <label for="fpassEmail" class="mdc-floating-label">이메일</label>
+                                    </div>
+                                    <div class="mdc-notched-outline__trailing"></div>
+                                </div>
+                            </div>
+                            <div style="width:100%;height:5px;display: flex;"></div>
+                            <span id="errFPass" style="color:#e36346;margin-top:2px;">
+                                <i class="material-icons" style="font-size: 100%;margin-top:5px;display: inline-block;">error_outline</i>
+                                <p id="errFPassMsg" style="color:#e36346;display: inline-block;"></p>
+                            </span>
+                            <button class="mdc-button mdc-button--raised mdc-ripple"
+                                    style="width:100px;float:right;margin-right:25px;" onclick="clickFindPass();"
+                                    id="clickFindPass">다음
+                            </button>
+                        </div>
                         <div class="innerCont" id="signup1Form">
                             <video autoplay loop muted playsinline src="/res/vid/card.mp4"
                                    style="width:430px;transform:translate(-0.5px, 0);"
@@ -445,7 +491,7 @@
                         <div class="innerCont" id="finSignupForm">
                             <button class="mdc-button mdc-button--raised mdc-ripple"
                                     style="width:100px;float:right;margin-right:25px;"
-                                    onclick="moveToForm('id');setHeader('로그인', 'IASA Portal로 계속');">
+                                    onclick="moveToForm('id');setHeader('로그인', 'IASA Portal로 계속');setPrevForm('');">
                                 확인
                             </button>
                         </div>
