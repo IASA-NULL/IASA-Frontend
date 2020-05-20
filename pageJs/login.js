@@ -63,7 +63,6 @@ function enterPass() {
         if (res.status == 200) {
             setCookie('auth', res.body, 365);
             setCookie('name', uName, 365);
-            setCookie('id', document.getElementById("uid").value, 365);
             setTimeout(function () {
                 try {
                     if (getQueryString('next')) location.replace(atob(getQueryString('next')));

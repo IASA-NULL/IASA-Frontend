@@ -1,6 +1,6 @@
-var nowLoadStat = 0, totalLoadStat = 2;
-var isFrameLoaded = Object();
-var isFirstFrame = true;
+let nowLoadStat = 0, totalLoadStat = 2;
+let isFrameLoaded = Object();
+let isFirstFrame = true;
 
 if (!isLogin()) {
     document.querySelector('body').style.display = 'none';
@@ -76,7 +76,7 @@ function selectSection(secName, laSection) {
     if (secName == activeSection && laSection === undefined) return;
     isFirstFrame = false;
     setProgressBar(0.1);
-    fetch('//api.iasa.kr/frame?file=' + secName + '&id=' + getCookie('id') + '&token=' + getCookie('auth')).then(function (res) {
+    fetch('//api.iasa.kr/frame?file=' + secName + '&token=' + getCookie('auth')).then(function (res) {
         return res.text().then(function (data) {
             return {
                 status: res.status,
@@ -172,7 +172,7 @@ function closeSnackbar() {
 let res;
 
 function init() {
-    fetch('//api.iasa.kr/frame?file=_list&id=' + getCookie('id') + '&token=' + getCookie('auth')).then(function (res) {
+    fetch('//api.iasa.kr/frame?file=_list&token=' + getCookie('auth')).then(function (res) {
         return res.text().then(function (data) {
             return {
                 status: res.status,
@@ -195,7 +195,7 @@ function init() {
             })
         }
         document.getElementById("iProg").style.opacity = 0;
-        fetch('//api.iasa.kr/frame?file=' + activeSection + '&id=' + getCookie('id') + '&token=' + getCookie('auth')).then(function (res) {
+        fetch('//api.iasa.kr/frame?file=' + activeSection + '&token=' + getCookie('auth')).then(function (res) {
             return res.text().then(function (data) {
                 return {
                     status: res.status,
@@ -213,7 +213,7 @@ function init() {
             document.getElementById('sec-wrapper').appendChild(newEl);
             const text = res.body;
             document.getElementById('sec_' + activeSection).innerHTML = text;
-            var script = document.createElement("script");
+            let script = document.createElement("script");
             script.type = "text/javascript";
             script.src = '/pageJs/frame/' + activeSection + '.js';
             document.body.appendChild(script);
@@ -279,7 +279,7 @@ function modalHandle() {
 
 function loadFin() {
     ++nowLoadStat;
-    if (nowLoadStat == totalLoadStat) {
+    if (nowLoadStat === totalLoadStat) {
         document.body.style.cursor = 'default';
         setTimeout(function () {
             document.getElementById("preloader").style.opacity = 0;
