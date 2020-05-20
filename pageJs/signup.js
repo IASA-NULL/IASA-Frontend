@@ -169,7 +169,12 @@ function enterSignup() {
                 document.getElementById("iProg").style.opacity = 0;
             }, 500);
             history.back();
-            if (signupMode == 's') history.back();
+            history.back();
+            if (signupMode === 's' && byCode) history.back();
+            setTimeout(function () {
+                history.pushState(null, null, '#');
+                history.back();
+            }, 500);
         } else {
             loginError(4, JSON.parse(res.body).message);
         }

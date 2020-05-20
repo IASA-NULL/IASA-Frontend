@@ -119,6 +119,9 @@ function moveToForm(formId) {
     }, 400);
     pageStr = btoa(formId);
     if (formId === 'finSignup' || formId === 'id' || formId === 'idFound') pageStr = '';
-    if (formId === 'pass' || formId === 'findPass' || formId === 'signup1' || formId === 'signup3' || formId === 'findId' || formId === 'signupData1') history.pushState(null, null, '/signin' + UpdateQueryString('signinform', pageStr, location.search));
-    else history.replaceState(null, null, '/signin' + UpdateQueryString('signinform', pageStr, location.search));
+    var surl = UpdateQueryString('signinform', pageStr, location.search);
+    if (formId === 'pass') surl = UpdateQueryString('uid', document.getElementById('uid').value, surl);
+    if ((formId === 'pass' || formId === 'findPass' || formId === 'signup1' || formId === 'signup3' || formId === 'findId' || formId === 'signupData1') && !initByUrl) history.pushState(null, null, '/signin' + surl);
+    else if (!initByUrl) history.replaceState(null, null, '/signin' + surl);
+    initByUrl--;
 }

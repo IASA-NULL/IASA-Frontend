@@ -115,6 +115,10 @@ function clickFindId() {
         setHeader('아이디 찾기', '아이디를 찾았습니다.');
         history.back();
         setTimeout(function () {
+            history.pushState(null, null, '#');
+            history.back();
+        }, 500);
+        setTimeout(function () {
             document.getElementById("fidName").disabled = false;
             document.getElementById("fidEmail").disabled = false;
             document.getElementById("fidContinue").disabled = false;

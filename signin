@@ -152,14 +152,19 @@
         }
     }
 
-    let stuId;
+    let stuId, initByUrl = 0;
 
     function urlHandler() {
         if (getQueryString('uid')) document.getElementById('uid').value = getQueryString('uid');
         if (getQueryString('signinform')) {
             try {
-                if (atob(getQueryString('signinform')) === 'passwd') enterId();
-                else if (atob(getQueryString('signinform')) === 'findid') reqFindId();
+                if (atob(getQueryString('signinform')) === 'pass') {
+                    initByUrl = 1;
+                    enterId();
+                } else if (atob(getQueryString('signinform')) === 'findId') {
+                    initByUrl = 1;
+                    reqFindId();
+                }
             } catch (e) {
 
             }
