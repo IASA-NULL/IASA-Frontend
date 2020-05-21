@@ -23,7 +23,7 @@ function enterId() {
     }).then(function (res) {
         if (res.status == 200) {
             setTimeout(function () {
-                uName = JSON.parse(res.body)['name']
+                uName = JSON.parse(res.body)['name'];
                 setHeader(uName + '님, 안녕하세요.', '비밀번호를 입력해서 로그인');
                 setPrevForm("id");
                 document.getElementById("iProg").style.opacity = 0;

@@ -156,6 +156,8 @@
 
     function urlHandler() {
         if (getQueryString('uid')) document.getElementById('uid').value = getQueryString('uid');
+        if (getQueryString('regCode')) document.getElementById('signupCode').value = getQueryString('regCode');
+        if (getQueryString('regUser')) signupMode = getQueryString('regUser');
         if (getQueryString('signinform')) {
             try {
                 if (atob(getQueryString('signinform')) === 'pass') {
@@ -166,6 +168,11 @@
                     initByUrl = 1;
                     currentLevel = 1;
                     reqFindId();
+                } else if (atob(getQueryString('signinform')) === 'signupData1') {
+                    initByUrl = 1;
+                    if (signupMode === 't') currentLevel = 2;
+                    else currentLevel = 3;
+                    enterCode();
                 }
             } catch (e) {
 

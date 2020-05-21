@@ -122,6 +122,8 @@ function moveToForm(formId, noupdateURL) {
     if (formId === 'finSignup' || formId === 'id' || formId === 'idFound') pageStr = '';
     var surl = UpdateQueryString('signinform', pageStr, location.search);
     if (formId === 'pass') surl = UpdateQueryString('uid', document.getElementById('uid').value, surl);
+    if (formId === 'signup2' || formId === 'signup3') surl = UpdateQueryString('regUser', signupMode, surl);
+    if (formId === 'signupData1') surl = UpdateQueryString('regCode', document.getElementById('signupCode').value, surl);
     if ((formId === 'pass' || formId === 'findPass' || formId === 'signup1' || formId === 'signup3' || formId === 'findId' || formId === 'signupData1') && initByUrl === 0 && !noupdateURL) {
         ++currentLevel;
         history.pushState(currentLevel, null, '/signin' + surl);
