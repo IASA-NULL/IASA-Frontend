@@ -159,7 +159,13 @@ function selectSection(secName, laSection) {
     });
 }
 
+let popFl = false;
+
 addEventListener("popstate", function (e) {
+    if (popFl) {
+        popFl = false;
+        return;
+    }
     if (location.href.substr(location.href.length - 6) === '#login') return;
     let nextSection = location.pathname.split('/')[1].split('#')[0];
     if (activeSection === nextSection) return;

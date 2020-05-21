@@ -156,7 +156,7 @@
 
     function urlHandler() {
         if (getQueryString('uid')) document.getElementById('uid').value = getQueryString('uid');
-        if (getQueryString('regCode')) document.getElementById('signupCode').value = getQueryString('regCode');
+        if (getQueryString('regCode')) document.getElementById('signupCode').value = atob(getQueryString('regCode'));
         if (getQueryString('regUser')) signupMode = getQueryString('regUser');
         if (getQueryString('signinform')) {
             try {

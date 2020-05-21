@@ -149,6 +149,7 @@ window.addEventListener('DOMContentLoaded', function () {
         let url = location.href.substr(0, location.href.length - 6);
         history.pushState(null, null, url);
         history.back();
+        popFl = true;
         setTimeout(function () {
             history.replaceState(null, null, url);
         }, 100);
