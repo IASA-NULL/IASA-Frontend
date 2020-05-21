@@ -1,3 +1,5 @@
+let currentLevel = 0;
+
 function swapForm(form1, form2) {
     if (form1 == form2) return;
     obj1 = document.getElementById(form1 + "Form");
@@ -30,8 +32,8 @@ function backToForm() {
     formId = prevForm;
     document.getElementById(nextForm + "Form").style.display = "none";
     document.getElementById(currentForm + "Form").style.display = "none";
-    if (currentState == 0 && currentForm == formId) return;
-    if (currentState == 1 && nextForm == formId) return;
+    if (currentState == 0 && currentForm === formId) return;
+    if (currentState == 1 && nextForm === formId) return;
     if (currentState == 0) {
         swapForm(currentForm, nextForm);
         document.getElementById(currentForm + "Form").style.display = "none";
@@ -84,10 +86,9 @@ function backToForm() {
     setTimeout(function () {
         document.getElementById("iProg").style.opacity = 0;
     }, 400);
-    history.back();
 }
 
-function moveToForm(formId) {
+function moveToForm(formId, noupdateURL) {
     if (currentState === 0 && currentForm === formId) return;
     if (currentState === 1 && nextForm === formId) return;
     stopVideo();
@@ -121,7 +122,36 @@ function moveToForm(formId) {
     if (formId === 'finSignup' || formId === 'id' || formId === 'idFound') pageStr = '';
     var surl = UpdateQueryString('signinform', pageStr, location.search);
     if (formId === 'pass') surl = UpdateQueryString('uid', document.getElementById('uid').value, surl);
-    if ((formId === 'pass' || formId === 'findPass' || formId === 'signup1' || formId === 'signup3' || formId === 'findId' || formId === 'signupData1') && !initByUrl) history.pushState(null, null, '/signin' + surl);
-    else if (!initByUrl) history.replaceState(null, null, '/signin' + surl);
-    initByUrl--;
+    if ((formId === 'pass' || formId === 'findPass' || formId === 'signup1' || formId === 'signup3' || formId === 'findId' || formId === 'signupData1') && initByUrl === 0 && !noupdateURL) {
+        ++currentLevel;
+        history.pushState(currentLevel, null, '/signin' + surl);
+    } else if (initByUrl === 0 && !noupdateURL) history.replaceState(currentLevel, null, '/signin' + surl);
+    if (initByUrl) initByUrl--;
 }
+
+let popFl = false;
+
+function popStateHandler(e) {
+    if (popFl) {
+        popFl = false;
+        return;
+    }
+    if (e.state < currentLevel) {
+        backToForm();
+    }
+    if (e.state > currentLevel) {
+        if (atob(getQueryString('signinform')) === 'pass') {
+            popFl = true;
+            history.back();
+            enterId();
+        } else if (atob(getQueryString('signinform')) === 'findPass') reqFindPass(true);
+        else if (atob(getQueryString('signinform')) === 'findId') reqFindId(true);
+        else if (atob(getQueryString('signinform')) === 'signup1') reqSignup(true);
+        else if (atob(getQueryString('signinform')) === 'signup2') reqSignup2(true);
+        else if (atob(getQueryString('signinform')) === 'signup3') reqSignup3(signupMode, true);
+        else if (atob(getQueryString('signinform')) === 'signupData1') reqSignupData1(true);
+    }
+    currentLevel = e.state;
+}
+
+window.addEventListener('popstate', popStateHandler);

@@ -64,11 +64,16 @@ function enterPass() {
             setCookie('auth', res.body, 365);
             setCookie('name', uName, 365);
             setTimeout(function () {
+                window.removeEventListener('popstate', popStateHandler);
+                history.back();
                 try {
-                    if (getQueryString('next')) location.replace(atob(getQueryString('next')));
-                    else location.replace('/');
+                    if (getQueryString('next')) {
+                        location.replace(atob(getQueryString('next')) + '#login');
+                    } else {
+                        location.replace('/#login');
+                    }
                 } catch (e) {
-                    location.replace('/');
+                    location.replace('/#login');
                 }
             }, 800);
         } else loginError(1, '잘못된 비밀번호입니다.');
@@ -117,6 +122,7 @@ function clickFindId() {
         setTimeout(function () {
             history.pushState(null, null, '#');
             history.back();
+            currentLevel = 0;
         }, 500);
         setTimeout(function () {
             document.getElementById("fidName").disabled = false;
@@ -129,8 +135,8 @@ function clickFindId() {
 
 }
 
-function reqFindId() {
-    moveToForm('findId');
+function reqFindId(noupdateURL) {
+    moveToForm('findId', noupdateURL);
     setHeader('아이디 찾기', '이름과 이메일을 입력하세요.');
     setPrevForm("id");
     setTimeout(function () {
@@ -138,8 +144,8 @@ function reqFindId() {
     }, 500);
 }
 
-function reqFindPass() {
-    moveToForm('findPass');
+function reqFindPass(noupdateURL) {
+    moveToForm('findPass', noupdateURL);
     setHeader('비밀번호 찾기', '이름과 이메일을 입력하세요.');
     setPrevForm("pass");
     setTimeout(function () {

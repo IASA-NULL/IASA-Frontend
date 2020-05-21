@@ -160,9 +160,11 @@
             try {
                 if (atob(getQueryString('signinform')) === 'pass') {
                     initByUrl = 1;
+                    currentLevel = 1;
                     enterId();
                 } else if (atob(getQueryString('signinform')) === 'findId') {
                     initByUrl = 1;
+                    currentLevel = 1;
                     reqFindId();
                 }
             } catch (e) {
@@ -206,7 +208,7 @@
 <div id="fullCont">
     <div id="cont">
         <div class="mdc-card demo-card demo-ui-control mdc-elevation--z0" id="cardCont">
-            <a onclick="backToForm('id');" style="padding:10px;position:absolute;cursor: pointer;" id="prevCont">
+            <a onclick="history.back();" style="padding:10px;position:absolute;cursor: pointer;" id="prevCont">
                 <div><span class="mdc-fab__icon material-icons" style="font-size: 200%;"><button
                         class="mdc-icon-button material-icons">arrow_back</button></span></div>
             </a>

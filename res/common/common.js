@@ -1,4 +1,4 @@
-if (location.protocol != 'https:') {
+if (location.protocol !== 'https:') {
     document.querySelector('body').style.display = 'none';
     location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
 }
@@ -143,6 +143,15 @@ window.addEventListener('DOMContentLoaded', function () {
         document.getElementById('userId').innerText = getCookie('name');
     } catch (e) {
 
+    }
+
+    if (location.href.substr(location.href.length - 6) === '#login') {
+        let url = location.href.substr(0, location.href.length - 6);
+        history.pushState(null, null, url);
+        history.back();
+        setTimeout(function () {
+            history.replaceState(null, null, url);
+        }, 100);
     }
 });
 

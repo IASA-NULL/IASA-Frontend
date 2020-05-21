@@ -1,11 +1,11 @@
 let signupMode;
 
-function reqSignup() {
+function reqSignup(noupdateURL) {
     if (isIE()) {
         reqSignup3('s');
         return;
     }
-    moveToForm('signup1');
+    moveToForm('signup1', noupdateURL);
     setHeader('가입하기', '다음 버튼을 누르고 웹캠에 학생증의 바코드를 보여주세요.');
     var curVid = document.getElementById('cardAnim');
     curVid.pause();
@@ -16,7 +16,7 @@ function reqSignup() {
     setPrevForm("id");
 }
 
-function reqSignup2() {
+function reqSignup2(noupdateURL) {
     var curVid = document.getElementById('camAnim');
     curVid.style.display = "";
     curVid.pause();
@@ -52,15 +52,15 @@ function reqSignup2() {
         document.getElementById("qrContainer").style.display = 'block';
         curVid.style.display = "none";
     });
-    moveToForm('signup2');
+    moveToForm('signup2', noupdateURL);
     setHeader('가입하기', '카메라에 바코드가 선명하게 보이게 해주세요.');
     setPrevForm("id");
 }
 
-function reqSignup3(mode) {
+function reqSignup3(mode, noupdateURL) {
     signupMode = mode;
     document.getElementById("iProg").style.opacity = 1;
-    moveToForm('signup3');
+    moveToForm('signup3', noupdateURL);
     setHeader('본인인증 코드 입력', '계속하려면 NULL에 본인인증을 위한 24자리 코드를 요청하세요.');
     if (mode === 's') setPrevForm("signup1");
     else setPrevForm("id");
@@ -105,9 +105,9 @@ function enterCode() {
     });
 }
 
-function reqSignupData1() {
+function reqSignupData1(noupdateURL) {
     document.getElementById("iProg").style.opacity = 1;
-    moveToForm('signupData1');
+    moveToForm('signupData1', noupdateURL);
     setHeader('가입하기', '아래 내용을 채워주세요.');
     if (signupMode === 's') {
         if (byCode) setPrevForm("signup3");
@@ -174,6 +174,7 @@ function enterSignup() {
             setTimeout(function () {
                 history.pushState(null, null, '#');
                 history.back();
+                currentLevel = 0;
             }, 500);
         } else {
             loginError(4, JSON.parse(res.body).message);

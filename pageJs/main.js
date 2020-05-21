@@ -160,8 +160,11 @@ function selectSection(secName, laSection) {
 }
 
 addEventListener("popstate", function (e) {
-    selectSection(location.pathname.split('/')[1], activeSection);
-    activeSection = location.pathname.split('/')[1];
+    if (location.href.substr(location.href.length - 6) === '#login') return;
+    let nextSection = location.pathname.split('/')[1].split('#')[0];
+    if (activeSection === nextSection) return;
+    selectSection(nextSection, activeSection);
+    activeSection = nextSection;
 });
 
 function closeSnackbar() {
