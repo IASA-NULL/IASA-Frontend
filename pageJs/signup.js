@@ -168,9 +168,12 @@ function enterSignup() {
             setTimeout(function () {
                 document.getElementById("iProg").style.opacity = 0;
             }, 500);
+            if (signupMode === 's' && byCode) {
+                popFl = 3;
+                history.back();
+            } else popFl = 2;
             history.back();
             history.back();
-            if (signupMode === 's' && byCode) history.back();
             setTimeout(function () {
                 history.pushState(null, null, '#');
                 history.back();

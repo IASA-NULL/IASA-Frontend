@@ -126,16 +126,17 @@ function moveToForm(formId, noupdateURL) {
     if (formId === 'signupData1') surl = UpdateQueryString('regCode', btoa(document.getElementById('signupCode').value), surl);
     if ((formId === 'pass' || formId === 'findPass' || formId === 'signup1' || formId === 'signup3' || formId === 'findId' || formId === 'signupData1') && initByUrl === 0 && !noupdateURL) {
         ++currentLevel;
-        history.pushState(currentLevel, null, '/signin' + surl);
-    } else if (initByUrl === 0 && !noupdateURL) history.replaceState(currentLevel, null, '/signin' + surl);
+        history.pushState(currentLevel, null, '/signin/v1' + surl);
+    } else if (initByUrl === 0 && !noupdateURL) history.replaceState(currentLevel, null, '/v1' + surl);
     if (initByUrl) initByUrl--;
 }
 
-let popFl = false;
+let popFl = 0;
 
 function popStateHandler(e) {
+    if (popFl < 0) return;
     if (popFl) {
-        popFl = false;
+        popFl--;
         return;
     }
     if (e.state < currentLevel) {
@@ -143,7 +144,7 @@ function popStateHandler(e) {
     }
     if (e.state > currentLevel) {
         if (atob(getQueryString('signinform')) === 'pass') {
-            popFl = true;
+            popFl = 1;
             history.back();
             enterId();
         } else if (atob(getQueryString('signinform')) === 'findPass') reqFindPass(true);

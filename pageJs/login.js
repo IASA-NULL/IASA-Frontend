@@ -118,9 +118,11 @@ function clickFindId() {
         document.getElementById('foundID').innerText = JSON.parse(res.body)['id'];
         moveToForm('idFound');
         setHeader('아이디 찾기', '아이디를 찾았습니다.');
+        popFl++;
         history.back();
         setTimeout(function () {
             history.pushState(null, null, '#');
+            popFl++;
             history.back();
             currentLevel = 0;
         }, 500);
